@@ -374,9 +374,9 @@
       EVENT_YEAR: 2027,
 
       // Dati bonifico (sostituire con quelli reali)
-      BANK_HOLDER: 'Moto Guzzi Club Pisa APS',
-      BANK_NAME: 'Banca di Prova Guzzi (Sede di Pisa)',
-      IBAN: 'IT93 Z030 3201 0000 1000 1234 567',
+      BANK_HOLDER: 'Moto Guzzi Club Pisa Aquile Alfee',
+      BANK_NAME: 'UniCredit',
+      IBAN: 'IT61 U020 0871 1320 0010 7354 780',
 
       // Dove arrivano le iscrizioni. Compilare almeno UNA delle due:
       // 1) SUBMIT_ENDPOINT: URL che riceve un POST JSON (Formspree, Google Apps Script, ecc.)
@@ -540,8 +540,7 @@
     }
 
     function causaleText() {
-      const name = (titleCase($('pilotSurname').value) + ' ' + titleCase($('pilotFirstName').value)).trim() || '[Cognome Nome Pilota]';
-      return 'Raduno Pisa ' + CONFIG.EVENT_YEAR + ' - ' + name;
+      return 'Raduno Pisa ' + CONFIG.EVENT_YEAR;
     }
     function updateCausale() { $('causaleValue').textContent = causaleText(); }
 
@@ -766,8 +765,6 @@
       $('bankHolder').textContent = CONFIG.BANK_HOLDER;
       $('bankName').textContent = CONFIG.BANK_NAME;
       $('ibanValue').textContent = CONFIG.IBAN;
-      $('pilotSurname').addEventListener('input', updateCausale);
-      $('pilotFirstName').addEventListener('input', updateCausale);
       updateTotal();
     })();
   </script>
