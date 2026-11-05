@@ -254,13 +254,11 @@
           <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition">Bonifico Bancario</button>
         </div>
 
-        <!-- PayPal (testo rimosso) -->
         <div id="paypalContainer" class="mt-4 space-y-3">
           <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 disabled:opacity-60 text-gray-900 font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Invia Iscrizione (PayPal)</button>
           <p id="paypalError" class="hidden text-sm text-red-600 text-center"></p>
         </div>
 
-        <!-- Bonifico -->
         <div id="bankContainer" class="hidden p-5 bg-red-50/70 rounded-xl border border-red-200 space-y-3 text-sm">
           <div class="flex justify-between items-center border-b border-red-200 pb-2">
             <p class="font-bold text-red-700 text-base">🏦 Coordinate per il Bonifico Bancario</p>
@@ -305,14 +303,11 @@
   <!-- MODALE RIEPILOGO -->
   <div id="reviewModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      
       <div class="bg-white border-b-4 border-red-600 p-6 text-center sticky top-0 bg-white z-10">
         <h2 class="text-2xl font-bold text-red-600 uppercase tracking-wide">Rivedi e Conferma</h2>
         <p class="text-sm text-gray-600 mt-1">Controlla i dati prima di inviare</p>
       </div>
-
       <div id="reviewContent" class="p-6 space-y-4"></div>
-
       <div class="p-6 border-t border-gray-200 bg-gray-50 flex flex-col gap-3 sticky bottom-0">
         <div class="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-800 text-center">
           ⚠️ <strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).
@@ -325,6 +320,27 @@
             ✅ Invia Iscrizione Definitivamente
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE ERRORE (DUPLICATO O ALTRO) -->
+  <div id="errorModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">
+      <div class="bg-red-600 text-white p-6 text-center">
+        <div class="text-5xl mb-2">⚠️</div>
+        <h2 class="text-2xl font-bold">Iscrizione Già Registrata</h2>
+      </div>
+      <div class="p-6 space-y-4">
+        <p class="text-gray-800 text-sm leading-relaxed" id="errorModalMessage"></p>
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2 text-sm">
+          <p class="font-semibold text-gray-800 mb-1">Se pensi sia un errore, contatta l'organizzazione:</p>
+          <p>📧 <a href="mailto:motoguzziclubpisa@gmail.com" class="text-red-600 underline font-medium">motoguzziclubpisa@gmail.com</a></p>
+          <p>📞 <a href="tel:+393297259560" class="text-red-600 underline font-medium">329 725 9560</a></p>
+        </div>
+      </div>
+      <div class="p-4 bg-gray-50 border-t border-gray-200 flex justify-end">
+        <button type="button" onclick="closeErrorModal()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 px-6 rounded-lg transition">Chiudi</button>
       </div>
     </div>
   </div>
@@ -472,6 +488,7 @@
       if (!$('pilotFirstName').value.trim()) { $('pilotFirstName').focus(); return false; }
       return true;
     }
+    
     async function sendRegistration(order, payment) {
       const payload = { submittedAt: new Date().toISOString(), event: 'Raduno Aquile Alfee ' + CONFIG.EVENT_YEAR, order: order, payment: payment };
       if (CONFIG.SUBMIT_ENDPOINT) {
@@ -482,10 +499,25 @@
             body: JSON.stringify(payload)
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
+          let responseData = {};
+          try { responseData = await res.json(); } catch (e) { responseData = { ok: true }; }
+          if (responseData.ok === false) {
+            return { 
+              ok: false, 
+              mode: 'endpoint', 
+              error: responseData.error || 'UNKNOWN', 
+              message: responseData.message || 'Errore sconosciuto. Contatta l\'organizzazione.'
+            };
+          }
           return { ok: true, mode: 'endpoint' };
         } catch (e) {
           console.error('Invio iscrizione fallito:', e);
-          return { ok: false, mode: 'endpoint' };
+          return { 
+            ok: false, 
+            mode: 'endpoint', 
+            error: 'NETWORK', 
+            message: 'Errore di connessione. Controlla la rete e riprova.'
+          };
         }
       }
       return { ok: true, mode: 'none' };
@@ -640,7 +672,20 @@
     }
 
     // =============================================
-    // FLUSSO PAYPAL
+    // MODALE ERRORE
+    // =============================================
+    function showErrorModal(message) {
+      $('errorModalMessage').textContent = message || 'Non è stato possibile completare l\'iscrizione.';
+      $('errorModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeErrorModal() {
+      $('errorModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // =============================================
+    // FLUSSO PAYPAL (verifica PRIMA di aprire PayPal)
     // =============================================
     function paypalUrl(total) { return 'https://www.paypal.me/' + encodeURIComponent(CONFIG.PAYPAL_ME_HANDLE) + '/' + total.toFixed(2) + 'EUR'; }
     
@@ -651,20 +696,21 @@
 
       const order = reviewOrder;
       const url = paypalUrl(order.total);
-      
-      window.open(url, '_blank', 'noopener');
-
       const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
+      
+      // 1. Invio PRIMA al backend per verificare duplicati
       const result = await sendRegistration(order, payment);
-
+      
       if (!result.ok) {
-        $('paypalError').textContent = 'Errore di invio. Controlla la connessione e riprova.';
-        $('paypalError').classList.remove('hidden');
-        $('reviewModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        // Errore (incluso duplicato): mostro modale e NON apro PayPal
         submitting = false;
+        reviewOrder = null;
+        showErrorModal(result.message);
         return;
       }
+      
+      // 2. Tutto ok: apro PayPal
+      window.open(url, '_blank', 'noopener');
       
       reviewOrder = null;
       showSuccess(order, payment, result);
@@ -684,11 +730,9 @@
       const result = await sendRegistration(order, payment);
       
       if (!result.ok) {
-        $('bankError').textContent = 'Invio non riuscito. Controlla la connessione e riprova.';
-        $('bankError').classList.remove('hidden');
-        $('reviewModal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
         submitting = false;
+        reviewOrder = null;
+        showErrorModal(result.message);
         return;
       }
       
