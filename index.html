@@ -254,9 +254,8 @@
           <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition">Bonifico Bancario</button>
         </div>
 
-        <!-- PayPal -->
+        <!-- PayPal (testo rimosso) -->
         <div id="paypalContainer" class="mt-4 space-y-3">
-          <p class="text-xs text-gray-500 text-center mb-3">Premendo il pulsante si aprirà PayPal con l'importo già compilato: <strong>paga come "acquisto di beni e servizi"</strong>, non come "amici e familiari".</p>
           <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 disabled:opacity-60 text-gray-900 font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Invia Iscrizione (PayPal)</button>
           <p id="paypalError" class="hidden text-sm text-red-600 text-center"></p>
         </div>
@@ -653,17 +652,14 @@
       const order = reviewOrder;
       const url = paypalUrl(order.total);
       
-      // Apre PayPal in una nuova finestra
       window.open(url, '_blank', 'noopener');
 
-      // Invia i dati al server (stato: in attesa di pagamento)
       const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
       const result = await sendRegistration(order, payment);
 
       if (!result.ok) {
         $('paypalError').textContent = 'Errore di invio. Controlla la connessione e riprova.';
         $('paypalError').classList.remove('hidden');
-        // Riapriamo il form per permettere il retry
         $('reviewModal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         submitting = false;
