@@ -242,7 +242,7 @@
           </span>
         </label>
         <p class="text-xs text-gray-500 pl-7">
-          📧 Dopo l'invio riceverai una <strong>email di ricevuta</strong> con il riepilogo e le istruzioni di pagamento; riceverai una seconda email di <strong>conferma</strong> non appena il pagamento sarà registrato. Se non la vedi, <strong>controlla anche la cartella spam</strong>.
+          📧 Dopo l'invio riceverai una <strong>email con il riepilogo e le istruzioni</strong> per completare il pagamento (PayPal o Bonifico). La tua iscrizione sarà <strong>confermata</strong> non appena avremo registrato il pagamento. Controlla anche la cartella spam.
         </p>
       </div>
 
@@ -254,22 +254,10 @@
           <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition">Bonifico Bancario</button>
         </div>
 
-        <!-- PayPal.Me con conferma manuale -->
+        <!-- PayPal -->
         <div id="paypalContainer" class="mt-4 space-y-3">
-          <div id="paypalInitialBox">
-            <p class="text-xs text-gray-500 text-center mb-3">Premendo il pulsante si apre PayPal con l'importo già compilato: <strong>paga come "acquisto di beni e servizi"</strong>, non come "amici e familiari".</p>
-            <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 disabled:opacity-60 text-gray-900 font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Conferma (PayPal)</button>
-          </div>
-          
-          <div id="paypalConfirmBox" class="hidden p-5 bg-yellow-50 border-2 border-yellow-300 rounded-xl text-center">
-            <p class="text-sm font-bold text-yellow-800 mb-2">Hai completato il pagamento su PayPal?</p>
-            <p class="text-xs text-yellow-700 mb-4">Se hai già pagato, conferma per registrare l'iscrizione. Se hai cambiato idea, torna indietro per scegliere un altro metodo.</p>
-            <div class="flex flex-col sm:flex-row gap-3 justify-center">
-              <button type="button" id="paypalConfirmYes" onclick="confirmPaypalPayment()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-6 rounded-lg transition">Sì, ho pagato</button>
-              <button type="button" id="paypalConfirmNo" onclick="cancelPaypalPayment()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2.5 px-6 rounded-lg transition">No, torna indietro</button>
-            </div>
-          </div>
-          
+          <p class="text-xs text-gray-500 text-center mb-3">Premendo il pulsante si aprirà PayPal con l'importo già compilato: <strong>paga come "acquisto di beni e servizi"</strong>, non come "amici e familiari".</p>
+          <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 disabled:opacity-60 text-gray-900 font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Invia Iscrizione (PayPal)</button>
           <p id="paypalError" class="hidden text-sm text-red-600 text-center"></p>
         </div>
 
@@ -292,7 +280,7 @@
             </div>
             <p><strong class="text-gray-900">Causale obbligatoria:</strong> <span id="causaleValue" class="text-red-700 font-semibold"></span></p>
           </div>
-          <button type="button" id="bankSubmitBtn" onclick="openReviewModal()" class="w-full mt-4 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Conferma (Bonifico)</button>
+          <button type="button" id="bankSubmitBtn" onclick="openReviewModal()" class="w-full mt-4 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Invia Iscrizione (Bonifico)</button>
           <p id="bankError" class="hidden text-sm text-red-600 text-center"></p>
         </div>
       </div>
@@ -300,15 +288,17 @@
 
     <!-- Successo -->
     <div id="successBox" class="hidden bg-white p-8 rounded-2xl border-2 border-green-500 text-center space-y-4 shadow-lg">
-      <div class="text-5xl">🎉</div>
-      <h2 class="text-2xl font-bold text-green-600">Iscrizione Registrata!</h2>
+      <div class="text-5xl">✅</div>
+      <h2 class="text-2xl font-bold text-green-600">Iscrizione Inviata!</h2>
       <p class="text-gray-600 text-sm">Grazie per esserti iscritto al 2° Raduno "Aquile Alfee" del Moto Guzzi Club Pisa.</p>
-      <p id="successNote" class="hidden text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-3"></p>
+      <p class="text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm font-medium">
+        ⏳ La tua iscrizione è ora <strong>in attesa di conferma del pagamento</strong>. Non appena l'organizzazione avrà verificato il pagamento, riceverai una seconda email di <strong>conferma definitiva</strong>.
+      </p>
+      <p id="successNote" class="hidden text-sm text-red-600"></p>
       <div id="successDetails" class="p-4 bg-gray-50 rounded-lg text-left text-sm space-y-1 text-gray-800 border border-gray-200"></div>
       
-      <div class="flex flex-col sm:flex-row gap-3 justify-center mt-4">
+      <div class="mt-4">
         <button type="button" onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 text-sm text-gray-800 font-medium px-4 py-2 rounded-md border border-gray-300 transition">🖨️ Stampa / salva il riepilogo</button>
-        <button type="button" onclick="changePaymentMethod()" class="bg-red-50 hover:bg-red-100 text-sm text-red-700 font-medium px-4 py-2 rounded-md border border-red-300 transition">↩️ Cambia metodo di pagamento</button>
       </div>
     </div>
   </main>
@@ -317,23 +307,25 @@
   <div id="reviewModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
       
-      <!-- Header del modale -->
       <div class="bg-white border-b-4 border-red-600 p-6 text-center sticky top-0 bg-white z-10">
         <h2 class="text-2xl font-bold text-red-600 uppercase tracking-wide">Rivedi e Conferma</h2>
-        <p class="text-sm text-gray-600 mt-1">Controlla i dati inseriti prima di procedere</p>
+        <p class="text-sm text-gray-600 mt-1">Controlla i dati prima di inviare</p>
       </div>
 
-      <!-- Contenuto del modale -->
       <div id="reviewContent" class="p-6 space-y-4"></div>
 
-      <!-- Footer del modale -->
-      <div class="p-6 border-t border-gray-200 bg-gray-50 flex flex-col sm:flex-row gap-3 justify-end sticky bottom-0">
-        <button type="button" onclick="closeReviewModal()" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-6 rounded-lg border-2 border-gray-300 transition w-full sm:w-auto">
-          ↩️ Modifica
-        </button>
-        <button type="button" onclick="proceedWithPayment()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md w-full sm:w-auto">
-          ✅ Conferma e Procedi
-        </button>
+      <div class="p-6 border-t border-gray-200 bg-gray-50 flex flex-col gap-3 sticky bottom-0">
+        <div class="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-800 text-center">
+          ⚠️ <strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 justify-end">
+          <button type="button" onclick="closeReviewModal()" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-6 rounded-lg border-2 border-gray-300 transition w-full sm:w-auto">
+            ↩️ Modifica (non invia)
+          </button>
+          <button type="button" onclick="proceedWithPayment()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md w-full sm:w-auto">
+            ✅ Invia Iscrizione Definitivamente
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -351,8 +343,6 @@
     const PRICES = { base: 25, withShirt: 35, mgwcDiscount: 5, meals: { fri: 20, satPack: 15, satGala: 40, sun: 22 } };
     const MEAL_LABELS = { fri: 'Buffet Venerdì', satPack: 'Pranzo al sacco Sabato', satGala: 'Cena di Gala Sabato', sun: 'Pranzo Domenica' };
     let currentTotal = 25, submitting = false, paymentMethod = 'paypal';
-    let pendingPaypalOrder = null;
-    let pendingPaypalPayment = null;
     let reviewOrder = null;
     const $ = (id) => document.getElementById(id);
     const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
@@ -459,7 +449,6 @@
       $('btnBank').className = method === 'bank' ? on : off;
       toggle('paypalContainer', method === 'paypal');
       toggle('bankContainer', method === 'bank');
-      if (method === 'bank') cancelPaypalPayment();
     }
     function copyIban() {
       const text = $('ibanValue').innerText;
@@ -517,17 +506,12 @@
       addPerson('Pilota', order.pilot);
       if (order.passenger) addPerson('Passeggero', order.passenger);
       add('Totale: ' + eur(order.total), 'font-bold text-lg pt-3');
-      add('Pagamento: ' + payment.method, 'pt-1');
-      add('📧 Ti abbiamo inviato una email di ricevuta con il riepilogo e TUTTE le opzioni di pagamento. Controlla anche lo spam.', 'text-gray-600 pt-2');
+      add('Metodo scelto: ' + payment.method, 'pt-1');
       
       if (payment.method === 'Bonifico bancario') {
-        add('Importo da versare: ' + eur(order.total), 'font-bold');
-        add('IBAN: ' + CONFIG.IBAN);
-        add('Intestatario: ' + CONFIG.BANK_HOLDER);
+        add('IBAN: ' + CONFIG.IBAN, 'mt-2');
         add('Causale: ' + causaleText());
       } else if (payment.method === 'PayPal') {
-        add('Importo da pagare su PayPal: ' + eur(order.total), 'font-bold');
-        add('Beneficiario: paypal.me/' + CONFIG.PAYPAL_ME_HANDLE);
         const a = document.createElement('a');
         a.href = payment.url; a.target = '_blank'; a.rel = 'noopener';
         a.className = 'inline-block mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-lg';
@@ -543,14 +527,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function changePaymentMethod() {
-      $('successBox').classList.add('hidden');
-      $('rallyForm').classList.remove('hidden');
-      const newMethod = (paymentMethod === 'paypal') ? 'bank' : 'paypal';
-      setPaymentMethod(newMethod);
-      document.getElementById('btnPaypal').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
     // =============================================
     // MODALE DI RIEPILOGO
     // =============================================
@@ -562,17 +538,14 @@
       const order = getOrder();
       reviewOrder = order;
 
-      // Costruiamo il contenuto del modale
       const box = $('reviewContent');
       box.innerHTML = '';
 
-      // Funzione per creare un blocco persona
       const renderPerson = (title, p, extraFields) => {
         const div = document.createElement('div');
         div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
         
         let html = `<h3 class="font-bold text-red-600 mb-3 text-lg border-b border-gray-300 pb-2">${title}</h3>`;
-        
         html += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">`;
         html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Nome</span><p class="font-semibold">${p.name}</p></div>`;
         html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Email</span><p class="font-semibold break-all">${p.email || '-'}</p></div>`;
@@ -583,27 +556,20 @@
           });
         }
         html += `</div>`;
-
-        // Dettaglio iscrizione
         html += `<div class="mt-4 pt-3 border-t border-gray-300">`;
         html += `<p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Dettaglio Iscrizione</p>`;
         p.lines.forEach(l => {
           html += `<div class="flex justify-between text-sm py-1"><span>${l.label}</span><span class="font-semibold">${(l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))}</span></div>`;
         });
-        
-        // Pasti selezionati
         const mealsOn = Object.keys(p.meals).filter(k => p.meals[k]);
         if (mealsOn.length > 0) {
           html += `<p class="text-xs text-gray-500 uppercase tracking-wider mt-3 mb-1">Pasti Prenotati</p>`;
           html += `<p class="text-sm">${mealsOn.map(k => MEAL_LABELS[k]).join(', ')}</p>`;
         }
-        
-        // Intolleranze
         if (p.dietary) {
           html += `<p class="text-xs text-gray-500 uppercase tracking-wider mt-3 mb-1">Intolleranze / Esigenze</p>`;
           html += `<p class="text-sm bg-amber-50 border border-amber-200 rounded p-2">${p.dietary}</p>`;
         }
-        
         html += `<div class="flex justify-between text-base font-bold text-red-600 mt-3 pt-3 border-t border-gray-300"><span>Subtotale</span><span>${eur(p.subtotal)}</span></div>`;
         html += `</div>`;
 
@@ -615,12 +581,8 @@
         { label: 'Città', value: order.pilot.city },
         { label: 'Club', value: order.pilot.club }
       ]);
-      
-      if (order.passenger) {
-        renderPerson('👥 Passeggero', order.passenger, null);
-      }
+      if (order.passenger) renderPerson('👥 Passeggero', order.passenger, null);
 
-      // Totale e Metodo
       const totalDiv = document.createElement('div');
       totalDiv.className = 'bg-red-50 rounded-xl p-5 border-2 border-red-600 text-center';
       const methodLabel = paymentMethod === 'paypal' ? 'PayPal' : 'Bonifico Bancario';
@@ -632,15 +594,25 @@
       `;
       box.appendChild(totalDiv);
 
-      // Privacy check reminder
+      if (paymentMethod === 'bank') {
+        const ibanDiv = document.createElement('div');
+        ibanDiv.className = 'bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm';
+        ibanDiv.innerHTML = `
+          <p class="font-bold text-blue-800 mb-2">🏦 Coordinate Bancarie</p>
+          <p class="text-blue-900"><strong>Intestatario:</strong> ${CONFIG.BANK_HOLDER}</p>
+          <p class="text-blue-900"><strong>IBAN:</strong> <span class="font-mono">${CONFIG.IBAN}</span></p>
+          <p class="text-blue-900"><strong>Causale:</strong> Raduno Pisa ${CONFIG.EVENT_YEAR}</p>
+        `;
+        box.appendChild(ibanDiv);
+      }
+
       if (!$('privacyConsent').checked) {
         const warn = document.createElement('div');
         warn.className = 'bg-amber-50 border border-amber-300 rounded-lg p-3 text-sm text-amber-800';
-        warn.innerHTML = '⚠️ Non hai ancora accettato l\'informativa privacy. Chiudi questo riepilogo, spunta la casella e riprova.';
+        warn.innerHTML = '⚠️ Devi accettare l\'informativa privacy prima di inviare.';
         box.appendChild(warn);
       }
 
-      // Mostra il modale
       $('reviewModal').classList.remove('hidden');
       document.body.style.overflow = 'hidden';
     }
@@ -648,17 +620,18 @@
     function closeReviewModal() {
       $('reviewModal').classList.add('hidden');
       document.body.style.overflow = '';
+      reviewOrder = null;
     }
 
     async function proceedWithPayment() {
-      if (!reviewOrder || !$('privacyConsent').checked) {
-        if (!$('privacyConsent').checked) {
-          alert('Devi accettare l\'informativa privacy per procedere.');
-        }
+      if (!$('privacyConsent').checked) {
+        alert('Devi accettare l\'informativa privacy per procedere.');
         return;
       }
+      if (!reviewOrder) return;
       
-      closeReviewModal();
+      $('reviewModal').classList.add('hidden');
+      document.body.style.overflow = '';
       
       if (paymentMethod === 'paypal') {
         await submitPaypalFlow();
@@ -674,78 +647,56 @@
     
     async function submitPaypalFlow() {
       if (submitting) return;
+      submitting = true;
       $('paypalError').classList.add('hidden');
 
       const order = reviewOrder;
       const url = paypalUrl(order.total);
+      
+      // Apre PayPal in una nuova finestra
       window.open(url, '_blank', 'noopener');
 
-      pendingPaypalOrder = order;
-      pendingPaypalPayment = { method: 'PayPal', transactionId: null, status: 'da completare su PayPal.me', url: url };
-
-      $('paypalInitialBox').classList.add('hidden');
-      $('paypalConfirmBox').classList.remove('hidden');
-      // Scroll verso il box di conferma
-      $('paypalConfirmBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    async function confirmPaypalPayment() {
-      if (submitting || !pendingPaypalOrder) return;
-      submitting = true;
-      const btn = $('paypalConfirmYes');
-      btn.disabled = true;
-      btn.textContent = 'Invio in corso…';
-
-      const result = await sendRegistration(pendingPaypalOrder, pendingPaypalPayment);
+      // Invia i dati al server (stato: in attesa di pagamento)
+      const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
+      const result = await sendRegistration(order, payment);
 
       if (!result.ok) {
-        showPaypalError('Invio non riuscito. Riprova o scegli il bonifico.');
-        btn.disabled = false;
-        btn.textContent = 'Sì, ho pagato';
+        $('paypalError').textContent = 'Errore di invio. Controlla la connessione e riprova.';
+        $('paypalError').classList.remove('hidden');
+        // Riapriamo il form per permettere il retry
+        $('reviewModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
         submitting = false;
         return;
       }
-
-      showSuccess(pendingPaypalOrder, pendingPaypalPayment, result);
+      
+      reviewOrder = null;
+      showSuccess(order, payment, result);
       submitting = false;
     }
-
-    function cancelPaypalPayment() {
-      pendingPaypalOrder = null;
-      pendingPaypalPayment = null;
-      $('paypalConfirmBox').classList.add('hidden');
-      $('paypalInitialBox').classList.remove('hidden');
-      $('paypalError').classList.add('hidden');
-      $('paypalConfirmYes').disabled = false;
-      $('paypalConfirmYes').textContent = 'Sì, ho pagato';
-    }
-
-    function showPaypalError(msg) { const el = $('paypalError'); el.textContent = msg; el.classList.remove('hidden'); }
 
     // =============================================
     // FLUSSO BONIFICO
     // =============================================
     async function submitBankFlow() {
-      if (submitting) return;
-      $('bankError').classList.add('hidden');
+      if (submitting || !reviewOrder) return;
       submitting = true;
-      const btn = $('bankSubmitBtn'); 
-      btn.disabled = true; 
-      btn.textContent = 'Invio in corso…';
+      $('bankError').classList.add('hidden');
 
       const order = reviewOrder;
-      const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa' };
+      const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa di pagamento' };
       const result = await sendRegistration(order, payment);
       
       if (!result.ok) {
-        const err = $('bankError');
-        err.textContent = 'Invio non riuscito. Controlla la connessione e riprova.';
-        err.classList.remove('hidden');
-        btn.disabled = false; 
-        btn.textContent = 'Rivedi e Conferma (Bonifico)';
+        $('bankError').textContent = 'Invio non riuscito. Controlla la connessione e riprova.';
+        $('bankError').classList.remove('hidden');
+        $('reviewModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
         submitting = false;
         return;
       }
+      
+      reviewOrder = null;
       showSuccess(order, payment, result);
       submitting = false;
     }
