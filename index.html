@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iscrizione Raduno - Moto Guzzi Club Pisa</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- SDK di PayPal -->
-  <script src="https://www.paypal.com/sdk/js?client-id=IL_TUO_CLIENT_ID_PAYPAL&currency=EUR"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans min-h-screen pb-12">
 
@@ -196,7 +194,7 @@
         </div>
         <div class="mt-4 pt-4 border-t border-gray-100">
           <label for="pilotDietary" class="block text-sm font-medium text-gray-700 mb-1">Intolleranze / Esigenze Alimentari (Pilota)</label>
-          <input type="text" id="pilotDietary" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Es. Vegetariano, Celiachia, Allergia a..."
+          <input type="text" id="pilotDietary" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
         </div>
       </div>
 
@@ -256,10 +254,10 @@
           <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition">Bonifico Bancario</button>
         </div>
 
-        <!-- PayPal Smart Buttons -->
+        <!-- PayPal.Me -->
         <div id="paypalContainer" class="mt-4 space-y-3">
-          <p class="text-xs text-gray-500 text-center">Premendo il pulsante si aprirà la finestra di PayPal per completare il pagamento in sicurezza.</p>
-          <div id="paypal-button-container"></div>
+          <p class="text-xs text-gray-500 text-center">Premendo il pulsante si apre PayPal con l'importo già compilato: <strong>paga come "acquisto di beni e servizi"</strong>, non come "amici e familiari".</p>
+          <button type="button" id="paypalPayBtn" onclick="submitPaypal()" class="w-full bg-yellow-400 hover:bg-yellow-500 disabled:opacity-60 text-gray-900 font-bold py-3.5 rounded-lg transition text-base shadow-md">Conferma e paga con PayPal</button>
           <p id="paypalError" class="hidden text-sm text-red-600 text-center"></p>
         </div>
 
@@ -301,12 +299,12 @@
 
   <script>
     const CONFIG = {
-      PAYPAL_CLIENT_ID: 'IL_TUO_CLIENT_ID_PAYPAL', // Sostituisci con il tuo Client ID
+      PAYPAL_ME_HANDLE: 'motoguzziclubpisa',
       EVENT_YEAR: 2027,
       BANK_HOLDER: 'Moto Guzzi Club Pisa Aquile Alfee',
       BANK_NAME: 'UniCredit',
       IBAN: 'IT61 U020 0871 1320 0010 7354 780',
-      SUBMIT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbylSsf-_9pND0tYhjK2w1s99cFYwkluH9CLTFMoI3ayWBLVplVPLOZxAxgd3kvJJ3P-/exec', // Assicurati che sia l'URL corretto
+      SUBMIT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbylSsf-_9pND0tYhjK2w1s99cFYwkluH9CLTFMoI3ayWBLVplVPLOZxAxgd3kvJJ3P-/exec',
       ORGANIZER_EMAIL: ''
     };
     const PRICES = { base: 25, withShirt: 35, mgwcDiscount: 5, meals: { fri: 20, satPack: 15, satGala: 40, sun: 22 } };
@@ -316,48 +314,262 @@
     const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
     const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
 
-    // Inizializza i bottoni PayPal
-    paypal.Buttons({
-        style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'paypal' },
-        createOrder: function(data, actions) {
-            if (!validateForm()) {
-                throw new Error("Modulo non valido");
-            }
-            // Calcola il totale al momento del click
-            const order = getOrder();
-            currentTotal = order.total;
-            return actions.order.create({
-                purchase_units: [{ amount: { value: currentTotal.toFixed(2) } }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(async function(details) {
-                // Il pagamento è andato a buon fine
-                submitting = true;
-                const order = getOrder();
-                const payment = { 
-                    method: 'PayPal', 
-                    transactionId: details.id, 
-                    status: 'completed' 
-                };
-                const result = await sendRegistration(order, payment);
-                
-                if (!result.ok) {
-                    showPaypalError("Errore nell'invio dei dati al server. Contatta l'organizzatore.");
-                    submitting = false;
-                } else {
-                    showSuccess(order, payment, result);
-                }
-            });
-        },
-        onError: function(err) {
-            showPaypalError("Si è verificato un errore con PayPal. Riprova.");
-            console.error(err);
-        }
-    }).render('#paypal-button-container');
+    function buildPerson(prefix, p) {
+      const regValue = parseInt(document.querySelector('input[name="' + p.regName + '"]:checked').value, 10);
+      const withShirt = regValue === PRICES.withShirt;
+      const isMember = $(p.member).checked;
+      const meals = {};
+      let total = withShirt ? PRICES.withShirt : PRICES.base;
+      const lines = [{ label: withShirt ? 'Iscrizione con maglietta' : 'Iscrizione base', amount: total }];
+      if (withShirt) lines[0].label += ' (taglia ' + $(p.shirt).value + ')';
+      if (isMember) {
+        total -= PRICES.mgwcDiscount;
+        lines.push({ label: 'Sconto socio MGWC (tessera ' + ($(p.card).value.trim() || '—') + ')', amount: -PRICES.mgwcDiscount });
+      }
+      Object.keys(PRICES.meals).forEach((k) => {
+        const on = $(p.meals[k]).checked; meals[k] = on;
+        if (on) { total += PRICES.meals[k]; lines.push({ label: MEAL_LABELS[k], amount: PRICES.meals[k] }); }
+      });
+      const surname = titleCase($(p.surname).value);
+      const firstName = titleCase($(p.first).value);
+      return {
+        surname: surname, firstName: firstName, name: (firstName + ' ' + surname).trim(),
+        email: $(p.email).value.trim(), phone: $(p.phone).value.trim(),
+        shirtSize: withShirt ? $(p.shirt).value : null,
+        mgwcMember: isMember, mgwcCard: isMember ? $(p.card).value.trim() : null,
+        meals: meals, lines: lines, subtotal: total,
+        dietary: $(p.dietary).value.trim()
+      };
+    }
+    const PILOT_IDS = { regName: 'regType', shirt: 'shirtSize', member: 'mgwcMember', card: 'mgwcCardNumber', surname: 'pilotSurname', first: 'pilotFirstName', email: 'pilotEmail', phone: 'pilotPhone', dietary: 'pilotDietary', meals: { fri: 'mealFri', satPack: 'mealSatPack', satGala: 'mealSatGala', sun: 'mealSun' } };
+    const PASS_IDS = { regName: 'passRegType', shirt: 'passShirtSize', member: 'passMgwcMember', card: 'passMgwcCardNumber', surname: 'passSurname', first: 'passFirstName', email: 'passEmail', phone: 'passPhone', dietary: 'passDietary', meals: { fri: 'passMealFri', satPack: 'passMealSatPack', satGala: 'passMealSatGala', sun: 'passMealSun' } };
 
-    // ... (tutte le altre funzioni JS: buildPerson, getOrder, updateTotal, setPaymentMethod, validateForm, sendRegistration, showSuccess, submitBank, ecc.)
-    // (Il codice è identico a quello fornito in precedenza, con l'aggiunta della gestione dei nuovi campi dietary)
+    function getOrder() {
+      const pilot = buildPerson('', PILOT_IDS);
+      pilot.city = $('pilotCity').value.trim();
+      pilot.club = $('pilotClub').value.trim();
+      const hasPassenger = $('hasPassenger').checked;
+      const passenger = hasPassenger ? buildPerson('pass', PASS_IDS) : null;
+      const total = Math.max(pilot.subtotal + (passenger ? passenger.subtotal : 0), 0);
+      return { pilot: pilot, passenger: passenger, total: total, currency: 'EUR', year: CONFIG.EVENT_YEAR };
+    }
+    function setRequired(id, on) { const el = $(id); if (on) el.setAttribute('required', 'true'); else el.removeAttribute('required'); }
+    function toggle(id, show) { $(id).classList.toggle('hidden', !show); }
+    function resetPassengerFields() {
+      ['passSurname','passFirstName','passEmail','passPhone','passMgwcCardNumber','passDietary'].forEach((id) => { $(id).value = ''; });
+      ['passMgwcMember','passMealFri','passMealSatPack','passMealSatGala','passMealSun'].forEach((id) => { $(id).checked = false; });
+      document.querySelector('input[name="passRegType"][value="25"]').checked = true;
+      $('passShirtSize').value = 'M';
+    }
+    function onPassengerToggle() { if (!$('hasPassenger').checked) resetPassengerFields(); updateTotal(); }
+
+    function updateTotal() {
+      const pilotShirt = document.querySelector('input[name="regType"]:checked').value === String(PRICES.withShirt);
+      toggle('shirtSizeContainer', pilotShirt);
+      const pilotMember = $('mgwcMember').checked;
+      toggle('mgwcCardContainer', pilotMember);
+      setRequired('mgwcCardNumber', pilotMember);
+      if (!pilotMember) $('mgwcCardNumber').value = '';
+      const hasPassenger = $('hasPassenger').checked;
+      toggle('passengerContainer', hasPassenger);
+      toggle('passengerRegContainer', hasPassenger);
+      toggle('passengerMealsContainer', hasPassenger);
+      setRequired('passSurname', hasPassenger);
+      setRequired('passFirstName', hasPassenger);
+      const passShirt = hasPassenger && document.querySelector('input[name="passRegType"]:checked').value === String(PRICES.withShirt);
+      toggle('passShirtSizeContainer', passShirt);
+      const passMember = hasPassenger && $('passMgwcMember').checked;
+      toggle('passMgwcCardContainer', passMember);
+      setRequired('passMgwcCardNumber', passMember);
+      if (!passMember) $('passMgwcCardNumber').value = '';
+      const order = getOrder();
+      currentTotal = order.total;
+      $('totalDisplay').innerText = eur(order.total);
+      const list = $('summaryList');
+      list.innerHTML = '';
+      const addGroup = (title, person) => {
+        const head = document.createElement('li');
+        head.className = 'font-bold text-gray-900 pt-1';
+        head.textContent = title;
+        list.appendChild(head);
+        person.lines.forEach((l) => {
+          const li = document.createElement('li');
+          li.className = 'flex justify-between';
+          const a = document.createElement('span'); a.textContent = l.label;
+          const b = document.createElement('span'); b.textContent = (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount));
+          li.appendChild(a); li.appendChild(b);
+          list.appendChild(li);
+        });
+      };
+      addGroup('Pilota', order.pilot);
+      if (order.passenger) addGroup('Passeggero', order.passenger);
+      updateCausale();
+    }
+    function causaleText() { return 'Raduno Pisa ' + CONFIG.EVENT_YEAR; }
+    function updateCausale() { $('causaleValue').textContent = causaleText(); }
+    function setPaymentMethod(method) {
+      paymentMethod = method;
+      const on = 'p-3 border-2 border-red-600 bg-red-50 rounded-lg text-center font-bold text-red-700 transition';
+      const off = 'p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition';
+      $('btnPaypal').className = method === 'paypal' ? on : off;
+      $('btnBank').className = method === 'bank' ? on : off;
+      toggle('paypalContainer', method === 'paypal');
+      toggle('bankContainer', method === 'bank');
+    }
+    function copyIban() {
+      const text = $('ibanValue').innerText;
+      const done = () => { $('copyBtnText').innerText = 'Copiato!'; setTimeout(() => { $('copyBtnText').innerText = 'Copia IBAN'; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fallbackCopy);
+      } else { fallbackCopy(); }
+      function fallbackCopy() {
+        const ta = document.createElement('textarea'); ta.value = text;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); done();
+      }
+    }
+    function validateForm() {
+      const form = $('rallyForm');
+      if (!form.reportValidity()) return false;
+      if ($('hasPassenger').checked) {
+        const missing = !$('passSurname').value.trim() ? 'passSurname' : (!$('passFirstName').value.trim() ? 'passFirstName' : null);
+        if (missing) { $(missing).focus(); return false; }
+      }
+      if (!$('pilotSurname').value.trim()) { $('pilotSurname').focus(); return false; }
+      if (!$('pilotFirstName').value.trim()) { $('pilotFirstName').focus(); return false; }
+      return true;
+    }
+    function buildEmailBody(order, payment) {
+      const rows = [];
+      const addPerson = (title, p) => {
+        rows.push('--- ' + title + ' ---');
+        rows.push('Nome: ' + p.name);
+        rows.push('Email: ' + (p.email || '-'));
+        rows.push('Telefono: ' + (p.phone || '-'));
+        if (p.city !== undefined) { rows.push('Città: ' + p.city); rows.push('Club: ' + (p.club || '-')); }
+        p.lines.forEach((l) => rows.push('  ' + l.label + ': ' + (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))));
+        rows.push('');
+      };
+      addPerson('PILOTA', order.pilot);
+      if (order.passenger) addPerson('PASSEGGERO', order.passenger);
+      rows.push('TOTALE: ' + eur(order.total));
+      rows.push('Pagamento: ' + payment.method + (payment.method === 'PayPal' ? ' (da completare su PayPal.me/' + CONFIG.PAYPAL_ME_HANDLE + ')' : ' (in attesa di bonifico)'));
+      return rows.join('\n');
+    }
+    async function sendRegistration(order, payment) {
+      const payload = { submittedAt: new Date().toISOString(), event: 'Raduno Aquile Alfee ' + CONFIG.EVENT_YEAR, order: order, payment: payment };
+      if (CONFIG.SUBMIT_ENDPOINT) {
+        try {
+          const res = await fetch(CONFIG.SUBMIT_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return { ok: true, mode: 'endpoint' };
+        } catch (e) {
+          console.error('Invio iscrizione fallito:', e);
+          return { ok: false, mode: 'endpoint' };
+        }
+      }
+      if (CONFIG.ORGANIZER_EMAIL) {
+        const subject = encodeURIComponent('Iscrizione Raduno ' + CONFIG.EVENT_YEAR + ' - ' + order.pilot.name);
+        const body = encodeURIComponent(buildEmailBody(order, payment));
+        window.location.href = 'mailto:' + CONFIG.ORGANIZER_EMAIL + '?subject=' + subject + '&body=' + body;
+        return { ok: true, mode: 'mailto' };
+      }
+      return { ok: true, mode: 'none' };
+    }
+    function showSuccess(order, payment, sendResult) {
+      $('rallyForm').classList.add('hidden');
+      $('successBox').classList.remove('hidden');
+      const box = $('successDetails'); box.innerHTML = '';
+      const add = (text, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = text; box.appendChild(d); };
+      const addPerson = (title, p) => {
+        add(title + ': ' + p.name, 'font-bold pt-2');
+        if (p.email) add('Email: ' + p.email);
+        if (p.phone) add('Telefono: ' + p.phone);
+        p.lines.forEach((l) => add('• ' + l.label + ': ' + (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))));
+      };
+      addPerson('Pilota', order.pilot);
+      if (order.passenger) addPerson('Passeggero', order.passenger);
+      add('Totale: ' + eur(order.total), 'font-bold text-lg pt-3');
+      add('Pagamento: ' + payment.method, 'pt-1');
+      add('📧 Ti abbiamo inviato una email di ricevuta con il riepilogo. Controlla anche lo spam.', 'text-gray-600 pt-2');
+      if (payment.method === 'Bonifico bancario') {
+        add('Importo da versare: ' + eur(order.total), 'font-bold');
+        add('IBAN: ' + CONFIG.IBAN);
+        add('Intestatario: ' + CONFIG.BANK_HOLDER);
+        add('Causale: ' + causaleText());
+        add('L\'iscrizione sarà confermata alla ricezione del bonifico.', 'text-gray-600 pt-1');
+      } else if (payment.method === 'PayPal') {
+        add('Importo da pagare su PayPal: ' + eur(order.total), 'font-bold');
+        add('Beneficiario: paypal.me/' + CONFIG.PAYPAL_ME_HANDLE);
+        add('L\'iscrizione sarà confermata alla ricezione del pagamento.', 'text-gray-600 pt-1');
+        const a = document.createElement('a');
+        a.href = payment.url; a.target = '_blank'; a.rel = 'noopener';
+        a.className = 'inline-block mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-lg';
+        a.textContent = 'Apri PayPal e completa il pagamento';
+        box.appendChild(a);
+      }
+      const note = $('successNote');
+      if (!sendResult.ok) {
+        note.textContent = 'Attenzione: non siamo riusciti a trasmettere i dati agli organizzatori. Salva o stampa questo riepilogo e contattaci' + (CONFIG.ORGANIZER_EMAIL ? ' a ' + CONFIG.ORGANIZER_EMAIL : '') + '.';
+        note.classList.remove('hidden');
+      } else if (sendResult.mode === 'mailto') {
+        note.textContent = 'Si è aperta la tua app di posta con l\'iscrizione già compilata: premi "Invia" per completare la registrazione.';
+        note.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    async function submitBank() {
+      if (submitting) return;
+      $('bankError').classList.add('hidden');
+      if (!validateForm()) return;
+      submitting = true;
+      const btn = $('bankSubmitBtn'); btn.disabled = true; btn.textContent = 'Invio in corso…';
+      const order = getOrder();
+      const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa' };
+      const result = await sendRegistration(order, payment);
+      if (!result.ok) {
+        const err = $('bankError');
+        err.textContent = 'Invio non riuscito. Controlla la connessione e riprova.';
+        err.classList.remove('hidden');
+        btn.disabled = false; btn.textContent = 'Conferma e Invia Iscrizione (Pagamento via Bonifico)';
+        submitting = false;
+        return;
+      }
+      showSuccess(order, payment, result);
+      submitting = false;
+    }
+    function showPaypalError(msg) { const el = $('paypalError'); el.textContent = msg; el.classList.remove('hidden'); }
+    function paypalUrl(total) { return 'https://www.paypal.me/' + encodeURIComponent(CONFIG.PAYPAL_ME_HANDLE) + '/' + total.toFixed(2) + 'EUR'; }
+    async function submitPaypal() {
+      if (submitting) return;
+      $('paypalError').classList.add('hidden');
+      if (!validateForm()) return;
+      submitting = true;
+      const btn = $('paypalPayBtn'); btn.disabled = true; btn.textContent = 'Apertura PayPal…';
+      const order = getOrder();
+      const url = paypalUrl(order.total);
+      window.open(url, '_blank', 'noopener');
+      const payment = { method: 'PayPal', transactionId: null, status: 'da completare su PayPal.me', url: url };
+      const result = await sendRegistration(order, payment);
+      if (!result.ok) {
+        showPaypalError('Invio dell\'iscrizione non riuscito. Non completare il pagamento: controlla la connessione e riprova.');
+        btn.disabled = false; btn.textContent = 'Conferma e paga con PayPal';
+        submitting = false;
+        return;
+      }
+      showSuccess(order, payment, result);
+      submitting = false;
+    }
+    (function init() {
+      $('bankHolder').textContent = CONFIG.BANK_HOLDER;
+      $('bankName').textContent = CONFIG.BANK_NAME;
+      $('ibanValue').textContent = CONFIG.IBAN;
+      updateTotal();
+    })();
   </script>
 </body>
 </html>
