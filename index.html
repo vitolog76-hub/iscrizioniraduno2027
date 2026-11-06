@@ -240,6 +240,7 @@
               <select id="pilotMoto" required class="select">
                 <option value="">Seleziona il tuo modello...</option>
               </select>
+              <input type="text" id="pilotMotoAltro" class="hidden mt-2 input" placeholder="Scrivi il modello della tua moto">
             </div>
           </div>
           <div class="pt-2 border-t border-neutral-200 mt-2" style="padding-top: 1.25rem;">
@@ -655,7 +656,7 @@
       "MOTOCLUB LE AQUILE PALERMO", "GUZZI CLUB FIORENZA", "QUELLI CHE..GUZZI ROMA"
     ];
 
-        const MOTOMODELS = {
+    const MOTOMODELS = {
       "Storiche (1921-1960)": [
         "Normale 500", "Sport (13/14/15)", "GT (Norge, 16, 17)", "GTS", "Alce 500", "Airone 250", 
         "Motoleggera 65 (Guzzino)", "Superalce 500", "Astore 500", "Falcone 500", 
@@ -721,10 +722,27 @@
         });
         selectMoto.appendChild(optgroup);
       }
+      const optMotoAltro = document.createElement('option');
+      optMotoAltro.value = 'ALTRO';
+      optMotoAltro.textContent = 'ALTRO (specifica)';
+      selectMoto.appendChild(optMotoAltro);
     })();
 
     $('pilotClub').addEventListener('change', function() {
       const altroInput = $('pilotClubAltro');
+      if (this.value === 'ALTRO') {
+        altroInput.classList.remove('hidden');
+        altroInput.required = true;
+        altroInput.focus();
+      } else {
+        altroInput.classList.add('hidden');
+        altroInput.required = false;
+        altroInput.value = '';
+      }
+    });
+
+    $('pilotMoto').addEventListener('change', function() {
+      const altroInput = $('pilotMotoAltro');
       if (this.value === 'ALTRO') {
         altroInput.classList.remove('hidden');
         altroInput.required = true;
@@ -777,7 +795,10 @@
       let clubValue = $('pilotClub').value;
       if (clubValue === 'ALTRO') clubValue = $('pilotClubAltro').value.trim();
       pilot.club = clubValue;
-      pilot.moto = $('pilotMoto').value.trim();
+      
+      let motoValue = $('pilotMoto').value;
+      if (motoValue === 'ALTRO') motoValue = $('pilotMotoAltro').value.trim();
+      pilot.moto = motoValue;
 
       const hasPassenger = $('hasPassenger').checked;
       const passenger = hasPassenger ? buildPerson('pass', PASS_IDS) : null;
@@ -873,7 +894,9 @@
       if (!clubSelect.value) { alert('Seleziona il tuo Club di Appartenenza.'); clubSelect.focus(); return false; }
       if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) { alert('Inserisci il nome del tuo club.'); $('pilotClubAltro').focus(); return false; }
       
-      if (!$('pilotMoto').value) { alert('Seleziona il tuo modello di Moto Guzzi.'); $('pilotMoto').focus(); return false; }
+      const motoSelect = $('pilotMoto');
+      if (!motoSelect.value) { alert('Seleziona il tuo modello di Moto Guzzi.'); motoSelect.focus(); return false; }
+      if (motoSelect.value === 'ALTRO' && !$('pilotMotoAltro').value.trim()) { alert('Inserisci il modello della tua moto.'); $('pilotMotoAltro').focus(); return false; }
 
       if ($('mgwcMember').checked) {
         const cardNum = $('mgwcCardNumber').value.trim();
