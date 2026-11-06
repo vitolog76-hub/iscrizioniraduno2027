@@ -53,7 +53,6 @@
             <label for="pilotClub" class="block text-sm font-medium text-gray-700 mb-1">Club di Appartenenza *</label>
             <select id="pilotClub" required class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none">
               <option value="">Seleziona il tuo club...</option>
-              <!-- Le opzioni vengono generate via JS -->
             </select>
             <input type="text" id="pilotClubAltro" class="hidden mt-2 w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Scrivi il nome del club">
           </div>
@@ -403,7 +402,6 @@
         opt.textContent = club;
         select.appendChild(opt);
       });
-      // Aggiungi "NESSUN CLUB" e "ALTRO"
       const optNone = document.createElement('option');
       optNone.value = 'NESSUN CLUB';
       optNone.textContent = 'NESSUN CLUB';
@@ -463,6 +461,9 @@
       };
     }
 
+    const PILOT_IDS = { regName: 'regType', shirt: 'shirtSize', member: 'mgwcMember', card: 'mgwcCardNumber', surname: 'pilotSurname', first: 'pilotFirstName', email: 'pilotEmail', phone: 'pilotPhone', dietary: 'pilotDietary', meals: { fri: 'mealFri', satPack: 'mealSatPack', satGala: 'mealSatGala', sun: 'mealSun' } };
+    const PASS_IDS = { regName: 'passRegType', shirt: 'passShirtSize', member: 'passMgwcMember', card: 'passMgwcCardNumber', surname: 'passSurname', first: 'passFirstName', email: 'passEmail', phone: 'passPhone', dietary: 'passDietary', meals: { fri: 'passMealFri', satPack: 'passMealSatPack', satGala: 'passMealSatGala', sun: 'passMealSun' } };
+
     function getOrder() {
       const pilot = buildPerson('', PILOT_IDS);
       pilot.city = $('pilotCity').value.trim();
@@ -477,10 +478,384 @@
       return { pilot: pilot, passenger: passenger, total: total, currency: 'EUR', year: CONFIG.EVENT_YEAR };
     }
 
-    // ... (Il resto delle funzioni JS per la UI, i totali, il modale, l'invio, ecc. rimane identico)
-    // Per non appesantire il messaggio, incollo solo la parte che cambia. 
-    // Se ti serve il file completo da copiare, usa quello dell'ultimo messaggio e modifica solo la funzione buildPerson e getOrder come sopra.
-    // Se vuoi che ti ridia TUTTO il file index.html completo, dimmelo.
+    function setRequired(id, on) { const el = $(id); if (on) el.setAttribute('required', 'true'); else el.removeAttribute('required'); }
+    function toggle(id, show) { $(id).classList.toggle('hidden', !show); }
+    function resetPassengerFields() {
+      ['passSurname','passFirstName','passEmail','passPhone','passMgwcCardNumber','passDietary'].forEach((id) => { $(id).value = ''; });
+      ['passMgwcMember','passMealFri','passMealSatPack','passMealSatGala','passMealSun'].forEach((id) => { $(id).checked = false; });
+      document.querySelector('input[name="passRegType"][value="25"]').checked = true;
+      $('passShirtSize').value = 'M';
+    }
+    function onPassengerToggle() { if (!$('hasPassenger').checked) resetPassengerFields(); updateTotal(); }
+
+    function updateTotal() {
+      const pilotShirt = document.querySelector('input[name="regType"]:checked').value === String(PRICES.withShirt);
+      toggle('shirtSizeContainer', pilotShirt);
+      const pilotMember = $('mgwcMember').checked;
+      toggle('mgwcCardContainer', pilotMember);
+      setRequired('mgwcCardNumber', pilotMember);
+      if (!pilotMember) $('mgwcCardNumber').value = '';
+      
+      const hasPassenger = $('hasPassenger').checked;
+      toggle('passengerContainer', hasPassenger);
+      toggle('passengerRegContainer', hasPassenger);
+      toggle('passengerMealsContainer', hasPassenger);
+      setRequired('passSurname', hasPassenger);
+      setRequired('passFirstName', hasPassenger);
+      
+      const passShirt = hasPassenger && document.querySelector('input[name="passRegType"]:checked').value === String(PRICES.withShirt);
+      toggle('passShirtSizeContainer', passShirt);
+      
+      const passMember = hasPassenger && $('passMgwcMember').checked;
+      toggle('passMgwcCardContainer', passMember);
+      setRequired('passMgwcCardNumber', passMember);
+      if (!passMember) $('passMgwcCardNumber').value = '';
+      
+      const order = getOrder();
+      currentTotal = order.total;
+      $('totalDisplay').innerText = eur(order.total);
+      
+      const list = $('summaryList');
+      list.innerHTML = '';
+      const addGroup = (title, person) => {
+        const head = document.createElement('li');
+        head.className = 'font-bold text-gray-900 pt-1';
+        head.textContent = title;
+        list.appendChild(head);
+        person.lines.forEach((l) => {
+          const li = document.createElement('li');
+          li.className = 'flex justify-between';
+          const a = document.createElement('span'); a.textContent = l.label;
+          const b = document.createElement('span'); b.textContent = (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount));
+          li.appendChild(a); li.appendChild(b);
+          list.appendChild(li);
+        });
+      };
+      addGroup('Pilota', order.pilot);
+      if (order.passenger) addGroup('Passeggero', order.passenger);
+      updateCausale();
+    }
+    
+    function causaleText() { return 'Raduno Pisa ' + CONFIG.EVENT_YEAR; }
+    function updateCausale() { $('causaleValue').textContent = causaleText(); }
+    function setPaymentMethod(method) {
+      paymentMethod = method;
+      const on = 'p-3 border-2 border-red-600 bg-red-50 rounded-lg text-center font-bold text-red-700 transition';
+      const off = 'p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition';
+      $('btnPaypal').className = method === 'paypal' ? on : off;
+      $('btnBank').className = method === 'bank' ? on : off;
+      toggle('paypalContainer', method === 'paypal');
+      toggle('bankContainer', method === 'bank');
+    }
+    function copyIban() {
+      const text = $('ibanValue').innerText;
+      const done = () => { $('copyBtnText').innerText = 'Copiato!'; setTimeout(() => { $('copyBtnText').innerText = 'Copia IBAN'; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fallbackCopy);
+      } else { fallbackCopy(); }
+      function fallbackCopy() {
+        const ta = document.createElement('textarea'); ta.value = text;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); done();
+      }
+    }
+    function validateForm() {
+      const form = $('rallyForm');
+      if (!form.reportValidity()) return false;
+      
+      const clubSelect = $('pilotClub');
+      if (!clubSelect.value) {
+        alert('Seleziona il tuo Club di Appartenenza.');
+        clubSelect.focus();
+        return false;
+      }
+      if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) {
+        alert('Inserisci il nome del tuo club.');
+        $('pilotClubAltro').focus();
+        return false;
+      }
+      
+      if ($('mgwcMember').checked) {
+        const cardNum = $('mgwcCardNumber').value.trim();
+        if (cardNum.length !== 4 || isNaN(cardNum)) {
+          alert('Inserisci le 4 cifre finali della tessera MGWC.');
+          $('mgwcCardNumber').focus();
+          return false;
+        }
+      }
+      
+      if ($('hasPassenger').checked) {
+        if ($('passMgwcMember').checked) {
+           const passCardNum = $('passMgwcCardNumber').value.trim();
+           if (passCardNum.length !== 4 || isNaN(passCardNum)) {
+             alert('Inserisci le 4 cifre finali della tessera MGWC del passeggero.');
+             $('passMgwcCardNumber').focus();
+             return false;
+           }
+        }
+        const missing = !$('passSurname').value.trim() ? 'passSurname' : (!$('passFirstName').value.trim() ? 'passFirstName' : null);
+        if (missing) { $(missing).focus(); return false; }
+      }
+      if (!$('pilotSurname').value.trim()) { $('pilotSurname').focus(); return false; }
+      if (!$('pilotFirstName').value.trim()) { $('pilotFirstName').focus(); return false; }
+      return true;
+    }
+
+    async function sendRegistration(order, payment) {
+      const payload = { submittedAt: new Date().toISOString(), event: 'Raduno Aquile Alfee ' + CONFIG.EVENT_YEAR, order: order, payment: payment };
+      if (CONFIG.SUBMIT_ENDPOINT) {
+        try {
+          const res = await fetch(CONFIG.SUBMIT_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          let responseData = {};
+          try { responseData = await res.json(); } catch (e) { responseData = { ok: true }; }
+          if (responseData.ok === false) {
+            return { 
+              ok: false, 
+              mode: 'endpoint', 
+              error: responseData.error || 'UNKNOWN', 
+              message: responseData.message || 'Errore sconosciuto. Contatta l\'organizzazione.'
+            };
+          }
+          return { ok: true, mode: 'endpoint' };
+        } catch (e) {
+          console.error('Invio iscrizione fallito:', e);
+          return { 
+            ok: false, 
+            mode: 'endpoint', 
+            error: 'NETWORK', 
+            message: 'Errore di connessione. Controlla la rete e riprova.'
+          };
+        }
+      }
+      return { ok: true, mode: 'none' };
+    }
+    
+    function showSuccess(order, payment, sendResult) {
+      $('rallyForm').classList.add('hidden');
+      $('successBox').classList.remove('hidden');
+      const box = $('successDetails'); box.innerHTML = '';
+      const add = (text, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = text; box.appendChild(d); };
+      const addPerson = (title, p) => {
+        add(title + ': ' + p.name, 'font-bold pt-2');
+        if (p.email) add('Email: ' + p.email);
+        if (p.phone) add('Telefono: ' + p.phone);
+        p.lines.forEach((l) => add('• ' + l.label + ': ' + (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))));
+      };
+      addPerson('Pilota', order.pilot);
+      if (order.passenger) addPerson('Passeggero', order.passenger);
+      add('Totale: ' + eur(order.total), 'font-bold text-lg pt-3');
+      add('Metodo scelto: ' + payment.method, 'pt-1');
+      
+      if (payment.method === 'Bonifico bancario') {
+        add('IBAN: ' + CONFIG.IBAN, 'mt-2');
+        add('Causale: ' + causaleText());
+      } else if (payment.method === 'PayPal') {
+        const a = document.createElement('a');
+        a.href = payment.url; a.target = '_blank'; a.rel = 'noopener';
+        a.className = 'inline-block mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-lg';
+        a.textContent = 'Apri PayPal e completa il pagamento';
+        box.appendChild(a);
+      }
+      
+      const note = $('successNote');
+      if (!sendResult.ok) {
+        note.textContent = 'Attenzione: non siamo riusciti a trasmettere i dati agli organizzatori. Salva o stampa questo riepilogo e contattaci.';
+        note.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =============================================
+    // MODALE DI RIEPILOGO
+    // =============================================
+    function openReviewModal() {
+      $('bankError').classList.add('hidden');
+      $('paypalError').classList.add('hidden');
+      if (!validateForm()) return;
+
+      const order = getOrder();
+      reviewOrder = order;
+
+      const box = $('reviewContent');
+      box.innerHTML = '';
+
+      const renderPerson = (title, p, extraFields) => {
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
+        
+        let html = `<h3 class="font-bold text-red-600 mb-3 text-lg border-b border-gray-300 pb-2">${title}</h3>`;
+        html += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">`;
+        html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Nome</span><p class="font-semibold">${p.name}</p></div>`;
+        html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Email</span><p class="font-semibold break-all">${p.email || '-'}</p></div>`;
+        html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Telefono</span><p class="font-semibold">${p.phone || '-'}</p></div>`;
+        if (extraFields) {
+          extraFields.forEach(f => {
+            html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">${f.label}</span><p class="font-semibold">${f.value || '-'}</p></div>`;
+          });
+        }
+        html += `</div>`;
+        html += `<div class="mt-4 pt-3 border-t border-gray-300">`;
+        html += `<p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Dettaglio Iscrizione</p>`;
+        p.lines.forEach(l => {
+          html += `<div class="flex justify-between text-sm py-1"><span>${l.label}</span><span class="font-semibold">${(l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))}</span></div>`;
+        });
+        const mealsOn = Object.keys(p.meals).filter(k => p.meals[k]);
+        if (mealsOn.length > 0) {
+          html += `<p class="text-xs text-gray-500 uppercase tracking-wider mt-3 mb-1">Pasti Prenotati</p>`;
+          html += `<p class="text-sm">${mealsOn.map(k => MEAL_LABELS[k]).join(', ')}</p>`;
+        }
+        if (p.dietary) {
+          html += `<p class="text-xs text-gray-500 uppercase tracking-wider mt-3 mb-1">Intolleranze / Esigenze</p>`;
+          html += `<p class="text-sm bg-amber-50 border border-amber-200 rounded p-2">${p.dietary}</p>`;
+        }
+        html += `<div class="flex justify-between text-base font-bold text-red-600 mt-3 pt-3 border-t border-gray-300"><span>Subtotale</span><span>${eur(p.subtotal)}</span></div>`;
+        html += `</div>`;
+
+        div.innerHTML = html;
+        box.appendChild(div);
+      };
+
+      renderPerson('🏍️ Pilota', order.pilot, [
+        { label: 'Città', value: order.pilot.city },
+        { label: 'Club', value: order.pilot.club }
+      ]);
+      if (order.passenger) renderPerson('👥 Passeggero', order.passenger, null);
+
+      const totalDiv = document.createElement('div');
+      totalDiv.className = 'bg-red-50 rounded-xl p-5 border-2 border-red-600 text-center';
+      const methodLabel = paymentMethod === 'paypal' ? 'PayPal' : 'Bonifico Bancario';
+      const methodIcon = paymentMethod === 'paypal' ? '💳' : '🏦';
+      totalDiv.innerHTML = `
+        <p class="text-xs text-gray-600 uppercase tracking-wider mb-1">Totale da pagare</p>
+        <p class="text-3xl font-extrabold text-red-600 mb-3">${eur(order.total)}</p>
+        <p class="text-sm text-gray-700">Metodo scelto: <strong>${methodIcon} ${methodLabel}</strong></p>
+      `;
+      box.appendChild(totalDiv);
+
+      if (paymentMethod === 'bank') {
+        const ibanDiv = document.createElement('div');
+        ibanDiv.className = 'bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm';
+        ibanDiv.innerHTML = `
+          <p class="font-bold text-blue-800 mb-2">🏦 Coordinate Bancarie</p>
+          <p class="text-blue-900"><strong>Intestatario:</strong> ${CONFIG.BANK_HOLDER}</p>
+          <p class="text-blue-900"><strong>IBAN:</strong> <span class="font-mono">${CONFIG.IBAN}</span></p>
+          <p class="text-blue-900"><strong>Causale:</strong> Raduno Pisa ${CONFIG.EVENT_YEAR}</p>
+        `;
+        box.appendChild(ibanDiv);
+      }
+
+      if (!$('privacyConsent').checked) {
+        const warn = document.createElement('div');
+        warn.className = 'bg-amber-50 border border-amber-300 rounded-lg p-3 text-sm text-amber-800';
+        warn.innerHTML = '⚠️ Devi accettare l\'informativa privacy prima di inviare.';
+        box.appendChild(warn);
+      }
+
+      $('reviewModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReviewModal() {
+      $('reviewModal').classList.add('hidden');
+      document.body.style.overflow = '';
+      reviewOrder = null;
+    }
+
+    async function proceedWithPayment() {
+      if (!$('privacyConsent').checked) {
+        alert('Devi accettare l\'informativa privacy per procedere.');
+        return;
+      }
+      if (!reviewOrder) return;
+      
+      $('reviewModal').classList.add('hidden');
+      document.body.style.overflow = '';
+      
+      if (paymentMethod === 'paypal') {
+        await submitPaypalFlow();
+      } else {
+        await submitBankFlow();
+      }
+    }
+
+    // =============================================
+    // MODALE ERRORE
+    // =============================================
+    function showErrorModal(message) {
+      $('errorModalMessage').textContent = message || 'Non è stato possibile completare l\'iscrizione.';
+      $('errorModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeErrorModal() {
+      $('errorModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // =============================================
+    // FLUSSO PAYPAL
+    // =============================================
+    function paypalUrl(total) { return 'https://www.paypal.me/' + encodeURIComponent(CONFIG.PAYPAL_ME_HANDLE) + '/' + total.toFixed(2) + 'EUR'; }
+    
+    async function submitPaypalFlow() {
+      if (submitting) return;
+      submitting = true;
+      $('paypalError').classList.add('hidden');
+
+      const order = reviewOrder;
+      const url = paypalUrl(order.total);
+      const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
+      
+      const result = await sendRegistration(order, payment);
+      
+      if (!result.ok) {
+        submitting = false;
+        reviewOrder = null;
+        showErrorModal(result.message);
+        return;
+      }
+      
+      window.open(url, '_blank', 'noopener');
+      
+      reviewOrder = null;
+      showSuccess(order, payment, result);
+      submitting = false;
+    }
+
+    // =============================================
+    // FLUSSO BONIFICO
+    // =============================================
+    async function submitBankFlow() {
+      if (submitting || !reviewOrder) return;
+      submitting = true;
+      $('bankError').classList.add('hidden');
+
+      const order = reviewOrder;
+      const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa di pagamento' };
+      const result = await sendRegistration(order, payment);
+      
+      if (!result.ok) {
+        submitting = false;
+        reviewOrder = null;
+        showErrorModal(result.message);
+        return;
+      }
+      
+      reviewOrder = null;
+      showSuccess(order, payment, result);
+      submitting = false;
+    }
+
+    (function init() {
+      $('bankHolder').textContent = CONFIG.BANK_HOLDER;
+      $('bankName').textContent = CONFIG.BANK_NAME;
+      $('ibanValue').textContent = CONFIG.IBAN;
+      updateTotal();
+    })();
   </script>
 </body>
 </html>
