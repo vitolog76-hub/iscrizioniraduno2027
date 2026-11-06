@@ -98,18 +98,52 @@
       font-weight: 500;
     }
 
-    @media (max-width: 900px) {
+        @media (max-width: 900px) {
       .hero-inner {
-        flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
       }
-      .hero-logo { height: 14rem; }
-      .hero-logo-secondary { height: 9rem; }
-      .hero-text { text-align: center; padding: 0; }
+      .hero-logo { height: 7rem; }
+      .hero-logo-secondary { height: 5.5rem; }
+      .hero-title { font-size: 2.5rem; }
+      .hero-sub { font-size: 1.25rem; }
+      .hero-eyebrow { font-size: 0.6rem; padding: 0.25rem 0.5rem; }
     }
-    @media (max-width: 480px) {
-      .hero-logo { height: 10rem; }
-      .hero-logo-secondary { height: 8rem; }
+     @media (max-width: 480px) {
+      .hero {
+        padding: 1.5rem 0.5rem;
+      }
+      .hero-inner {
+        gap: 0.5rem; 
+        /* NESSUN flex-direction: column, rimane in linea! */
+      }
+      .hero-logo {
+        height: 4.5rem; /* Logo molto più piccolo per far stare tutto */
+      }
+      .hero-logo-secondary {
+        height: 3.5rem;
+      }
+      .hero-text {
+        padding: 0 0.25rem;
+      }
+      .hero-eyebrow {
+        font-size: 0.5rem;
+        padding: 0.2rem 0.4rem;
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.1em;
+      }
+      .hero-title {
+        font-size: 1.4rem; /* Titolo rimpicciolito */
+        line-height: 1;
+      }
+      .hero-sub {
+        font-size: 0.85rem;
+        margin-top: 0.2rem;
+      }
+      .hero-meta {
+        font-size: 0.55rem;
+        margin-top: 0.3rem;
+        letter-spacing: 0.05em;
+      }
     }
 
     /* LAYOUT */
