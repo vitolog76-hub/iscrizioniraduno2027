@@ -10,189 +10,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red: #c8102e;
-      --ink: #0a0a0a;
-      --ink-2: #404040;
-      --ink-3: #737373;
-      --paper: #f8f6f2;
-      --line: #e5e5e5;
+      --red: #c8102e; --ink: #0a0a0a; --ink-2: #404040; --ink-3: #737373;
+      --paper: #f8f6f2; --line: #e5e5e5;
     }
     * { box-sizing: border-box; }
-    body {
-      background: var(--paper);
-      font-family: 'Barlow', sans-serif;
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      margin: 0;
-    }
+    body { background: var(--paper); font-family: 'Barlow', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; margin: 0; }
     h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.01em; }
 
-        /* HERO */
-    .hero {
-      background: #ffffff;
-      border-top: 6px solid var(--red);
-      border-bottom: 1px solid var(--line);
-      padding: 2.5rem 1.5rem;
-    }
-    .hero-inner {
-      max-width: 72rem;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-    .hero-logo {
-      height: 15rem;
-      width: auto;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-    .hero-logo-secondary {
-      height: 14rem;
-      width: auto;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-    .hero-text {
-      flex: 1;
-      text-align: center;
-      padding: 0 1rem;
-      min-width: 0;
-    }
-    .hero-eyebrow {
-      display: inline-block;
-      background: var(--ink);
-      color: #fff;
-      font-size: 0.6875rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      font-weight: 700;
-      padding: 0.375rem 0.75rem;
-      margin-bottom: 1rem;
-    }
-    .hero-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      color: var(--ink);
-      line-height: 0.92;
-      text-transform: uppercase;
-      margin: 0;
-      letter-spacing: 0.005em;
-    }
-    .hero-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      color: var(--red);
-      font-size: 1.625rem;
-      font-weight: 600;
-      margin-top: 0.5rem;
-      letter-spacing: 0.01em;
-    }
-    .hero-meta {
-      color: var(--ink-3);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-top: 0.875rem;
-      font-weight: 500;
-    }
+    /* HERO */
+    .hero { background: #ffffff; border-top: 6px solid var(--red); border-bottom: 1px solid var(--line); padding: 2.5rem 1.5rem; }
+    .hero-inner { max-width: 72rem; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .hero-logos { display: flex; align-items: center; gap: 1.5rem; flex-shrink: 0; }
+    .hero-logo { height: 7rem; width: auto; object-fit: contain; }
+    .hero-logo-secondary { height: 4.5rem; width: auto; object-fit: contain; padding-left: 1.5rem; border-left: 1px solid var(--line); }
+    .hero-text { flex: 1; text-align: center; padding: 0 1rem; min-width: 0; }
+    .hero-eyebrow { display: inline-block; background: var(--ink); color: #fff; font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; padding: 0.375rem 0.75rem; margin-bottom: 1rem; }
+    .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--ink); line-height: 0.92; text-transform: uppercase; margin: 0; letter-spacing: 0.005em; }
+    .hero-sub { color: var(--red); font-size: 1.625rem; font-weight: 600; margin-top: 0.5rem; letter-spacing: 0.01em; }
+    .hero-meta { color: var(--ink-3); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.875rem; font-weight: 500; }
 
-         @media (max-width: 900px) {
-      .hero-inner {
-        gap: 1.5rem;
-        justify-content: center;
-      }
+    @media (max-width: 900px) {
+      .hero-inner { gap: 1.5rem; justify-content: center; }
       .hero-logo { height: 8rem; }
       .hero-logo-secondary { height: 6rem; }
       .hero-title { font-size: 2.5rem; }
       .hero-sub { font-size: 1.25rem; }
       .hero-eyebrow { font-size: 0.6rem; padding: 0.25rem 0.5rem; }
     }
-         @media (max-width: 480px) {
-      .hero {
-        padding: 2rem 1rem;
-      }
-      .hero-inner {
-        flex-direction: row;
-        justify-content: center;
-        gap: 1.25rem;
-      }
-      .hero-logo {
-        height: 12rem;
-      }
-      .hero-logo-secondary {
-        display: none;
-      }
-      .hero-text {
-        text-align: left;
-        padding: 0;
-      }
-      .hero-eyebrow {
-        font-size: 0.6rem;
-        padding: 0.25rem 0.5rem;
-        margin-bottom: 0.5rem;
-        letter-spacing: 0.1em;
-      }
-      .hero-title {
-        font-size: 1.9rem;
-        line-height: 1;
-      }
-      .hero-sub {
-        font-size: 1.1rem;
-        margin-top: 0.25rem;
-      }
-      .hero-meta {
-        font-size: 0.6rem; /* Rimpicciolito per stare nella riga */
-        margin-top: 0.4rem;
-        letter-spacing: 0.05em;
-        line-height: 1.3;
-      }
+    @media (max-width: 480px) {
+      .hero { padding: 2rem 1rem; }
+      .hero-inner { flex-direction: row; justify-content: center; gap: 1.25rem; }
+      .hero-logo { height: 6rem; }
+      .hero-logo-secondary { display: none; }
+      .hero-text { text-align: left; padding: 0; }
+      .hero-eyebrow { font-size: 0.6rem; padding: 0.25rem 0.5rem; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+      .hero-title { font-size: 1.9rem; line-height: 1; }
+      .hero-sub { font-size: 1.1rem; margin-top: 0.25rem; }
+      .hero-meta { font-size: 0.6rem; margin-top: 0.4rem; letter-spacing: 0.05em; line-height: 1.3; }
     }
 
     /* LAYOUT */
     .page-container { max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
 
     /* SECTIONS */
-    .section {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      margin-bottom: 1.25rem;
-    }
-    .section-head {
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-    .section-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 2.75rem;
-      font-weight: 700;
-      color: #e5e5e5;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      flex-shrink: 0;
-    }
-    .section-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--red);
-      margin: 0 0 0.25rem 0;
-    }
-    .section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: var(--ink);
-      text-transform: uppercase;
-      line-height: 1;
-      margin: 0;
-      letter-spacing: 0.01em;
-    }
+    .section { background: #ffffff; border: 1px solid var(--line); margin-bottom: 1.25rem; }
+    .section-head { padding: 1.5rem 2rem; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 1.25rem; }
+    .section-num { font-family: 'Barlow Condensed', sans-serif; font-size: 2.75rem; font-weight: 700; color: #e5e5e5; line-height: 1; letter-spacing: -0.02em; flex-shrink: 0; }
+    .section-label { font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: var(--red); margin: 0 0 0.25rem 0; }
+    .section-title { font-size: 1.75rem; font-weight: 600; color: var(--ink); text-transform: uppercase; line-height: 1; margin: 0; letter-spacing: 0.01em; }
     .section-body { padding: 2rem; }
     @media (max-width: 640px) {
       .section-head { padding: 1.25rem 1.25rem; gap: 1rem; }
@@ -204,434 +69,122 @@
     /* FIELDS */
     .field { margin-bottom: 1.25rem; }
     .field:last-child { margin-bottom: 0; }
-    .field-label {
-      display: block;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-2);
-      margin-bottom: 0.5rem;
-    }
+    .field-label { display: block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 0.5rem; }
     .field-label .req { color: var(--red); margin-left: 0.125rem; }
-    .input, .select {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      padding: 0.875rem 1rem;
-      font-size: 0.9375rem;
-      color: var(--ink);
-      transition: border-color 0.15s, box-shadow 0.15s;
-      font-family: 'Barlow', sans-serif;
-      border-radius: 0;
-    }
+    .input, .select { width: 100%; background: #ffffff; border: 1px solid var(--line); padding: 0.875rem 1rem; font-size: 0.9375rem; color: var(--ink); transition: border-color 0.15s, box-shadow 0.15s; font-family: 'Barlow', sans-serif; border-radius: 0; }
     .input:hover, .select:hover { border-color: #d4d4d4; }
-    .input:focus, .select:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08);
-    }
+    .input:focus, .select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08); }
     .input::placeholder { color: #a3a3a3; }
-    .select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23737373' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      padding-right: 2.5rem;
-    }
+    .select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23737373' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
     input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1rem; height: 1rem; cursor: pointer; }
-
     .field-row { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
     .field-row:last-child { margin-bottom: 0; }
     @media (min-width: 640px) { .field-row { grid-template-columns: 1fr 1fr; } }
 
-    /* RADIO CARDS (regType) */
+    /* RADIO CARDS */
     .radio-group { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
     @media (min-width: 640px) { .radio-group { grid-template-columns: 1fr 1fr; } }
-    .radio-card {
-      display: flex;
-      align-items: center;
-      padding: 1rem;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-    }
+    .radio-card { display: flex; align-items: center; padding: 1rem; background: #ffffff; border: 1px solid var(--line); cursor: pointer; transition: border-color 0.15s, background 0.15s; }
     .radio-card:hover { border-color: #a3a3a3; }
     .radio-card:has(input:checked) { border-color: var(--red); background: #fdf2f4; }
-    .radio-card-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-left: 0.75rem;
-      font-size: 0.9375rem;
-      color: var(--ink);
-      gap: 0.75rem;
-    }
-    .radio-card-price {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.375rem;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
+    .radio-card-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-left: 0.75rem; font-size: 0.9375rem; color: var(--ink); gap: 0.75rem; }
+    .radio-card-price { font-family: 'Barlow Condensed', sans-serif; font-size: 1.375rem; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; white-space: nowrap; }
 
-    /* OPTION ROWS (meals, mgwc) */
+    /* OPTION ROWS */
     .option-list { display: flex; flex-direction: column; gap: 0.5rem; }
-    .option-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.125rem;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-    }
+    .option-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.125rem; background: #ffffff; border: 1px solid var(--line); cursor: pointer; transition: border-color 0.15s, background 0.15s; }
     .option-row:hover { border-color: #a3a3a3; background: #fafafa; }
     .option-row-left { display: flex; align-items: center; gap: 0.875rem; font-size: 0.9375rem; color: var(--ink); }
-    .option-row-price {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-    }
+    .option-row-price { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; }
     .option-highlight { background: #f0fdf4; border-color: #bbf7d0; }
     .option-highlight:hover { background: #dcfce7; border-color: #86efac; }
     .option-highlight .option-row-left { color: #166534; }
     .option-highlight .option-row-price { color: #15803d; }
 
     /* TOTAL CARD */
-    .total-card {
-      background: var(--ink);
-      color: #ffffff;
-      padding: 2.25rem;
-      border-left: 6px solid var(--red);
-      margin-bottom: 1.25rem;
-    }
-    .total-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: #a3a3a3;
-      margin: 0;
-    }
-    .total-amount {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 4rem;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      display: block;
-      margin: 0.5rem 0 0 0;
-    }
-    .total-summary {
-      margin: 1.75rem 0 0 0;
-      padding: 1.5rem 0 0 0;
-      border-top: 1px solid #262626;
-      font-size: 0.875rem;
-      color: #a3a3a3;
-      list-style: none;
-    }
-    .total-summary li {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.25rem 0;
-    }
-    .total-summary .summary-group-title {
-      color: #ffffff;
-      font-weight: 700;
-      margin-top: 0.75rem;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-    }
+    .total-card { background: var(--ink); color: #ffffff; padding: 2.25rem; border-left: 6px solid var(--red); margin-bottom: 1.25rem; }
+    .total-label { font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: #a3a3a3; margin: 0; }
+    .total-amount { font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 700; color: #ffffff; line-height: 1; letter-spacing: -0.02em; display: block; margin: 0.5rem 0 0 0; }
+    .total-summary { margin: 1.75rem 0 0 0; padding: 1.5rem 0 0 0; border-top: 1px solid #262626; font-size: 0.875rem; color: #a3a3a3; list-style: none; }
+    .total-summary li { display: flex; justify-content: space-between; padding: 0.25rem 0; }
+    .total-summary .summary-group-title { color: #ffffff; font-weight: 700; margin-top: 0.75rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.12em; }
     .total-summary .summary-group-title:first-child { margin-top: 0; }
 
     /* PRIVACY */
-    .privacy-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.875rem;
-      cursor: pointer;
-      font-size: 0.9375rem;
-      color: var(--ink-2);
-      line-height: 1.5;
-    }
+    .privacy-label { display: flex; align-items: flex-start; gap: 0.875rem; cursor: pointer; font-size: 0.9375rem; color: var(--ink-2); line-height: 1.5; }
     .privacy-label input { margin-top: 0.125rem; flex-shrink: 0; }
     .privacy-label a { color: var(--red); text-decoration: underline; font-weight: 500; }
-    .privacy-note {
-      margin-top: 1rem;
-      font-size: 0.8125rem;
-      color: var(--ink-3);
-      padding-left: 1.875rem;
-      line-height: 1.5;
-    }
+    .privacy-note { margin-top: 1rem; font-size: 0.8125rem; color: var(--ink-3); padding-left: 1.875rem; line-height: 1.5; }
 
     /* PAYMENT TOGGLE */
     .payment-toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.75rem; }
-    .payment-option {
-      padding: 1.125rem 1rem;
-      border: 1px solid var(--line);
-      background: #ffffff;
-      text-align: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-size: 1rem;
-      color: var(--ink-2);
-      transition: all 0.15s;
-      cursor: pointer;
-    }
+    .payment-option { padding: 1.125rem 1rem; border: 1px solid var(--line); background: #ffffff; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 1rem; color: var(--ink-2); transition: all 0.15s; cursor: pointer; }
     .payment-option:hover { border-color: var(--ink-3); background: #fafafa; }
     .payment-option.is-active { background: var(--red); border-color: var(--red); color: #ffffff; }
 
     /* BUTTONS */
-    .btn-primary {
-      width: 100%;
-      background: var(--red);
-      color: #ffffff;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 1.125rem 2rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.15s;
-      display: block;
-    }
+    .btn-primary { width: 100%; background: var(--red); color: #ffffff; font-family: 'Barlow Condensed', sans-serif; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 1.125rem 2rem; border: none; cursor: pointer; transition: background 0.15s; display: block; }
     .btn-primary:hover { background: #a50d26; }
     .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    .btn-paypal {
-      width: 100%;
-      background: #ffc439;
-      color: #003087;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 1.125rem 2rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.15s;
-      display: block;
-    }
+    .btn-paypal { width: 100%; background: #ffc439; color: #003087; font-family: 'Barlow Condensed', sans-serif; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 1.125rem 2rem; border: none; cursor: pointer; transition: background 0.15s; display: block; }
     .btn-paypal:hover { background: #f0b429; }
     .btn-paypal:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--ink);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.875rem 1.75rem;
-      border: 1px solid var(--ink);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
+    .btn-secondary { background: transparent; color: var(--ink); font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.875rem 1.75rem; border: 1px solid var(--ink); cursor: pointer; transition: all 0.15s; }
     .btn-secondary:hover { background: var(--ink); color: #ffffff; }
 
     /* BANK INFO */
-    .bank-info {
-      background: #faf9f7;
-      border-left: 4px solid var(--red);
-      padding: 1.5rem;
-    }
-    .bank-info-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      letter-spacing: 0.03em;
-    }
-    .bank-info-row {
-      font-size: 0.875rem;
-      padding: 0.25rem 0;
-      color: var(--ink-2);
-    }
+    .bank-info { background: #faf9f7; border-left: 4px solid var(--red); padding: 1.5rem; }
+    .bank-info-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.03em; }
+    .bank-info-row { font-size: 0.875rem; padding: 0.25rem 0; color: var(--ink-2); }
     .bank-info-row strong { color: var(--ink); font-weight: 600; }
-    .bank-info-iban {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      padding: 1rem;
-      margin: 1rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .bank-info-iban-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      font-weight: 600;
-    }
-    .bank-info-iban-code {
-      font-family: 'Courier New', monospace;
-      color: var(--red);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      font-size: 1rem;
-    }
-    .btn-copy {
-      background: transparent;
-      border: 1px solid var(--line);
-      padding: 0.5rem 0.875rem;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ink-2);
-      cursor: pointer;
-      transition: all 0.15s;
-      font-family: 'Barlow', sans-serif;
-    }
+    .bank-info-iban { background: #ffffff; border: 1px solid var(--line); padding: 1rem; margin: 1rem 0; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .bank-info-iban-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+    .bank-info-iban-code { font-family: 'Courier New', monospace; color: var(--red); font-weight: 700; letter-spacing: 0.05em; font-size: 1rem; }
+    .btn-copy { background: transparent; border: 1px solid var(--line); padding: 0.5rem 0.875rem; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; }
     .btn-copy:hover { background: var(--ink); color: #ffffff; border-color: var(--ink); }
 
     /* MODALS */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 10, 10, 0.75);
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .modal-content {
-      background: #ffffff;
-      max-width: 42rem;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-    .modal-header {
-      background: var(--ink);
-      color: #ffffff;
-      padding: 1.75rem 2rem;
-      border-bottom: 4px solid var(--red);
-    }
-    .modal-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      margin: 0;
-      line-height: 1;
-    }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.75); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-content { background: #ffffff; max-width: 42rem; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+    .modal-header { background: var(--ink); color: #ffffff; padding: 1.75rem 2rem; border-bottom: 4px solid var(--red); }
+    .modal-title { font-size: 1.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin: 0; line-height: 1; }
     .modal-subtitle { font-size: 0.875rem; color: #a3a3a3; margin: 0.375rem 0 0 0; }
     .modal-body { padding: 2rem; }
-    .modal-footer {
-      padding: 1.5rem 2rem;
-      border-top: 1px solid var(--line);
-      background: #faf9f7;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--line); background: #faf9f7; display: flex; flex-direction: column; gap: 0.75rem; }
 
     /* SUCCESS */
-    .success-card {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-top: 6px solid #16a34a;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    .success-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 5rem;
-      height: 5rem;
-      background: #16a34a;
-      color: #ffffff;
-      border-radius: 50%;
-      margin-bottom: 1.5rem;
-    }
-    .success-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--ink);
-      letter-spacing: 0.03em;
-      line-height: 1;
-      margin: 0 0 1rem 0;
-    }
+    .success-card { background: #ffffff; border: 1px solid var(--line); border-top: 6px solid #16a34a; padding: 3rem 2rem; text-align: center; }
+    .success-icon { display: inline-flex; align-items: center; justify-content: center; width: 5rem; height: 5rem; background: #16a34a; color: #ffffff; border-radius: 50%; margin-bottom: 1.5rem; }
+    .success-title { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; color: var(--ink); letter-spacing: 0.03em; line-height: 1; margin: 0 0 1rem 0; }
 
     /* ERROR MODAL */
-    .error-header {
-      background: var(--red);
-      color: #ffffff;
-      padding: 1.75rem 2rem;
-      text-align: center;
-    }
+    .error-header { background: var(--red); color: #ffffff; padding: 1.75rem 2rem; text-align: center; }
 
     /* FOOTER */
-    .page-footer {
-      text-align: center;
-      padding: 3rem 1.5rem 2rem;
-      color: var(--ink-3);
-      font-size: 0.8125rem;
-      border-top: 1px solid var(--line);
-      background: #ffffff;
-    }
-    .page-footer strong {
-      color: var(--ink);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
+    .page-footer { text-align: center; padding: 3rem 1.5rem 2rem; color: var(--ink-3); font-size: 0.8125rem; border-top: 1px solid var(--line); background: #ffffff; }
+    .page-footer strong { color: var(--ink); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem; display: block; margin-bottom: 0.5rem; }
 
-    /* SUCCESS DETAILS */
     #successDetails { text-align: left; }
     #successDetails > div { padding: 0.25rem 0; color: var(--ink-2); font-size: 0.9375rem; }
     #successDetails > div.font-bold { color: var(--ink); font-weight: 600; }
-
-    /* REVIEW MODAL DETAILS */
     #reviewContent .bg-gray-50 { background: #faf9f7; }
-
-    /* HIDDEN / SHOW */
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
- <!-- HERO -->
   <header class="hero">
     <div class="hero-inner">
-      <img src="logo.jpg" alt="Moto Guzzi Club Pisa" class="hero-logo">
+      <div class="hero-logos">
+        <img src="logo.jpg" alt="Moto Guzzi Club Pisa" class="hero-logo">
+        <img src="logo-mgwc.jpg" alt="Moto Guzzi World Club" class="hero-logo-secondary">
+      </div>
       <div class="hero-text">
         <span class="hero-eyebrow">2-4 Aprile 2027</span>
         <h1 class="hero-title">Moto Guzzi<br>Club Pisa</h1>
         <p class="hero-sub">2° Raduno "Aquile Alfee"</p>
         <p class="hero-meta">Modulo Ufficiale Iscrizione &amp; Ristorazione</p>
       </div>
-      <img src="logo-mgwc.jpg" alt="Moto Guzzi World Club" class="hero-logo-secondary">
     </div>
   </header>
 
@@ -679,6 +232,14 @@
                 <option value="">Seleziona il tuo club...</option>
               </select>
               <input type="text" id="pilotClubAltro" class="hidden mt-2 input" placeholder="Scrivi il nome del club">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotMoto" class="field-label">Modello Moto Guzzi <span class="req">*</span></label>
+              <select id="pilotMoto" required class="select">
+                <option value="">Seleziona il tuo modello...</option>
+              </select>
             </div>
           </div>
           <div class="pt-2 border-t border-neutral-200 mt-2" style="padding-top: 1.25rem;">
@@ -752,7 +313,6 @@
               </label>
             </div>
           </div>
-
           <div id="shirtSizeContainer" class="hidden field mt-4">
             <label for="shirtSize" class="field-label">Taglia Maglietta</label>
             <select id="shirtSize" class="select">
@@ -763,7 +323,6 @@
               <option value="XXL">XXL</option>
             </select>
           </div>
-
           <div class="mt-4 pt-4 border-t border-neutral-200">
             <label class="option-row option-highlight">
               <span class="option-row-left">
@@ -813,7 +372,6 @@
               </label>
             </div>
           </div>
-
           <div id="passShirtSizeContainer" class="hidden field mt-4">
             <label for="passShirtSize" class="field-label">Taglia Maglietta</label>
             <select id="passShirtSize" class="select">
@@ -824,7 +382,6 @@
               <option value="XXL">XXL</option>
             </select>
           </div>
-
           <div class="mt-4 pt-4 border-t border-neutral-200">
             <label class="option-row option-highlight">
               <span class="option-row-left">
@@ -939,7 +496,7 @@
         </div>
       </div>
 
-      <!-- TOTALE (dark card) -->
+      <!-- TOTALE -->
       <div class="total-card">
         <p class="total-label">Riepilogo finale</p>
         <span id="totalDisplay" class="total-amount">25,00 €</span>
@@ -984,13 +541,11 @@
             <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="payment-option">Bonifico Bancario</button>
           </div>
 
-          <!-- PAYPAL -->
           <div id="paypalContainer">
             <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="btn-paypal">Rivedi e Invia — PayPal</button>
             <p id="paypalError" class="hidden text-sm text-red-600 text-center mt-3"></p>
           </div>
 
-          <!-- BONIFICO -->
           <div id="bankContainer" class="hidden">
             <div class="bank-info">
               <p class="bank-info-title">Coordinate Bancarie</p>
@@ -1046,12 +601,8 @@
           <strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).
         </div>
         <div class="flex flex-col sm:flex-row gap-3 justify-end">
-          <button type="button" onclick="closeReviewModal()" class="btn-secondary w-full sm:w-auto">
-            Modifica
-          </button>
-          <button type="button" onclick="proceedWithPayment()" class="btn-primary w-full sm:w-auto">
-            Invia Definitivamente
-          </button>
+          <button type="button" onclick="closeReviewModal()" class="btn-secondary w-full sm:w-auto">Modifica</button>
+          <button type="button" onclick="proceedWithPayment()" class="btn-primary w-full sm:w-auto">Invia Definitivamente</button>
         </div>
       </div>
     </div>
@@ -1080,7 +631,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="page-footer">
     <strong>Moto Guzzi Club Pisa — Aquile Alfee</strong>
     <p style="margin: 0.5rem 0;">motoguzziclubpisa@gmail.com · 329 725 9560</p>
@@ -1099,22 +649,18 @@
     };
 
     const CLUBS = [
-      "MOTO GUZZI CLUB PISA - AQUILE ALFEE",
-      "GUZZI CLUB BENEVENTO",
-      "MOTO GUZZI CLUB ROMA",
-      "SGENERAZIONE GUZZISTA",
-      "MOTO GUZZI CLUB GENOVA",
-      "AMICI MOTO GUZZI LECCE",
-      "GUZZI CLUB CAPO DI LEUCA",
-      "GUZZISTI DEL GARGANO",
-      "GUZZISTI DI TARANTO",
-      "1° MOTO GUZZI CLUB BARI",
-      "AQUILE ARETUSEE SIRACUSA",
-      "AQUILE DELLE CINQUE TORRI TRAPANI",
-      "MOTOCLUB LE AQUILE PALERMO",
-      "GUZZI CLUB FIORENZA",
-      "QUELLI CHE..GUZZI ROMA"
+      "MOTO GUZZI CLUB PISA - AQUILE ALFEE", "GUZZI CLUB BENEVENTO", "MOTO GUZZI CLUB ROMA", "SGENERAZIONE GUZZISTA",
+      "MOTO GUZZI CLUB GENOVA", "AMICI MOTO GUZZI LECCE", "GUZZI CLUB CAPO DI LEUCA", "GUZZISTI DEL GARGANO",
+      "GUZZISTI DI TARANTO", "1° MOTO GUZZI CLUB BARI", "AQUILE ARETUSEE SIRACUSA", "AQUILE DELLE CINQUE TORRI TRAPANI",
+      "MOTOCLUB LE AQUILE PALERMO", "GUZZI CLUB FIORENZA", "QUELLI CHE..GUZZI ROMA"
     ];
+
+    const MOTOMODELS = {
+      "Storiche (1921-1960)": ["Normale 500", "Sport 13/14/15", "GT (Norge, 16, 17)", "Tre Cilindri", "Alce 500", "Airone 250", "Motoleggera 65 (Guzzino)", "Superalce 500", "Astore 500", "Falcone 500", "Galletto 160/175/192", "Cardellino 73", "Zigolo 98/110", "Lodola 175", "Stornello 125", "Dingo", "Trotter"],
+      "Anni '60 e '70": ["V7 700", "V7 Special", "V7 Sport", "850 GT", "850 T", "850 T3", "850 T5", "V1000 I-Convert", "V1000 G5", "1000 SP", "1000 SP II", "Le Mans I/II/III/1000", "V35", "V35 II", "V35 Imola", "V35 C", "V50", "V50 II", "V50 Monza", "V50 III", "V50 C", "V65", "V65 SP", "V65 Lario", "California I/II/III", "254", "2C 4T"],
+      "Anni '80 e '90": ["Mille GT", "1000S", "Nevada 350", "Nevada 750", "Daytona 1000 IE", "Quota 1000", "Quota 1100 ES", "Strada 750", "Strada 1000", "1100 Sport", "V10 Centauro", "V11 Sport", "V11 Le Mans", "V11 Rosso Mandello", "V11 Scura", "V11 Ballabio", "V11 Coppa Italia"],
+      "Moderne (2000 - oggi)": ["Breva 750/850/1100/1200", "Griso 1100/1200 8V", "Norge 1200/GT 8V", "1200 Sport 4V/8V", "Bellagio", "Stelvio 1200/1200 NTX", "V7 Classic/Stone/Special/Sport/III/IV", "V9 Roamer/Bobber", "V85 TT", "V100 Mandello", "V100 Stelvio", "California 1400 Custom/Touring", "Audace", "Eldorado", "MGX-21 Flying Fortress", "MGS-01 Corsa"]
+    };
 
     const PRICES = { base: 25, withShirt: 35, mgwcDiscount: 5, meals: { fri: 20, satPack: 15, satGala: 40, sun: 22 } };
     const MEAL_LABELS = { fri: 'Buffet Venerdì', satPack: 'Pranzo al sacco Sabato', satGala: 'Cena di Gala Sabato', sun: 'Pranzo Domenica' };
@@ -1124,19 +670,32 @@
     const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
     const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
 
-    (function initClubs() {
-      const select = $('pilotClub');
+    (function initDropdowns() {
+      const selectClub = $('pilotClub');
       CLUBS.forEach(club => {
         const opt = document.createElement('option');
         opt.value = club; opt.textContent = club;
-        select.appendChild(opt);
+        selectClub.appendChild(opt);
       });
       const optNone = document.createElement('option');
       optNone.value = 'NESSUN CLUB'; optNone.textContent = 'NESSUN CLUB';
-      select.appendChild(optNone);
+      selectClub.appendChild(optNone);
       const optAltro = document.createElement('option');
       optAltro.value = 'ALTRO'; optAltro.textContent = 'ALTRO (specifica)';
-      select.appendChild(optAltro);
+      selectClub.appendChild(optAltro);
+
+      const selectMoto = $('pilotMoto');
+      for (const [groupName, models] of Object.entries(MOTOMODELS)) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = groupName;
+        models.forEach(model => {
+          const opt = document.createElement('option');
+          opt.value = model;
+          opt.textContent = model;
+          optgroup.appendChild(opt);
+        });
+        selectMoto.appendChild(optgroup);
+      }
     })();
 
     $('pilotClub').addEventListener('change', function() {
@@ -1159,7 +718,7 @@
       const meals = {};
       let total = withShirt ? PRICES.withShirt : PRICES.base;
       const lines = [{ label: withShirt ? 'Iscrizione con maglietta' : 'Iscrizione base', amount: total }];
-
+      
       let cardValue = null;
       if (isMember) {
         const suffix = $(p.card).value.trim();
@@ -1193,6 +752,8 @@
       let clubValue = $('pilotClub').value;
       if (clubValue === 'ALTRO') clubValue = $('pilotClubAltro').value.trim();
       pilot.club = clubValue;
+      pilot.moto = $('pilotMoto').value.trim(); // <-- NUOVO CAMPO MOTO
+
       const hasPassenger = $('hasPassenger').checked;
       const passenger = hasPassenger ? buildPerson('pass', PASS_IDS) : null;
       const total = Math.max(pilot.subtotal + (passenger ? passenger.subtotal : 0), 0);
@@ -1286,6 +847,9 @@
       const clubSelect = $('pilotClub');
       if (!clubSelect.value) { alert('Seleziona il tuo Club di Appartenenza.'); clubSelect.focus(); return false; }
       if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) { alert('Inserisci il nome del tuo club.'); $('pilotClubAltro').focus(); return false; }
+      
+      if (!$('pilotMoto').value) { alert('Seleziona il tuo modello di Moto Guzzi.'); $('pilotMoto').focus(); return false; }
+
       if ($('mgwcMember').checked) {
         const cardNum = $('mgwcCardNumber').value.trim();
         if (cardNum.length !== 4 || isNaN(cardNum)) { alert('Inserisci le 4 cifre finali della tessera MGWC.'); $('mgwcCardNumber').focus(); return false; }
@@ -1335,6 +899,7 @@
         add(title + ': ' + p.name, 'font-bold pt-2');
         if (p.email) add('Email: ' + p.email);
         if (p.phone) add('Telefono: ' + p.phone);
+        if (title === 'Pilota' && p.moto) add('Moto: ' + p.moto);
         p.lines.forEach((l) => add('• ' + l.label + ': ' + (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))));
       };
       addPerson('Pilota', order.pilot);
@@ -1402,7 +967,8 @@
 
       renderPerson('Pilota', order.pilot, [
         { label: 'Città', value: order.pilot.city },
-        { label: 'Club', value: order.pilot.club }
+        { label: 'Club', value: order.pilot.club },
+        { label: 'Moto', value: order.pilot.moto }
       ]);
       if (order.passenger) renderPerson('Passeggero', order.passenger, null);
 
