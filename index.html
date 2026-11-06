@@ -5,330 +5,983 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iscrizione Raduno - Moto Guzzi Club Pisa</title>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800 font-sans min-h-screen pb-12">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #c8102e;
+      --ink: #0a0a0a;
+      --ink-2: #404040;
+      --ink-3: #737373;
+      --paper: #f8f6f2;
+      --line: #e5e5e5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--paper);
+      font-family: 'Barlow', sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+    }
+    h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.01em; }
 
-  <header class="bg-white border-b-4 border-red-600 shadow-md py-6 mb-8 text-center px-4">
-    <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-6">
-      <div class="relative shrink-0">
-        <img src="logo.jpg" alt="2° Raduno Moto Guzzi Club Pisa - Aquile Alfee" class="h-56 sm:h-64 w-auto object-contain" style="mix-blend-mode: multiply;">
-      </div>
-      <div class="text-center sm:text-left">
-        <span class="inline-block bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">2-4 Aprile 2027</span>
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase tracking-wide leading-tight">Moto Guzzi Club Pisa</h1>
-        <p class="text-red-600 font-bold text-lg mt-1">2° Raduno "Aquile Alfee"</p>
-        <p class="text-gray-500 text-xs mt-1">Modulo Ufficiale Iscrizione & Ristorazione</p>
+    /* HERO */
+    .hero {
+      background: #ffffff;
+      border-top: 6px solid var(--red);
+      border-bottom: 1px solid var(--line);
+      padding: 3rem 1.5rem;
+    }
+    .hero-inner {
+      max-width: 60rem;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-logo { height: 9rem; width: auto; object-fit: contain; flex-shrink: 0; }
+    .hero-text { flex: 1; min-width: 280px; }
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.6875rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.375rem 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 0.92;
+      text-transform: uppercase;
+      margin: 0;
+      letter-spacing: 0.005em;
+    }
+    .hero-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      color: var(--red);
+      font-size: 1.625rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+    .hero-meta {
+      color: var(--ink-3);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* LAYOUT */
+    .page-container { max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+    /* SECTIONS */
+    .section {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      margin-bottom: 1.25rem;
+    }
+    .section-head {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .section-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: #e5e5e5;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+    .section-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--red);
+      margin: 0 0 0.25rem 0;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+    .section-body { padding: 2rem; }
+    @media (max-width: 640px) {
+      .section-head { padding: 1.25rem 1.25rem; gap: 1rem; }
+      .section-body { padding: 1.5rem 1.25rem; }
+      .section-num { font-size: 2rem; }
+      .section-title { font-size: 1.5rem; }
+    }
+
+    /* FIELDS */
+    .field { margin-bottom: 1.25rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      margin-bottom: 0.5rem;
+    }
+    .field-label .req { color: var(--red); margin-left: 0.125rem; }
+    .input, .select {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      padding: 0.875rem 1rem;
+      font-size: 0.9375rem;
+      color: var(--ink);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      font-family: 'Barlow', sans-serif;
+      border-radius: 0;
+    }
+    .input:hover, .select:hover { border-color: #d4d4d4; }
+    .input:focus, .select:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08);
+    }
+    .input::placeholder { color: #a3a3a3; }
+    .select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23737373' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1rem; height: 1rem; cursor: pointer; }
+
+    .field-row { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+    .field-row:last-child { margin-bottom: 0; }
+    @media (min-width: 640px) { .field-row { grid-template-columns: 1fr 1fr; } }
+
+    /* RADIO CARDS (regType) */
+    .radio-group { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+    @media (min-width: 640px) { .radio-group { grid-template-columns: 1fr 1fr; } }
+    .radio-card {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .radio-card:hover { border-color: #a3a3a3; }
+    .radio-card:has(input:checked) { border-color: var(--red); background: #fdf2f4; }
+    .radio-card-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-left: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--ink);
+      gap: 0.75rem;
+    }
+    .radio-card-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    /* OPTION ROWS (meals, mgwc) */
+    .option-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .option-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.125rem;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .option-row:hover { border-color: #a3a3a3; background: #fafafa; }
+    .option-row-left { display: flex; align-items: center; gap: 0.875rem; font-size: 0.9375rem; color: var(--ink); }
+    .option-row-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .option-highlight { background: #f0fdf4; border-color: #bbf7d0; }
+    .option-highlight:hover { background: #dcfce7; border-color: #86efac; }
+    .option-highlight .option-row-left { color: #166534; }
+    .option-highlight .option-row-price { color: #15803d; }
+
+    /* TOTAL CARD */
+    .total-card {
+      background: var(--ink);
+      color: #ffffff;
+      padding: 2.25rem;
+      border-left: 6px solid var(--red);
+      margin-bottom: 1.25rem;
+    }
+    .total-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #a3a3a3;
+      margin: 0;
+    }
+    .total-amount {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      display: block;
+      margin: 0.5rem 0 0 0;
+    }
+    .total-summary {
+      margin: 1.75rem 0 0 0;
+      padding: 1.5rem 0 0 0;
+      border-top: 1px solid #262626;
+      font-size: 0.875rem;
+      color: #a3a3a3;
+      list-style: none;
+    }
+    .total-summary li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+    }
+    .total-summary .summary-group-title {
+      color: #ffffff;
+      font-weight: 700;
+      margin-top: 0.75rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+    }
+    .total-summary .summary-group-title:first-child { margin-top: 0; }
+
+    /* PRIVACY */
+    .privacy-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+    .privacy-label input { margin-top: 0.125rem; flex-shrink: 0; }
+    .privacy-label a { color: var(--red); text-decoration: underline; font-weight: 500; }
+    .privacy-note {
+      margin-top: 1rem;
+      font-size: 0.8125rem;
+      color: var(--ink-3);
+      padding-left: 1.875rem;
+      line-height: 1.5;
+    }
+
+    /* PAYMENT TOGGLE */
+    .payment-toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.75rem; }
+    .payment-option {
+      padding: 1.125rem 1rem;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      text-align: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 1rem;
+      color: var(--ink-2);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .payment-option:hover { border-color: var(--ink-3); background: #fafafa; }
+    .payment-option.is-active { background: var(--red); border-color: var(--red); color: #ffffff; }
+
+    /* BUTTONS */
+    .btn-primary {
+      width: 100%;
+      background: var(--red);
+      color: #ffffff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1.125rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: block;
+    }
+    .btn-primary:hover { background: #a50d26; }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-paypal {
+      width: 100%;
+      background: #ffc439;
+      color: #003087;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1.125rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: block;
+    }
+    .btn-paypal:hover { background: #f0b429; }
+    .btn-paypal:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.875rem 1.75rem;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-secondary:hover { background: var(--ink); color: #ffffff; }
+
+    /* BANK INFO */
+    .bank-info {
+      background: #faf9f7;
+      border-left: 4px solid var(--red);
+      padding: 1.5rem;
+    }
+    .bank-info-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .bank-info-row {
+      font-size: 0.875rem;
+      padding: 0.25rem 0;
+      color: var(--ink-2);
+    }
+    .bank-info-row strong { color: var(--ink); font-weight: 600; }
+    .bank-info-iban {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      padding: 1rem;
+      margin: 1rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .bank-info-iban-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-weight: 600;
+    }
+    .bank-info-iban-code {
+      font-family: 'Courier New', monospace;
+      color: var(--red);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      font-size: 1rem;
+    }
+    .btn-copy {
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 0.5rem 0.875rem;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-2);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'Barlow', sans-serif;
+    }
+    .btn-copy:hover { background: var(--ink); color: #ffffff; border-color: var(--ink); }
+
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.75);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-content {
+      background: #ffffff;
+      max-width: 42rem;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .modal-header {
+      background: var(--ink);
+      color: #ffffff;
+      padding: 1.75rem 2rem;
+      border-bottom: 4px solid var(--red);
+    }
+    .modal-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin: 0;
+      line-height: 1;
+    }
+    .modal-subtitle { font-size: 0.875rem; color: #a3a3a3; margin: 0.375rem 0 0 0; }
+    .modal-body { padding: 2rem; }
+    .modal-footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--line);
+      background: #faf9f7;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    /* SUCCESS */
+    .success-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-top: 6px solid #16a34a;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .success-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 5rem;
+      height: 5rem;
+      background: #16a34a;
+      color: #ffffff;
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+    }
+    .success-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--ink);
+      letter-spacing: 0.03em;
+      line-height: 1;
+      margin: 0 0 1rem 0;
+    }
+
+    /* ERROR MODAL */
+    .error-header {
+      background: var(--red);
+      color: #ffffff;
+      padding: 1.75rem 2rem;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    .page-footer {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      color: var(--ink-3);
+      font-size: 0.8125rem;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+    }
+    .page-footer strong {
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* SUCCESS DETAILS */
+    #successDetails { text-align: left; }
+    #successDetails > div { padding: 0.25rem 0; color: var(--ink-2); font-size: 0.9375rem; }
+    #successDetails > div.font-bold { color: var(--ink); font-weight: 600; }
+
+    /* REVIEW MODAL DETAILS */
+    #reviewContent .bg-gray-50 { background: #faf9f7; }
+
+    /* HIDDEN / SHOW */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <img src="logo.jpg" alt="Moto Guzzi Club Pisa" class="hero-logo">
+      <div class="hero-text">
+        <span class="hero-eyebrow">2-4 Aprile 2027</span>
+        <h1 class="hero-title">Moto Guzzi<br>Club Pisa</h1>
+        <p class="hero-sub">2° Raduno "Aquile Alfee"</p>
+        <p class="hero-meta">Modulo Ufficiale Iscrizione &amp; Ristorazione</p>
       </div>
     </div>
   </header>
 
-  <main class="max-w-3xl mx-auto px-4">
-    <form id="rallyForm" class="space-y-6" novalidate onsubmit="event.preventDefault();">
+  <main class="page-container">
+    <form id="rallyForm" novalidate onsubmit="event.preventDefault();">
 
-      <!-- 1. Dati Pilota -->
-      <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>👤</span> Dati Pilota</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <!-- 01 DATI PILOTA -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">01</span>
           <div>
-            <label for="pilotSurname" class="block text-sm font-medium text-gray-700 mb-1">Cognome Pilota *</label>
-            <input type="text" id="pilotSurname" required autocomplete="family-name" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Rossi">
-          </div>
-          <div>
-            <label for="pilotFirstName" class="block text-sm font-medium text-gray-700 mb-1">Nome Pilota *</label>
-            <input type="text" id="pilotFirstName" required autocomplete="given-name" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Mario">
-          </div>
-          <div>
-            <label for="pilotEmail" class="block text-sm font-medium text-gray-700 mb-1">Email Pilota *</label>
-            <input type="email" id="pilotEmail" required autocomplete="email" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="mario.rossi@email.com">
-          </div>
-          <div>
-            <label for="pilotPhone" class="block text-sm font-medium text-gray-700 mb-1">Telefono Pilota *</label>
-            <input type="tel" id="pilotPhone" required autocomplete="tel" pattern="[0-9\s\+\-]{9,15}" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="333 1234567">
-          </div>
-          <div>
-            <label for="pilotCity" class="block text-sm font-medium text-gray-700 mb-1">Città di Provenienza *</label>
-            <input type="text" id="pilotCity" required class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Pisa">
-          </div>
-          <div>
-            <label for="pilotClub" class="block text-sm font-medium text-gray-700 mb-1">Club di Appartenenza *</label>
-            <select id="pilotClub" required class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none">
-              <option value="">Seleziona il tuo club...</option>
-            </select>
-            <input type="text" id="pilotClubAltro" class="hidden mt-2 w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Scrivi il nome del club">
+            <p class="section-label">Pilota</p>
+            <h2 class="section-title">Dati Anagrafici</h2>
           </div>
         </div>
-        <div class="pt-4 border-t border-gray-100">
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" id="hasPassenger" class="w-4 h-4 text-red-600 bg-gray-50 border-gray-300 rounded focus:ring-red-600" onchange="onPassengerToggle()">
-            <span class="ml-2 text-sm font-medium text-gray-700">Partecipa anche un Passeggero</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- 1B. Dati Passeggero -->
-      <div id="passengerContainer" class="hidden bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>👥</span> Dati Passeggero</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="passSurname" class="block text-sm font-medium text-gray-700 mb-1">Cognome Passeggero *</label>
-            <input type="text" id="passSurname" autocomplete="off" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Bianchi">
-          </div>
-          <div>
-            <label for="passFirstName" class="block text-sm font-medium text-gray-700 mb-1">Nome Passeggero *</label>
-            <input type="text" id="passFirstName" autocomplete="off" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Laura">
-          </div>
-          <div>
-            <label for="passEmail" class="block text-sm font-medium text-gray-700 mb-1">Email Passeggero</label>
-            <input type="email" id="passEmail" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="laura.bianchi@email.com">
-          </div>
-          <div>
-            <label for="passPhone" class="block text-sm font-medium text-gray-700 mb-1">Telefono Passeggero</label>
-            <input type="tel" id="passPhone" pattern="[0-9\s\+\-]{9,15}" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="333 9876543">
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Quota Pilota -->
-      <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>🏍️</span> Quota Iscrizione & Gadget (Pilota)</h2>
-        <div class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Scegli la quota di iscrizione per il Pilota:</label>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200 hover:border-red-600">
-                <input type="radio" name="regType" value="25" checked class="text-red-600 focus:ring-red-600" onchange="updateTotal()">
-                <span class="ml-3 text-sm text-gray-800">Iscrizione Base (Senza maglietta) - <strong>25,00 €</strong></span>
-              </label>
-              <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200 hover:border-red-600">
-                <input type="radio" name="regType" value="35" class="text-red-600 focus:ring-red-600" onchange="updateTotal()">
-                <span class="ml-3 text-sm text-gray-800">Iscrizione con Maglietta - <strong>35,00 €</strong></span>
-              </label>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotSurname" class="field-label">Cognome <span class="req">*</span></label>
+              <input type="text" id="pilotSurname" required autocomplete="family-name" class="input" placeholder="Rossi">
+            </div>
+            <div class="field">
+              <label for="pilotFirstName" class="field-label">Nome <span class="req">*</span></label>
+              <input type="text" id="pilotFirstName" required autocomplete="given-name" class="input" placeholder="Mario">
             </div>
           </div>
-          <div id="shirtSizeContainer" class="hidden pt-2">
-            <label for="shirtSize" class="block text-sm font-medium text-gray-700 mb-1">Taglia Maglietta Pilota</label>
-            <select id="shirtSize" class="w-full md:w-1/3 bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900">
-              <option value="S">Taglia S</option>
-              <option value="M" selected>Taglia M</option>
-              <option value="L">Taglia L</option>
-              <option value="XL">Taglia XL</option>
-              <option value="XXL">Taglia XXL</option>
-            </select>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotEmail" class="field-label">Email <span class="req">*</span></label>
+              <input type="email" id="pilotEmail" required autocomplete="email" class="input" placeholder="mario.rossi@email.com">
+            </div>
+            <div class="field">
+              <label for="pilotPhone" class="field-label">Telefono <span class="req">*</span></label>
+              <input type="tel" id="pilotPhone" required autocomplete="tel" pattern="[0-9\s\+\-]{9,15}" class="input" placeholder="333 1234567">
+            </div>
           </div>
-          <div class="pt-2 border-t border-gray-100 space-y-3">
-            <label class="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200 cursor-pointer hover:bg-green-100 transition">
-              <span class="flex items-center gap-2 text-sm font-medium text-green-900">
-                <input type="checkbox" id="mgwcMember" class="w-4 h-4 text-green-600 bg-white border-green-300 rounded" onchange="updateTotal()">
-                Socio Moto Guzzi World Club (MGWC) in regola (Sconto 5€ sul Pilota)
-              </span>
-              <span class="font-bold text-green-700">-5,00 €</span>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotCity" class="field-label">Città <span class="req">*</span></label>
+              <input type="text" id="pilotCity" required class="input" placeholder="Pisa">
+            </div>
+            <div class="field">
+              <label for="pilotClub" class="field-label">Club di Appartenenza <span class="req">*</span></label>
+              <select id="pilotClub" required class="select">
+                <option value="">Seleziona il tuo club...</option>
+              </select>
+              <input type="text" id="pilotClubAltro" class="hidden mt-2 input" placeholder="Scrivi il nome del club">
+            </div>
+          </div>
+          <div class="pt-2 border-t border-neutral-200 mt-2" style="padding-top: 1.25rem;">
+            <label class="inline-flex items-center cursor-pointer gap-2">
+              <input type="checkbox" id="hasPassenger" onchange="onPassengerToggle()">
+              <span class="text-sm font-medium">Partecipa anche un Passeggero</span>
             </label>
-            <div id="mgwcCardContainer" class="hidden pt-1">
-              <label class="block text-sm font-medium mb-1 text-red-600">Numero Tessera MGWC Pilota *</label>
-              <div class="flex w-full md:w-1/2">
-                <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-600 font-mono text-sm">2027</span>
-                <input type="text" id="mgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="w-full bg-gray-50 border border-gray-300 rounded-r-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none font-mono" placeholder="0000">
-              </div>
-              <p class="text-xs text-gray-500 mt-1">Inserisci solo le 4 cifre finali della tessera.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 DATI PASSEGGERO -->
+      <div id="passengerContainer" class="hidden section">
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <div>
+            <p class="section-label">Passeggero</p>
+            <h2 class="section-title">Dati Anagrafici</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="passSurname" class="field-label">Cognome <span class="req">*</span></label>
+              <input type="text" id="passSurname" class="input" placeholder="Bianchi">
+            </div>
+            <div class="field">
+              <label for="passFirstName" class="field-label">Nome <span class="req">*</span></label>
+              <input type="text" id="passFirstName" class="input" placeholder="Laura">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="passEmail" class="field-label">Email</label>
+              <input type="email" id="passEmail" class="input" placeholder="laura.bianchi@email.com">
+            </div>
+            <div class="field">
+              <label for="passPhone" class="field-label">Telefono</label>
+              <input type="tel" id="passPhone" pattern="[0-9\s\+\-]{9,15}" class="input" placeholder="333 9876543">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 2B. Quota Passeggero -->
-      <div id="passengerRegContainer" class="hidden bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>🏍️</span> Quota Iscrizione & Gadget (Passeggero)</h2>
-        <div class="space-y-4">
+      <!-- 03 QUOTA PILOTA -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">03</span>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Scegli la quota di iscrizione per il Passeggero:</label>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200 hover:border-red-600">
-                <input type="radio" name="passRegType" value="25" checked class="text-red-600 focus:ring-red-600" onchange="updateTotal()">
-                <span class="ml-3 text-sm text-gray-800">Iscrizione Base (Senza maglietta) - <strong>25,00 €</strong></span>
+            <p class="section-label">Pilota</p>
+            <h2 class="section-title">Quota &amp; Gadget</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label class="field-label">Tipo di Iscrizione</label>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="regType" value="25" checked onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Base — Senza maglietta</span>
+                  <span class="radio-card-price">25,00 €</span>
+                </span>
               </label>
-              <label class="flex items-center p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200 hover:border-red-600">
-                <input type="radio" name="passRegType" value="35" class="text-red-600 focus:ring-red-600" onchange="updateTotal()">
-                <span class="ml-3 text-sm text-gray-800">Iscrizione con Maglietta - <strong>35,00 €</strong></span>
+              <label class="radio-card">
+                <input type="radio" name="regType" value="35" onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Con maglietta</span>
+                  <span class="radio-card-price">35,00 €</span>
+                </span>
               </label>
             </div>
           </div>
-          <div id="passShirtSizeContainer" class="hidden pt-2">
-            <label for="passShirtSize" class="block text-sm font-medium text-gray-700 mb-1">Taglia Maglietta Passeggero</label>
-            <select id="passShirtSize" class="w-full md:w-1/3 bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900">
-              <option value="S">Taglia S</option>
-              <option value="M" selected>Taglia M</option>
-              <option value="L">Taglia L</option>
-              <option value="XL">Taglia XL</option>
-              <option value="XXL">Taglia XXL</option>
+
+          <div id="shirtSizeContainer" class="hidden field mt-4">
+            <label for="shirtSize" class="field-label">Taglia Maglietta</label>
+            <select id="shirtSize" class="select">
+              <option value="S">S</option>
+              <option value="M" selected>M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
             </select>
           </div>
-          <div class="pt-2 border-t border-gray-100 space-y-3">
-            <label class="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200 cursor-pointer hover:bg-green-100 transition">
-              <span class="flex items-center gap-2 text-sm font-medium text-green-900">
-                <input type="checkbox" id="passMgwcMember" class="w-4 h-4 text-green-600 bg-white border-green-300 rounded" onchange="updateTotal()">
-                Socio Moto Guzzi World Club (MGWC) in regola (Sconto 5€ sul Passeggero)
+
+          <div class="mt-4 pt-4 border-t border-neutral-200">
+            <label class="option-row option-highlight">
+              <span class="option-row-left">
+                <input type="checkbox" id="mgwcMember" onchange="updateTotal()">
+                Socio MGWC in regola — sconto 5€
               </span>
-              <span class="font-bold text-green-700">-5,00 €</span>
+              <span class="option-row-price">-5,00 €</span>
             </label>
-            <div id="passMgwcCardContainer" class="hidden pt-1">
-              <label class="block text-sm font-medium mb-1 text-red-600">Numero Tessera MGWC Passeggero *</label>
-              <div class="flex w-full md:w-1/2">
-                <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-600 font-mono text-sm">2027</span>
-                <input type="text" id="passMgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="w-full bg-gray-50 border border-gray-300 rounded-r-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none font-mono" placeholder="0000">
+            <div id="mgwcCardContainer" class="hidden mt-3">
+              <label class="field-label">Numero Tessera MGWC <span class="req">*</span></label>
+              <div class="flex" style="max-width: 260px;">
+                <span class="inline-flex items-center px-3 bg-neutral-100 border border-neutral-300 border-r-0 font-mono text-sm text-neutral-600">2027</span>
+                <input type="text" id="mgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="input" placeholder="0000" style="border-left: 0;">
               </div>
-              <p class="text-xs text-gray-500 mt-1">Inserisci solo le 4 cifre finali della tessera.</p>
+              <p class="text-xs text-neutral-500 mt-1.5">Inserisci le 4 cifre finali della tessera.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 3. Ristorazione Pilota -->
-      <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>🍽️</span> Ristorazione & Eventi (Pilota)</h2>
-        <div class="space-y-2">
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="mealFri" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Buffet Venerdì</span>
-            <span class="font-bold text-gray-900">20,00 €</span>
-          </label>
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="mealSatPack" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Pranzo al sacco Sabato</span>
-            <span class="font-bold text-gray-900">15,00 €</span>
-          </label>
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="mealSatGala" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Cena di Gala Sabato</span>
-            <span class="font-bold text-gray-900">40,00 €</span>
-          </label>
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="mealSun" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Pranzo Domenica</span>
-            <span class="font-bold text-gray-900">22,00 €</span>
-          </label>
-        </div>
-        <div class="mt-4 pt-4 border-t border-gray-100">
-          <label for="pilotDietary" class="block text-sm font-medium text-gray-700 mb-1">Intolleranze / Esigenze Alimentari (Pilota)</label>
-          <input type="text" id="pilotDietary" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
-        </div>
-      </div>
-
-      <!-- 3B. Ristorazione Passeggero -->
-      <div id="passengerMealsContainer" class="hidden bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>🍽️</span> Ristorazione & Eventi (Passeggero)</h2>
-        <div class="space-y-2">
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="passMealFri" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Buffet Venerdì (Passeggero)</span>
-            <span class="font-bold text-gray-900">20,00 €</span>
-          </label>
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="passMealSatPack" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Pranzo al sacco Sabato (Passeggero)</span>
-            <span class="font-bold text-gray-900">15,00 €</span>
-          </label>
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="passMealSatGala" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Cena di Gala Sabato (Passeggero)</span>
-            <span class="font-bold text-gray-900">40,00 €</span>
-          </label>
-          <label class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
-            <span class="text-sm font-medium text-gray-800"><input type="checkbox" id="passMealSun" class="w-4 h-4 text-red-600 rounded mr-2" onchange="updateTotal()">Pranzo Domenica (Passeggero)</span>
-            <span class="font-bold text-gray-900">22,00 €</span>
-          </label>
-        </div>
-        <div class="mt-4 pt-4 border-t border-gray-100">
-          <label for="passDietary" class="block text-sm font-medium text-gray-700 mb-1">Intolleranze / Esigenze Alimentari (Passeggero)</label>
-          <input type="text" id="passDietary" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-2.5 text-gray-900 focus:ring-2 focus:ring-red-600 outline-none" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
-        </div>
-      </div>
-
-      <!-- 4. Riepilogo -->
-      <div class="bg-white p-6 rounded-2xl border-2 border-red-600 shadow-md">
-        <span class="text-gray-500 text-xs font-bold uppercase tracking-wider block">Totale Complessivo Da Pagare</span>
-        <span id="totalDisplay" class="text-4xl font-extrabold text-red-600">25,00 €</span>
-        <ul id="summaryList" class="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 space-y-1"></ul>
-      </div>
-
-      <!-- 4B. Privacy -->
-      <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
-        <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" id="privacyConsent" required class="mt-1 w-4 h-4 text-red-600 bg-gray-50 border-gray-300 rounded focus:ring-red-600">
-          <span class="text-sm text-gray-700">
-            Acconsento al trattamento dei dati personali forniti (anche del passeggero, se presente) ai soli fini dell'organizzazione del raduno, ai sensi del Reg. UE 2016/679 (GDPR). *
-            <a href="#" target="_blank" class="text-red-600 underline font-medium">Leggi l'informativa completa</a>
-          </span>
-        </label>
-        <p class="text-xs text-gray-500 pl-7">
-          📧 Dopo l'invio riceverai una <strong>email con il riepilogo e le istruzioni</strong> per completare il pagamento (PayPal o Bonifico). La tua iscrizione sarà <strong>confermata</strong> non appena avremo registrato il pagamento. Controlla anche la cartella spam.
-        </p>
-      </div>
-
-      <!-- 5. Metodo di Pagamento -->
-      <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2"><span>💳</span> Metodo di Pagamento</h2>
-        <div class="grid grid-cols-2 gap-4 mb-6">
-          <button type="button" id="btnPaypal" onclick="setPaymentMethod('paypal')" class="p-3 border-2 border-red-600 bg-red-50 rounded-lg text-center font-bold text-red-700 transition">PayPal</button>
-          <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition">Bonifico Bancario</button>
-        </div>
-
-        <div id="paypalContainer" class="mt-4 space-y-3">
-          <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 disabled:opacity-60 text-gray-900 font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Invia Iscrizione (PayPal)</button>
-          <p id="paypalError" class="hidden text-sm text-red-600 text-center"></p>
-        </div>
-
-        <div id="bankContainer" class="hidden p-5 bg-red-50/70 rounded-xl border border-red-200 space-y-3 text-sm">
-          <div class="flex justify-between items-center border-b border-red-200 pb-2">
-            <p class="font-bold text-red-700 text-base">🏦 Coordinate per il Bonifico Bancario</p>
+      <!-- 04 QUOTA PASSEGGERO -->
+      <div id="passengerRegContainer" class="hidden section">
+        <div class="section-head">
+          <span class="section-num">04</span>
+          <div>
+            <p class="section-label">Passeggero</p>
+            <h2 class="section-title">Quota &amp; Gadget</h2>
           </div>
-          <div class="space-y-2 pt-1 text-gray-700">
-            <p><strong class="text-gray-900">Intestatario:</strong> <span id="bankHolder"></span></p>
-            <p><strong class="text-gray-900">Banca:</strong> <span id="bankName"></span></p>
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white p-3 rounded-lg border border-red-200 gap-2 shadow-sm">
-              <div>
-                <span class="text-xs text-gray-500 block">IBAN:</span>
-                <span id="ibanValue" class="font-mono text-red-600 font-bold tracking-wider text-base"></span>
-              </div>
-              <button type="button" onclick="copyIban()" class="bg-gray-100 hover:bg-gray-200 text-xs text-gray-800 font-medium px-3 py-2 rounded-md border border-gray-300 transition flex items-center justify-center gap-1.5 shrink-0">
-                <span>📋</span> <span id="copyBtnText">Copia IBAN</span>
-              </button>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label class="field-label">Tipo di Iscrizione</label>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="passRegType" value="25" checked onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Base — Senza maglietta</span>
+                  <span class="radio-card-price">25,00 €</span>
+                </span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="passRegType" value="35" onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Con maglietta</span>
+                  <span class="radio-card-price">35,00 €</span>
+                </span>
+              </label>
             </div>
-            <p><strong class="text-gray-900">Causale obbligatoria:</strong> <span id="causaleValue" class="text-red-700 font-semibold"></span></p>
           </div>
-          <button type="button" id="bankSubmitBtn" onclick="openReviewModal()" class="w-full mt-4 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white font-bold py-3.5 rounded-lg transition text-base shadow-md">Rivedi e Invia Iscrizione (Bonifico)</button>
-          <p id="bankError" class="hidden text-sm text-red-600 text-center"></p>
+
+          <div id="passShirtSizeContainer" class="hidden field mt-4">
+            <label for="passShirtSize" class="field-label">Taglia Maglietta</label>
+            <select id="passShirtSize" class="select">
+              <option value="S">S</option>
+              <option value="M" selected>M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-neutral-200">
+            <label class="option-row option-highlight">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMgwcMember" onchange="updateTotal()">
+                Socio MGWC in regola — sconto 5€
+              </span>
+              <span class="option-row-price">-5,00 €</span>
+            </label>
+            <div id="passMgwcCardContainer" class="hidden mt-3">
+              <label class="field-label">Numero Tessera MGWC <span class="req">*</span></label>
+              <div class="flex" style="max-width: 260px;">
+                <span class="inline-flex items-center px-3 bg-neutral-100 border border-neutral-300 border-r-0 font-mono text-sm text-neutral-600">2027</span>
+                <input type="text" id="passMgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="input" placeholder="0000" style="border-left: 0;">
+              </div>
+              <p class="text-xs text-neutral-500 mt-1.5">Inserisci le 4 cifre finali della tessera.</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- 05 PASTI PILOTA -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">05</span>
+          <div>
+            <p class="section-label">Pilota</p>
+            <h2 class="section-title">Pasti &amp; Ristorazione</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="option-list">
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealFri" onchange="updateTotal()">
+                Buffet Venerdì
+              </span>
+              <span class="option-row-price">20,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealSatPack" onchange="updateTotal()">
+                Pranzo al sacco Sabato
+              </span>
+              <span class="option-row-price">15,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealSatGala" onchange="updateTotal()">
+                Cena di Gala Sabato
+              </span>
+              <span class="option-row-price">40,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealSun" onchange="updateTotal()">
+                Pranzo Domenica
+              </span>
+              <span class="option-row-price">22,00 €</span>
+            </label>
+          </div>
+          <div class="field mt-5">
+            <label for="pilotDietary" class="field-label">Intolleranze / Esigenze Alimentari</label>
+            <input type="text" id="pilotDietary" class="input" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 PASTI PASSEGGERO -->
+      <div id="passengerMealsContainer" class="hidden section">
+        <div class="section-head">
+          <span class="section-num">06</span>
+          <div>
+            <p class="section-label">Passeggero</p>
+            <h2 class="section-title">Pasti &amp; Ristorazione</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="option-list">
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealFri" onchange="updateTotal()">
+                Buffet Venerdì
+              </span>
+              <span class="option-row-price">20,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealSatPack" onchange="updateTotal()">
+                Pranzo al sacco Sabato
+              </span>
+              <span class="option-row-price">15,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealSatGala" onchange="updateTotal()">
+                Cena di Gala Sabato
+              </span>
+              <span class="option-row-price">40,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealSun" onchange="updateTotal()">
+                Pranzo Domenica
+              </span>
+              <span class="option-row-price">22,00 €</span>
+            </label>
+          </div>
+          <div class="field mt-5">
+            <label for="passDietary" class="field-label">Intolleranze / Esigenze Alimentari</label>
+            <input type="text" id="passDietary" class="input" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
+          </div>
+        </div>
+      </div>
+
+      <!-- TOTALE (dark card) -->
+      <div class="total-card">
+        <p class="total-label">Riepilogo finale</p>
+        <span id="totalDisplay" class="total-amount">25,00 €</span>
+        <ul id="summaryList" class="total-summary"></ul>
+      </div>
+
+      <!-- 07 PRIVACY -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">07</span>
+          <div>
+            <p class="section-label">Documenti</p>
+            <h2 class="section-title">Privacy &amp; Consenso</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <label class="privacy-label">
+            <input type="checkbox" id="privacyConsent" required>
+            <span>
+              Acconsento al trattamento dei dati personali forniti (anche del passeggero, se presente) ai soli fini dell'organizzazione del raduno, ai sensi del Reg. UE 2016/679 (GDPR). <span class="text-red-600">*</span>
+              <a href="#" target="_blank">Leggi l'informativa completa</a>
+            </span>
+          </label>
+          <p class="privacy-note">
+            Dopo l'invio riceverai un'email con il riepilogo e le istruzioni per completare il pagamento. La tua iscrizione sarà confermata non appena il pagamento sarà registrato. Se non la ricevi, controlla anche la cartella spam.
+          </p>
+        </div>
+      </div>
+
+      <!-- 08 PAGAMENTO -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">08</span>
+          <div>
+            <p class="section-label">Ultimo Step</p>
+            <h2 class="section-title">Metodo di Pagamento</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="payment-toggle-group">
+            <button type="button" id="btnPaypal" onclick="setPaymentMethod('paypal')" class="payment-option is-active">PayPal</button>
+            <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="payment-option">Bonifico Bancario</button>
+          </div>
+
+          <!-- PAYPAL -->
+          <div id="paypalContainer">
+            <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="btn-paypal">Rivedi e Invia — PayPal</button>
+            <p id="paypalError" class="hidden text-sm text-red-600 text-center mt-3"></p>
+          </div>
+
+          <!-- BONIFICO -->
+          <div id="bankContainer" class="hidden">
+            <div class="bank-info">
+              <p class="bank-info-title">Coordinate Bancarie</p>
+              <p class="bank-info-row"><strong>Intestatario:</strong> <span id="bankHolder"></span></p>
+              <p class="bank-info-row"><strong>Banca:</strong> <span id="bankName"></span></p>
+              <div class="bank-info-iban">
+                <div>
+                  <span class="bank-info-iban-label">IBAN</span>
+                  <span id="ibanValue" class="bank-info-iban-code"></span>
+                </div>
+                <button type="button" onclick="copyIban()" class="btn-copy">
+                  <span id="copyBtnText">Copia IBAN</span>
+                </button>
+              </div>
+              <p class="bank-info-row"><strong>Causale:</strong> <span id="causaleValue" style="color: var(--red); font-weight: 700;"></span></p>
+            </div>
+            <button type="button" id="bankSubmitBtn" onclick="openReviewModal()" class="btn-primary mt-5" style="margin-top: 1.5rem;">Rivedi e Invia — Bonifico</button>
+            <p id="bankError" class="hidden text-sm text-red-600 text-center mt-3"></p>
+          </div>
+        </div>
+      </div>
+
     </form>
 
-    <!-- Successo -->
-    <div id="successBox" class="hidden bg-white p-8 rounded-2xl border-2 border-green-500 text-center space-y-4 shadow-lg">
-      <div class="text-5xl">✅</div>
-      <h2 class="text-2xl font-bold text-green-600">Iscrizione Inviata!</h2>
-      <p class="text-gray-600 text-sm">Grazie per esserti iscritto al 2° Raduno "Aquile Alfee" del Moto Guzzi Club Pisa.</p>
-      <p class="text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm font-medium">
-        ⏳ La tua iscrizione è ora <strong>in attesa di conferma del pagamento</strong>. Non appena l'organizzazione avrà verificato il pagamento, riceverai una seconda email di <strong>conferma definitiva</strong>.
-      </p>
-      <p id="successNote" class="hidden text-sm text-red-600"></p>
-      <div id="successDetails" class="p-4 bg-gray-50 rounded-lg text-left text-sm space-y-1 text-gray-800 border border-gray-200"></div>
-      
-      <div class="mt-4">
-        <button type="button" onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 text-sm text-gray-800 font-medium px-4 py-2 rounded-md border border-gray-300 transition">🖨️ Stampa / salva il riepilogo</button>
+    <!-- SUCCESSO -->
+    <div id="successBox" class="hidden">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2 class="success-title">Iscrizione Inviata</h2>
+        <p class="text-neutral-600 mb-6" style="font-size: 1rem;">Grazie per esserti iscritto al 2° Raduno "Aquile Alfee" del Moto Guzzi Club Pisa.</p>
+        <div class="bg-amber-50 border-l-4 border-amber-400 p-5 mb-6 text-left">
+          <p class="text-sm text-amber-900" style="line-height: 1.6; margin: 0;">La tua iscrizione è ora in attesa di conferma del pagamento. Non appena l'organizzazione avrà verificato il pagamento, riceverai una seconda email di conferma definitiva.</p>
+        </div>
+        <p id="successNote" class="hidden text-sm text-red-600 mb-4"></p>
+        <div id="successDetails" class="bg-neutral-50 p-6 text-left text-sm border border-neutral-200 mb-6"></div>
+        <button type="button" onclick="window.print()" class="btn-secondary" style="width: 100%;">Stampa / salva riepilogo</button>
       </div>
     </div>
   </main>
 
   <!-- MODALE RIEPILOGO -->
-  <div id="reviewModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <div class="bg-white border-b-4 border-red-600 p-6 text-center sticky top-0 bg-white z-10">
-        <h2 class="text-2xl font-bold text-red-600 uppercase tracking-wide">Rivedi e Conferma</h2>
-        <p class="text-sm text-gray-600 mt-1">Controlla i dati prima di inviare</p>
+  <div id="reviewModal" class="hidden modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Rivedi e Conferma</h2>
+        <p class="modal-subtitle">Controlla i dati prima di inviare</p>
       </div>
-      <div id="reviewContent" class="p-6 space-y-4"></div>
-      <div class="p-6 border-t border-gray-200 bg-gray-50 flex flex-col gap-3 sticky bottom-0">
-        <div class="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-800 text-center">
-          ⚠️ <strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).
+      <div id="reviewContent" class="modal-body space-y-4"></div>
+      <div class="modal-footer">
+        <div class="bg-amber-50 border border-amber-300 p-3 text-xs text-amber-800 text-center">
+          <strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).
         </div>
         <div class="flex flex-col sm:flex-row gap-3 justify-end">
-          <button type="button" onclick="closeReviewModal()" class="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-6 rounded-lg border-2 border-gray-300 transition w-full sm:w-auto">
-            ↩️ Modifica (non invia)
+          <button type="button" onclick="closeReviewModal()" class="btn-secondary w-full sm:w-auto">
+            Modifica
           </button>
-          <button type="button" onclick="proceedWithPayment()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition shadow-md w-full sm:w-auto">
-            ✅ Invia Iscrizione Definitivamente
+          <button type="button" onclick="proceedWithPayment()" class="btn-primary w-full sm:w-auto">
+            Invia Definitivamente
           </button>
         </div>
       </div>
@@ -336,25 +989,34 @@
   </div>
 
   <!-- MODALE ERRORE -->
-  <div id="errorModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">
-      <div class="bg-red-600 text-white p-6 text-center">
-        <div class="text-5xl mb-2">⚠️</div>
-        <h2 class="text-2xl font-bold">Iscrizione Già Registrata</h2>
+  <div id="errorModal" class="hidden modal-overlay">
+    <div class="modal-content" style="max-width: 28rem;">
+      <div class="error-header">
+        <div style="margin-bottom: 0.75rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </div>
+        <h2 class="modal-title" style="color: #fff;">Iscrizione Già Registrata</h2>
       </div>
-      <div class="p-6 space-y-4">
-        <p class="text-gray-800 text-sm leading-relaxed" id="errorModalMessage"></p>
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2 text-sm">
-          <p class="font-semibold text-gray-800 mb-1">Se pensi sia un errore, contatta l'organizzazione:</p>
-          <p>📧 <a href="mailto:motoguzziclubpisa@gmail.com" class="text-red-600 underline font-medium">motoguzziclubpisa@gmail.com</a></p>
-          <p>📞 <a href="tel:+393297259560" class="text-red-600 underline font-medium">329 725 9560</a></p>
+      <div class="modal-body" style="padding: 1.75rem;">
+        <p class="text-neutral-800 text-sm" id="errorModalMessage" style="line-height: 1.6;"></p>
+        <div class="bg-neutral-50 border border-neutral-200 p-4 mt-4 text-sm space-y-1.5">
+          <p class="font-semibold text-neutral-800" style="margin: 0 0 0.5rem 0;">Se pensi sia un errore, contatta l'organizzazione:</p>
+          <p style="margin: 0;"><a href="mailto:motoguzziclubpisa@gmail.com" style="color: var(--red); text-decoration: underline;">motoguzziclubpisa@gmail.com</a></p>
+          <p style="margin: 0;"><a href="tel:+393297259560" style="color: var(--red); text-decoration: underline;">329 725 9560</a></p>
         </div>
       </div>
-      <div class="p-4 bg-gray-50 border-t border-gray-200 flex justify-end">
-        <button type="button" onclick="closeErrorModal()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 px-6 rounded-lg transition">Chiudi</button>
+      <div style="padding: 1rem 1.75rem; border-top: 1px solid var(--line); background: #faf9f7; text-align: right;">
+        <button type="button" onclick="closeErrorModal()" class="btn-secondary">Chiudi</button>
       </div>
     </div>
   </div>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <strong>Moto Guzzi Club Pisa — Aquile Alfee</strong>
+    <p style="margin: 0.5rem 0;">motoguzziclubpisa@gmail.com · 329 725 9560</p>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">2° Raduno Aquile Alfee · 2-4 Aprile 2027</p>
+  </footer>
 
   <script>
     const CONFIG = {
@@ -393,27 +1055,21 @@
     const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
     const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
 
-    // Popola il menu a tendina dei club
     (function initClubs() {
       const select = $('pilotClub');
       CLUBS.forEach(club => {
         const opt = document.createElement('option');
-        opt.value = club;
-        opt.textContent = club;
+        opt.value = club; opt.textContent = club;
         select.appendChild(opt);
       });
       const optNone = document.createElement('option');
-      optNone.value = 'NESSUN CLUB';
-      optNone.textContent = 'NESSUN CLUB';
+      optNone.value = 'NESSUN CLUB'; optNone.textContent = 'NESSUN CLUB';
       select.appendChild(optNone);
-      
       const optAltro = document.createElement('option');
-      optAltro.value = 'ALTRO';
-      optAltro.textContent = 'ALTRO (specifica)';
+      optAltro.value = 'ALTRO'; optAltro.textContent = 'ALTRO (specifica)';
       select.appendChild(optAltro);
     })();
 
-    // Logica per il campo "ALTRO" club
     $('pilotClub').addEventListener('change', function() {
       const altroInput = $('pilotClubAltro');
       if (this.value === 'ALTRO') {
@@ -434,7 +1090,7 @@
       const meals = {};
       let total = withShirt ? PRICES.withShirt : PRICES.base;
       const lines = [{ label: withShirt ? 'Iscrizione con maglietta' : 'Iscrizione base', amount: total }];
-      
+
       let cardValue = null;
       if (isMember) {
         const suffix = $(p.card).value.trim();
@@ -442,9 +1098,7 @@
         lines.push({ label: 'Sconto socio MGWC (tessera ' + (cardValue || '—') + ')', amount: -PRICES.mgwcDiscount });
         total -= PRICES.mgwcDiscount;
       }
-
       if (withShirt) lines[0].label += ' (taglia ' + $(p.shirt).value + ')';
-      
       Object.keys(PRICES.meals).forEach((k) => {
         const on = $(p.meals[k]).checked; meals[k] = on;
         if (on) { total += PRICES.meals[k]; lines.push({ label: MEAL_LABELS[k], amount: PRICES.meals[k] }); }
@@ -467,11 +1121,9 @@
     function getOrder() {
       const pilot = buildPerson('', PILOT_IDS);
       pilot.city = $('pilotCity').value.trim();
-      
       let clubValue = $('pilotClub').value;
       if (clubValue === 'ALTRO') clubValue = $('pilotClubAltro').value.trim();
       pilot.club = clubValue;
-
       const hasPassenger = $('hasPassenger').checked;
       const passenger = hasPassenger ? buildPerson('pass', PASS_IDS) : null;
       const total = Math.max(pilot.subtotal + (passenger ? passenger.subtotal : 0), 0);
@@ -495,36 +1147,35 @@
       toggle('mgwcCardContainer', pilotMember);
       setRequired('mgwcCardNumber', pilotMember);
       if (!pilotMember) $('mgwcCardNumber').value = '';
-      
+
       const hasPassenger = $('hasPassenger').checked;
       toggle('passengerContainer', hasPassenger);
       toggle('passengerRegContainer', hasPassenger);
       toggle('passengerMealsContainer', hasPassenger);
       setRequired('passSurname', hasPassenger);
       setRequired('passFirstName', hasPassenger);
-      
+
       const passShirt = hasPassenger && document.querySelector('input[name="passRegType"]:checked').value === String(PRICES.withShirt);
       toggle('passShirtSizeContainer', passShirt);
-      
+
       const passMember = hasPassenger && $('passMgwcMember').checked;
       toggle('passMgwcCardContainer', passMember);
       setRequired('passMgwcCardNumber', passMember);
       if (!passMember) $('passMgwcCardNumber').value = '';
-      
+
       const order = getOrder();
       currentTotal = order.total;
       $('totalDisplay').innerText = eur(order.total);
-      
+
       const list = $('summaryList');
       list.innerHTML = '';
       const addGroup = (title, person) => {
         const head = document.createElement('li');
-        head.className = 'font-bold text-gray-900 pt-1';
+        head.className = 'summary-group-title';
         head.textContent = title;
         list.appendChild(head);
         person.lines.forEach((l) => {
           const li = document.createElement('li');
-          li.className = 'flex justify-between';
           const a = document.createElement('span'); a.textContent = l.label;
           const b = document.createElement('span'); b.textContent = (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount));
           li.appendChild(a); li.appendChild(b);
@@ -535,21 +1186,21 @@
       if (order.passenger) addGroup('Passeggero', order.passenger);
       updateCausale();
     }
-    
+
     function causaleText() { return 'Raduno Pisa ' + CONFIG.EVENT_YEAR; }
     function updateCausale() { $('causaleValue').textContent = causaleText(); }
+
     function setPaymentMethod(method) {
       paymentMethod = method;
-      const on = 'p-3 border-2 border-red-600 bg-red-50 rounded-lg text-center font-bold text-red-700 transition';
-      const off = 'p-3 border-2 border-gray-200 bg-gray-50 rounded-lg text-center font-bold text-gray-600 transition';
-      $('btnPaypal').className = method === 'paypal' ? on : off;
-      $('btnBank').className = method === 'bank' ? on : off;
+      $('btnPaypal').classList.toggle('is-active', method === 'paypal');
+      $('btnBank').classList.toggle('is-active', method === 'bank');
       toggle('paypalContainer', method === 'paypal');
       toggle('bankContainer', method === 'bank');
     }
+
     function copyIban() {
       const text = $('ibanValue').innerText;
-      const done = () => { $('copyBtnText').innerText = 'Copiato!'; setTimeout(() => { $('copyBtnText').innerText = 'Copia IBAN'; }, 2000); };
+      const done = () => { $('copyBtnText').innerText = 'Copiato'; setTimeout(() => { $('copyBtnText').innerText = 'Copia IBAN'; }, 2000); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(done).catch(fallbackCopy);
       } else { fallbackCopy(); }
@@ -559,39 +1210,21 @@
         document.body.removeChild(ta); done();
       }
     }
+
     function validateForm() {
       const form = $('rallyForm');
       if (!form.reportValidity()) return false;
-      
       const clubSelect = $('pilotClub');
-      if (!clubSelect.value) {
-        alert('Seleziona il tuo Club di Appartenenza.');
-        clubSelect.focus();
-        return false;
-      }
-      if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) {
-        alert('Inserisci il nome del tuo club.');
-        $('pilotClubAltro').focus();
-        return false;
-      }
-      
+      if (!clubSelect.value) { alert('Seleziona il tuo Club di Appartenenza.'); clubSelect.focus(); return false; }
+      if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) { alert('Inserisci il nome del tuo club.'); $('pilotClubAltro').focus(); return false; }
       if ($('mgwcMember').checked) {
         const cardNum = $('mgwcCardNumber').value.trim();
-        if (cardNum.length !== 4 || isNaN(cardNum)) {
-          alert('Inserisci le 4 cifre finali della tessera MGWC.');
-          $('mgwcCardNumber').focus();
-          return false;
-        }
+        if (cardNum.length !== 4 || isNaN(cardNum)) { alert('Inserisci le 4 cifre finali della tessera MGWC.'); $('mgwcCardNumber').focus(); return false; }
       }
-      
       if ($('hasPassenger').checked) {
         if ($('passMgwcMember').checked) {
-           const passCardNum = $('passMgwcCardNumber').value.trim();
-           if (passCardNum.length !== 4 || isNaN(passCardNum)) {
-             alert('Inserisci le 4 cifre finali della tessera MGWC del passeggero.');
-             $('passMgwcCardNumber').focus();
-             return false;
-           }
+          const passCardNum = $('passMgwcCardNumber').value.trim();
+          if (passCardNum.length !== 4 || isNaN(passCardNum)) { alert('Inserisci le 4 cifre finali della tessera MGWC del passeggero.'); $('passMgwcCardNumber').focus(); return false; }
         }
         const missing = !$('passSurname').value.trim() ? 'passSurname' : (!$('passFirstName').value.trim() ? 'passFirstName' : null);
         if (missing) { $(missing).focus(); return false; }
@@ -614,27 +1247,16 @@
           let responseData = {};
           try { responseData = await res.json(); } catch (e) { responseData = { ok: true }; }
           if (responseData.ok === false) {
-            return { 
-              ok: false, 
-              mode: 'endpoint', 
-              error: responseData.error || 'UNKNOWN', 
-              message: responseData.message || 'Errore sconosciuto. Contatta l\'organizzazione.'
-            };
+            return { ok: false, mode: 'endpoint', error: responseData.error || 'UNKNOWN', message: responseData.message || 'Errore sconosciuto. Contatta l\'organizzazione.' };
           }
           return { ok: true, mode: 'endpoint' };
         } catch (e) {
-          console.error('Invio iscrizione fallito:', e);
-          return { 
-            ok: false, 
-            mode: 'endpoint', 
-            error: 'NETWORK', 
-            message: 'Errore di connessione. Controlla la rete e riprova.'
-          };
+          return { ok: false, mode: 'endpoint', error: 'NETWORK', message: 'Errore di connessione. Controlla la rete e riprova.' };
         }
       }
       return { ok: true, mode: 'none' };
     }
-    
+
     function showSuccess(order, payment, sendResult) {
       $('rallyForm').classList.add('hidden');
       $('successBox').classList.remove('hidden');
@@ -650,98 +1272,89 @@
       if (order.passenger) addPerson('Passeggero', order.passenger);
       add('Totale: ' + eur(order.total), 'font-bold text-lg pt-3');
       add('Metodo scelto: ' + payment.method, 'pt-1');
-      
       if (payment.method === 'Bonifico bancario') {
         add('IBAN: ' + CONFIG.IBAN, 'mt-2');
         add('Causale: ' + causaleText());
       } else if (payment.method === 'PayPal') {
         const a = document.createElement('a');
         a.href = payment.url; a.target = '_blank'; a.rel = 'noopener';
-        a.className = 'inline-block mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-lg';
+        a.className = 'inline-block mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded';
         a.textContent = 'Apri PayPal e completa il pagamento';
         box.appendChild(a);
       }
-      
       const note = $('successNote');
       if (!sendResult.ok) {
-        note.textContent = 'Attenzione: non siamo riusciti a trasmettere i dati agli organizzatori. Salva o stampa questo riepilogo e contattaci.';
+        note.textContent = 'Attenzione: non siamo riusciti a trasmettere i dati. Salva questo riepilogo e contattaci.';
         note.classList.remove('hidden');
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // =============================================
-    // MODALE DI RIEPILOGO
-    // =============================================
     function openReviewModal() {
       $('bankError').classList.add('hidden');
       $('paypalError').classList.add('hidden');
       if (!validateForm()) return;
-
       const order = getOrder();
       reviewOrder = order;
-
       const box = $('reviewContent');
       box.innerHTML = '';
 
       const renderPerson = (title, p, extraFields) => {
         const div = document.createElement('div');
-        div.className = 'bg-gray-50 rounded-xl p-4 border border-gray-200';
-        
-        let html = `<h3 class="font-bold text-red-600 mb-3 text-lg border-b border-gray-300 pb-2">${title}</h3>`;
+        div.className = 'bg-gray-50 p-4 border border-neutral-200';
+        let html = `<h3 class="text-lg font-bold mb-3 border-b border-neutral-300 pb-2" style="color: var(--red); text-transform: uppercase; letter-spacing: 0.03em; font-family: 'Barlow Condensed', sans-serif;">${title}</h3>`;
         html += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">`;
-        html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Nome</span><p class="font-semibold">${p.name}</p></div>`;
-        html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Email</span><p class="font-semibold break-all">${p.email || '-'}</p></div>`;
-        html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">Telefono</span><p class="font-semibold">${p.phone || '-'}</p></div>`;
-        if (extraFields) {
-          extraFields.forEach(f => {
-            html += `<div><span class="text-gray-500 text-xs uppercase tracking-wider">${f.label}</span><p class="font-semibold">${f.value || '-'}</p></div>`;
-          });
-        }
+        html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">Nome</span><p class="font-semibold mt-0.5">${p.name}</p></div>`;
+        html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">Email</span><p class="font-semibold mt-0.5 break-all">${p.email || '-'}</p></div>`;
+        html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">Telefono</span><p class="font-semibold mt-0.5">${p.phone || '-'}</p></div>`;
+        if (extraFields) extraFields.forEach(f => {
+          html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">${f.label}</span><p class="font-semibold mt-0.5">${f.value || '-'}</p></div>`;
+        });
         html += `</div>`;
-        html += `<div class="mt-4 pt-3 border-t border-gray-300">`;
-        html += `<p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Dettaglio Iscrizione</p>`;
+        html += `<div class="mt-4 pt-3 border-t border-neutral-300">`;
+        html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mb-2">Dettaglio Iscrizione</p>`;
         p.lines.forEach(l => {
           html += `<div class="flex justify-between text-sm py-1"><span>${l.label}</span><span class="font-semibold">${(l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))}</span></div>`;
         });
         const mealsOn = Object.keys(p.meals).filter(k => p.meals[k]);
         if (mealsOn.length > 0) {
-          html += `<p class="text-xs text-gray-500 uppercase tracking-wider mt-3 mb-1">Pasti Prenotati</p>`;
+          html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mt-3 mb-1">Pasti Prenotati</p>`;
           html += `<p class="text-sm">${mealsOn.map(k => MEAL_LABELS[k]).join(', ')}</p>`;
         }
         if (p.dietary) {
-          html += `<p class="text-xs text-gray-500 uppercase tracking-wider mt-3 mb-1">Intolleranze / Esigenze</p>`;
-          html += `<p class="text-sm bg-amber-50 border border-amber-200 rounded p-2">${p.dietary}</p>`;
+          html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mt-3 mb-1">Intolleranze / Esigenze</p>`;
+          html += `<p class="text-sm bg-amber-50 border border-amber-200 p-2">${p.dietary}</p>`;
         }
-        html += `<div class="flex justify-between text-base font-bold text-red-600 mt-3 pt-3 border-t border-gray-300"><span>Subtotale</span><span>${eur(p.subtotal)}</span></div>`;
+        html += `<div class="flex justify-between text-base font-bold mt-3 pt-3 border-t border-neutral-300" style="color: var(--red);"><span>Subtotale</span><span>${eur(p.subtotal)}</span></div>`;
         html += `</div>`;
-
         div.innerHTML = html;
         box.appendChild(div);
       };
 
-      renderPerson('🏍️ Pilota', order.pilot, [
+      renderPerson('Pilota', order.pilot, [
         { label: 'Città', value: order.pilot.city },
         { label: 'Club', value: order.pilot.club }
       ]);
-      if (order.passenger) renderPerson('👥 Passeggero', order.passenger, null);
+      if (order.passenger) renderPerson('Passeggero', order.passenger, null);
 
       const totalDiv = document.createElement('div');
-      totalDiv.className = 'bg-red-50 rounded-xl p-5 border-2 border-red-600 text-center';
+      totalDiv.style.background = '#0a0a0a';
+      totalDiv.style.borderLeft = '4px solid var(--red)';
+      totalDiv.style.padding = '1.5rem';
+      totalDiv.style.textAlign = 'center';
       const methodLabel = paymentMethod === 'paypal' ? 'PayPal' : 'Bonifico Bancario';
-      const methodIcon = paymentMethod === 'paypal' ? '💳' : '🏦';
       totalDiv.innerHTML = `
-        <p class="text-xs text-gray-600 uppercase tracking-wider mb-1">Totale da pagare</p>
-        <p class="text-3xl font-extrabold text-red-600 mb-3">${eur(order.total)}</p>
-        <p class="text-sm text-gray-700">Metodo scelto: <strong>${methodIcon} ${methodLabel}</strong></p>
+        <p style="color: #a3a3a3; font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; margin: 0;">Totale da pagare</p>
+        <p style="color: #ffffff; font-family: 'Barlow Condensed', sans-serif; font-size: 2.75rem; font-weight: 700; line-height: 1; margin: 0.5rem 0; letter-spacing: -0.02em;">${eur(order.total)}</p>
+        <p style="color: #a3a3a3; font-size: 0.875rem; margin: 0;">Metodo: <strong style="color: #fff;">${methodLabel}</strong></p>
       `;
       box.appendChild(totalDiv);
 
       if (paymentMethod === 'bank') {
         const ibanDiv = document.createElement('div');
-        ibanDiv.className = 'bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm';
+        ibanDiv.className = 'bg-blue-50 border border-blue-200 p-4 text-sm';
         ibanDiv.innerHTML = `
-          <p class="font-bold text-blue-800 mb-2">🏦 Coordinate Bancarie</p>
+          <p class="font-bold text-blue-900 mb-2" style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;">Coordinate Bancarie</p>
           <p class="text-blue-900"><strong>Intestatario:</strong> ${CONFIG.BANK_HOLDER}</p>
           <p class="text-blue-900"><strong>IBAN:</strong> <span class="font-mono">${CONFIG.IBAN}</span></p>
           <p class="text-blue-900"><strong>Causale:</strong> Raduno Pisa ${CONFIG.EVENT_YEAR}</p>
@@ -751,8 +1364,8 @@
 
       if (!$('privacyConsent').checked) {
         const warn = document.createElement('div');
-        warn.className = 'bg-amber-50 border border-amber-300 rounded-lg p-3 text-sm text-amber-800';
-        warn.innerHTML = '⚠️ Devi accettare l\'informativa privacy prima di inviare.';
+        warn.className = 'bg-amber-50 border border-amber-300 p-3 text-sm text-amber-800';
+        warn.innerHTML = 'Devi accettare l\'informativa privacy prima di inviare.';
         box.appendChild(warn);
       }
 
@@ -767,25 +1380,14 @@
     }
 
     async function proceedWithPayment() {
-      if (!$('privacyConsent').checked) {
-        alert('Devi accettare l\'informativa privacy per procedere.');
-        return;
-      }
+      if (!$('privacyConsent').checked) { alert('Devi accettare l\'informativa privacy per procedere.'); return; }
       if (!reviewOrder) return;
-      
       $('reviewModal').classList.add('hidden');
       document.body.style.overflow = '';
-      
-      if (paymentMethod === 'paypal') {
-        await submitPaypalFlow();
-      } else {
-        await submitBankFlow();
-      }
+      if (paymentMethod === 'paypal') await submitPaypalFlow();
+      else await submitBankFlow();
     }
 
-    // =============================================
-    // MODALE ERRORE
-    // =============================================
     function showErrorModal(message) {
       $('errorModalMessage').textContent = message || 'Non è stato possibile completare l\'iscrizione.';
       $('errorModal').classList.remove('hidden');
@@ -796,55 +1398,31 @@
       document.body.style.overflow = '';
     }
 
-    // =============================================
-    // FLUSSO PAYPAL
-    // =============================================
     function paypalUrl(total) { return 'https://www.paypal.me/' + encodeURIComponent(CONFIG.PAYPAL_ME_HANDLE) + '/' + total.toFixed(2) + 'EUR'; }
-    
+
     async function submitPaypalFlow() {
       if (submitting) return;
       submitting = true;
       $('paypalError').classList.add('hidden');
-
       const order = reviewOrder;
       const url = paypalUrl(order.total);
       const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
-      
       const result = await sendRegistration(order, payment);
-      
-      if (!result.ok) {
-        submitting = false;
-        reviewOrder = null;
-        showErrorModal(result.message);
-        return;
-      }
-      
+      if (!result.ok) { submitting = false; reviewOrder = null; showErrorModal(result.message); return; }
       window.open(url, '_blank', 'noopener');
-      
       reviewOrder = null;
       showSuccess(order, payment, result);
       submitting = false;
     }
 
-    // =============================================
-    // FLUSSO BONIFICO
-    // =============================================
     async function submitBankFlow() {
       if (submitting || !reviewOrder) return;
       submitting = true;
       $('bankError').classList.add('hidden');
-
       const order = reviewOrder;
       const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa di pagamento' };
       const result = await sendRegistration(order, payment);
-      
-      if (!result.ok) {
-        submitting = false;
-        reviewOrder = null;
-        showErrorModal(result.message);
-        return;
-      }
-      
+      if (!result.ok) { submitting = false; reviewOrder = null; showErrorModal(result.message); return; }
       reviewOrder = null;
       showSuccess(order, payment, result);
       submitting = false;
