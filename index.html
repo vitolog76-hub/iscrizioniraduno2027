@@ -98,51 +98,55 @@
       font-weight: 500;
     }
 
-        @media (max-width: 900px) {
+         @media (max-width: 900px) {
       .hero-inner {
-        gap: 1rem;
+        gap: 1.5rem;
+        justify-content: center;
       }
-      .hero-logo { height: 7rem; }
-      .hero-logo-secondary { height: 5.5rem; }
+      .hero-logo { height: 8rem; }
+      .hero-logo-secondary { height: 6rem; }
       .hero-title { font-size: 2.5rem; }
       .hero-sub { font-size: 1.25rem; }
       .hero-eyebrow { font-size: 0.6rem; padding: 0.25rem 0.5rem; }
     }
-     @media (max-width: 480px) {
+         @media (max-width: 480px) {
       .hero {
-        padding: 1.5rem 0.5rem;
+        padding: 2rem 1rem;
       }
       .hero-inner {
-        gap: 0.5rem; 
-        /* NESSUN flex-direction: column, rimane in linea! */
+        flex-direction: row;
+        justify-content: center;
+        gap: 1.25rem;
       }
       .hero-logo {
-        height: 4.5rem; /* Logo molto più piccolo per far stare tutto */
+        height: 6rem;
       }
       .hero-logo-secondary {
-        height: 3.5rem;
+        display: none;
       }
       .hero-text {
-        padding: 0 0.25rem;
+        text-align: left;
+        padding: 0;
       }
       .hero-eyebrow {
-        font-size: 0.5rem;
-        padding: 0.2rem 0.4rem;
-        margin-bottom: 0.4rem;
+        font-size: 0.6rem;
+        padding: 0.25rem 0.5rem;
+        margin-bottom: 0.5rem;
         letter-spacing: 0.1em;
       }
       .hero-title {
-        font-size: 1.4rem; /* Titolo rimpicciolito */
+        font-size: 1.9rem;
         line-height: 1;
       }
       .hero-sub {
-        font-size: 0.85rem;
-        margin-top: 0.2rem;
+        font-size: 1.1rem;
+        margin-top: 0.25rem;
       }
       .hero-meta {
-        font-size: 0.55rem;
-        margin-top: 0.3rem;
+        font-size: 0.6rem; /* Rimpicciolito per stare nella riga */
+        margin-top: 0.4rem;
         letter-spacing: 0.05em;
+        line-height: 1.3;
       }
     }
 
