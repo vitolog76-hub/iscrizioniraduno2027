@@ -656,10 +656,28 @@
     ];
 
     const MOTOMODELS = {
-      "Storiche (1921-1960)": ["Normale 500", "Sport 13/14/15", "GT (Norge, 16, 17)", "Tre Cilindri", "Alce 500", "Airone 250", "Motoleggera 65 (Guzzino)", "Superalce 500", "Astore 500", "Falcone 500", "Galletto 160/175/192", "Cardellino 73", "Zigolo 98/110", "Lodola 175", "Stornello 125", "Dingo", "Trotter"],
-      "Anni '60 e '70": ["V7 700", "V7 Special", "V7 Sport", "850 GT", "850 T", "850 T3", "850 T5", "V1000 I-Convert", "V1000 G5", "1000 SP", "1000 SP II", "Le Mans I/II/III/1000", "V35", "V35 II", "V35 Imola", "V35 C", "V50", "V50 II", "V50 Monza", "V50 III", "V50 C", "V65", "V65 SP", "V65 Lario", "California I/II/III", "254", "2C 4T"],
-      "Anni '80 e '90": ["Mille GT", "1000S", "Nevada 350", "Nevada 750", "Daytona 1000 IE", "Quota 1000", "Quota 1100 ES", "Strada 750", "Strada 1000", "1100 Sport", "V10 Centauro", "V11 Sport", "V11 Le Mans", "V11 Rosso Mandello", "V11 Scura", "V11 Ballabio", "V11 Coppa Italia"],
-      "Moderne (2000 - oggi)": ["Breva 750/850/1100/1200", "Griso 1100/1200 8V", "Norge 1200/GT 8V", "1200 Sport 4V/8V", "Bellagio", "Stelvio 1200/1200 NTX", "V7 Classic/Stone/Special/Sport/III/IV", "V9 Roamer/Bobber", "V85 TT", "V100 Mandello", "V100 Stelvio", "California 1400 Custom/Touring", "Audace", "Eldorado", "MGX-21 Flying Fortress", "MGS-01 Corsa"]
+      "Storiche (1921-1960)": [
+        "Normale 500", "Sport (13/14/15)", "GT (Norge, 16, 17)", "GTS", "Alce 500", "Airone 250", 
+        "Motoleggera 65 (Guzzino)", "Superalce 500", "Astore 500", "Falcone 500", 
+        "Galletto (160/175/192)", "Cardellino 73", "Zigolo (98/110)", "Lodola 175", 
+        "Stornello 125", "Dingo (49/50)", "Trotter"
+      ],
+      "Anni '60 e '70": [
+        "V7 700", "V7 Special 750", "V7 750 Sport", "850 GT", "850 California", "Nuovo Falcone 500",
+        "2C 4T", "254", "250 TS", "350 GTS", "400 GTS", "V850 Le Mans", "1000 SP", 
+        "V50", "V35", "V1000 Idroconvert", "V1000 G5", "V50 Monza", "Le Mans III", 
+        "California II", "V65", "V35 Custom", "850 T5", "V65 Lario", "Le Mans 1000", 
+        "Custom 125", "California III", "1000 GT", "Nevada 350", "Targa 750", 
+        "Daytona 1000 IE", "Quota 1000", "Strada 1000", "1100 Sport", "V10 Centauro", 
+        "Quota 1100 ES", "V11 / V11 Sport / V11 Le Mans"
+      ],
+      "Anni 2000 - oggi": [
+        "Breva 750", "Breva 850", "Breva 1100", "Breva 1200", "Griso 850", "Griso 1100", "Griso 1200 8V",
+        "Norge 850", "Norge 1200", "1200 Sport", "Stelvio 1200", "Stelvio 1200 NTX",
+        "Bellagio 940", "California 1400 Custom", "California 1400 Touring", "Audace", 
+        "Eldorado 1400", "MGX-21 Flying Fortress", "V7 (Classic/Stone/Special/Racer)", 
+        "V9 Roamer", "V9 Bobber", "V85 TT", "V100 Mandello", "V100 Stelvio", "MGS-01 Corsa"
+      ]
     };
 
     const PRICES = { base: 25, withShirt: 35, mgwcDiscount: 5, meals: { fri: 20, satPack: 15, satGala: 40, sun: 22 } };
@@ -752,7 +770,7 @@
       let clubValue = $('pilotClub').value;
       if (clubValue === 'ALTRO') clubValue = $('pilotClubAltro').value.trim();
       pilot.club = clubValue;
-      pilot.moto = $('pilotMoto').value.trim(); // <-- NUOVO CAMPO MOTO
+      pilot.moto = $('pilotMoto').value.trim();
 
       const hasPassenger = $('hasPassenger').checked;
       const passenger = hasPassenger ? buildPerson('pass', PASS_IDS) : null;
