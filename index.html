@@ -2,739 +2,1205 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>Check-in Raduno Aquile Alfee</title>
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscrizione Raduno - Moto Guzzi Club Pisa</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red: #c8102e;
-      --ink: #0a0a0a;
-      --ink-2: #404040;
-      --ink-3: #737373;
-      --paper: #f8f6f2;
-      --line: #e5e5e5;
-      
-      --success: #16a34a;
-      --success-bg: #f0fdf4;
-      --info: #2563eb;
-      --info-bg: #eff6ff;
-      --warning: #d97706;
-      --warning-bg: #fffbeb;
-      --error: #dc2626;
-      --error-bg: #fef2f2;
-      --neutral: #4b5563;
-      --neutral-bg: #f3f4f6;
+      --red: #c8102e; --ink: #0a0a0a; --ink-2: #404040; --ink-3: #737373;
+      --paper: #f8f6f2; --line: #e5e5e5;
     }
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body {
-      background: var(--paper);
-      font-family: 'Barlow', sans-serif;
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      margin: 0;
-      padding: 0;
-      -webkit-user-select: none; user-select: none;
-    }
+    * { box-sizing: border-box; }
+    body { background: var(--paper); font-family: 'Barlow', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; margin: 0; }
     h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.01em; }
 
-    .app-header {
-      background: #ffffff;
-      border-top: 6px solid var(--red);
-      border-bottom: 1px solid var(--line);
-      padding: 1.5rem 1.25rem;
-      text-align: center;
+    /* HERO */
+    .hero { background: #ffffff; border-top: 6px solid var(--red); border-bottom: 1px solid var(--line); padding: 2.5rem 1.5rem; }
+    .hero-inner { max-width: 72rem; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2.5rem; }
+    .hero-logos { display: flex; align-items: center; flex-shrink: 0; }
+    .hero-logo { height: 12rem; width: auto; object-fit: contain; }
+    .hero-text { flex: 0 1 auto; text-align: left; padding: 0; min-width: 0; }
+    .hero-eyebrow { display: inline-block; background: var(--ink); color: #fff; font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; padding: 0.375rem 0.75rem; margin-bottom: 1rem; }
+    .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--ink); line-height: 0.92; text-transform: uppercase; margin: 0; letter-spacing: 0.005em; }
+    .hero-sub { color: var(--red); font-size: 1.625rem; font-weight: 600; margin-top: 0.5rem; letter-spacing: 0.01em; }
+    .hero-meta { color: var(--ink-3); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.875rem; font-weight: 500; }
+
+    @media (max-width: 900px) {
+      .hero-inner { gap: 1.5rem; justify-content: center; }
+      .hero-logo { height: 10rem; }
+      .hero-title { font-size: 2.5rem; }
+      .hero-sub { font-size: 1.25rem; }
+      .hero-eyebrow { font-size: 0.6rem; padding: 0.25rem 0.5rem; }
     }
-    .app-header h1 {
-      font-size: 1.875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin: 0;
-      line-height: 1;
-    }
-    .app-header p {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin: 0.5rem 0 0 0;
-      font-weight: 500;
+    @media (max-width: 480px) {
+      .hero { padding: 2rem 1rem; }
+      .hero-inner { flex-direction: row; justify-content: center; gap: 1.25rem; }
+      .hero-logo { height: 8rem; }
+      .hero-text { text-align: left; padding: 0; }
+      .hero-eyebrow { font-size: 0.6rem; padding: 0.25rem 0.5rem; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+      .hero-title { font-size: 1.9rem; line-height: 1; }
+      .hero-sub { font-size: 1.1rem; margin-top: 0.25rem; }
+      .hero-meta { font-size: 0.6rem; margin-top: 0.4rem; letter-spacing: 0.05em; line-height: 1.3; }
     }
 
-    .app-container { max-width: 32rem; margin: 0 auto; padding: 1.25rem; }
+    /* LAYOUT */
+    .page-container { max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
 
-    .scanner-box {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      padding: 0.75rem;
-      margin-bottom: 1.25rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
-    #reader { width: 100%; }
-    #reader video { border-radius: 2px; }
-
-    .manual-box {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-    .manual-label {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-2);
-      display: block;
-      margin-bottom: 0.75rem;
-    }
-    .manual-input-group { display: flex; gap: 0.5rem; }
-    .manual-input {
-      flex: 1;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      padding: 0.875rem 1rem;
-      font-size: 1rem;
-      color: var(--ink);
-      font-family: 'Barlow', sans-serif;
-      text-transform: uppercase;
-      border-radius: 0;
-    }
-    .manual-input:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08);
-    }
-    .btn-search {
-      background: var(--ink);
-      color: #ffffff;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0 1.5rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .btn-search:hover { background: var(--red); }
-
-    .result-box {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      margin-bottom: 1.25rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    }
-    .result-header {
-      padding: 2rem 1.5rem;
-      text-align: center;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .result-icon { margin-bottom: 1rem; }
-    .result-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      margin: 0;
-      line-height: 1;
-      letter-spacing: 0.02em;
-    }
-    .result-name {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--ink-2);
-      margin: 0.75rem 0 0 0;
-    }
-    .result-total {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--ink-3);
-      margin: 0.25rem 0 0 0;
-    }
-    
-    .status-ok .result-header { border-left: 6px solid var(--success); background: var(--success-bg); }
-    .status-ok .result-title { color: var(--success); }
-    .status-ok .result-icon { color: var(--success); }
-    
-    .status-info .result-header { border-left: 6px solid var(--info); background: var(--info-bg); }
-    .status-info .result-title { color: var(--info); }
-    .status-info .result-icon { color: var(--info); }
-    
-    .status-warning .result-header { border-left: 6px solid var(--warning); background: var(--warning-bg); }
-    .status-warning .result-title { color: var(--warning); }
-    
-    .status-error .result-header { border-left: 6px solid var(--error); background: var(--error-bg); }
-    .status-error .result-title { color: var(--error); }
-
-    .status-neutral .result-header { border-left: 6px solid var(--neutral); background: var(--neutral-bg); }
-    .status-neutral .result-title { color: var(--neutral); }
-
-    .result-details { padding: 1.5rem; }
-    .person-block {
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 1.5rem;
-    }
-    .person-block:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
-    .person-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin: 0 0 0.75rem 0;
-      border-bottom: 2px solid var(--line);
-      padding-bottom: 0.5rem;
-      display: inline-block;
-    }
-    .detail-row { display: flex; justify-content: space-between; font-size: 0.9375rem; padding: 0.25rem 0; gap: 1rem; }
-    .detail-label { color: var(--ink-3); font-weight: 500; }
-    .detail-value { color: var(--ink); font-weight: 600; text-align: right; }
-    
-    .meal-list { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
-    .meal-list li { 
-      font-size: 0.9375rem; 
-      padding: 0.25rem 0; 
-      color: var(--ink);
-      display: flex;
-      align-items: center;
-    }
-    .meal-list li::before {
-      content: '';
-      display: inline-block;
-      width: 4px; height: 4px;
-      background: var(--red);
-      margin-right: 0.5rem;
-      border-radius: 50%;
-    }
-    
-    .dietary-box {
-      margin-top: 0.75rem;
-      background: #fffbeb;
-      border: 1px solid #fcd34d;
-      border-left: 3px solid var(--warning);
-      padding: 0.75rem;
-      font-size: 0.875rem;
-      color: #92400e;
-    }
-    .dietary-box strong { display: block; text-transform: uppercase; font-size: 0.6875rem; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-
-    .info-timestamp {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #ffffff;
-      border: 1px solid #bfdbfe;
-      border-radius: 999px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9375rem;
-      font-weight: 700;
-      color: var(--info);
-      letter-spacing: 0.03em;
-    }
-    .info-timestamp.success { border-color: #bbf7d0; color: var(--success); }
-
-    .order-info-block {
-      background: #fafafa;
-      border: 1px solid var(--line);
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .order-info-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--ink-3);
-      margin: 0 0 0.5rem 0;
+    /* SECTIONS */
+    .section { background: #ffffff; border: 1px solid var(--line); margin-bottom: 1.25rem; }
+    .section-head { padding: 1.5rem 2rem; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 1.25rem; }
+    .section-num { font-family: 'Barlow Condensed', sans-serif; font-size: 2.75rem; font-weight: 700; color: #e5e5e5; line-height: 1; letter-spacing: -0.02em; flex-shrink: 0; }
+    .section-label { font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: var(--red); margin: 0 0 0.25rem 0; }
+    .section-title { font-size: 1.75rem; font-weight: 600; color: var(--ink); text-transform: uppercase; line-height: 1; margin: 0; letter-spacing: 0.01em; }
+    .section-body { padding: 2rem; }
+    @media (max-width: 640px) {
+      .section-head { padding: 1.25rem 1.25rem; gap: 1rem; }
+      .section-body { padding: 1.5rem 1.25rem; }
+      .section-num { font-size: 2rem; }
+      .section-title { font-size: 1.5rem; }
     }
 
-    .result-actions {
-      padding: 1.5rem;
-      background: #faf9f7;
-      border-top: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .btn-action {
-      width: 100%;
-      padding: 1rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.125rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
-      border-radius: 0;
-    }
-    .btn-confirm { background: var(--success); color: #ffffff; }
-    .btn-confirm:hover { background: #15803d; }
-    
-    .btn-cancel { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
-    .btn-cancel:hover { background: var(--ink); color: #ffffff; }
-    
-    .btn-next { background: var(--ink); color: #ffffff; }
-    .btn-next:hover { background: var(--neutral); }
+    /* FIELDS */
+    .field { margin-bottom: 1.25rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label { display: block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 0.5rem; }
+    .field-label .req { color: var(--red); margin-left: 0.125rem; }
+    .input, .select { width: 100%; background: #ffffff; border: 1px solid var(--line); padding: 0.875rem 1rem; font-size: 0.9375rem; color: var(--ink); transition: border-color 0.15s, box-shadow 0.15s; font-family: 'Barlow', sans-serif; border-radius: 0; }
+    .input:hover, .select:hover { border-color: #d4d4d4; }
+    .input:focus, .select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08); }
+    .input::placeholder { color: #a3a3a3; }
+    .select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23737373' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+    input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1rem; height: 1rem; cursor: pointer; }
+    .field-row { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+    .field-row:last-child { margin-bottom: 0; }
+    @media (min-width: 640px) { .field-row { grid-template-columns: 1fr 1fr; } }
 
-    .search-results-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin: 0 0 1rem 0;
-      color: var(--ink);
-    }
-    .search-item {
-      width: 100%;
-      text-align: left;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      padding: 1rem;
-      margin-bottom: 0.5rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: 0;
-    }
-    .search-item:hover { border-color: var(--red); background: #fafafa; }
-    .search-item-name { font-weight: 700; font-size: 1rem; color: var(--ink); }
-    .search-item-status { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-top: 0.25rem; }
-    .search-item-status.paid { color: var(--success); }
-    .search-item-status.not-paid { color: var(--error); }
-    .search-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); }
+    /* RADIO CARDS */
+    .radio-group { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+    @media (min-width: 640px) { .radio-group { grid-template-columns: 1fr 1fr; } }
+    .radio-card { display: flex; align-items: center; padding: 1rem; background: #ffffff; border: 1px solid var(--line); cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+    .radio-card:hover { border-color: #a3a3a3; }
+    .radio-card:has(input:checked) { border-color: var(--red); background: #fdf2f4; }
+    .radio-card-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-left: 0.75rem; font-size: 0.9375rem; color: var(--ink); gap: 0.75rem; }
+    .radio-card-price { font-family: 'Barlow Condensed', sans-serif; font-size: 1.375rem; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; white-space: nowrap; }
+
+    /* OPTION ROWS */
+    .option-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .option-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.125rem; background: #ffffff; border: 1px solid var(--line); cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+    .option-row:hover { border-color: #a3a3a3; background: #fafafa; }
+    .option-row-left { display: flex; align-items: center; gap: 0.875rem; font-size: 0.9375rem; color: var(--ink); }
+    .option-row-price { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; }
+    .option-highlight { background: #f0fdf4; border-color: #bbf7d0; }
+    .option-highlight:hover { background: #dcfce7; border-color: #86efac; }
+    .option-highlight .option-row-left { color: #166534; }
+    .option-highlight .option-row-price { color: #15803d; }
+
+    /* TOTAL CARD */
+    .total-card { background: var(--ink); color: #ffffff; padding: 2.25rem; border-left: 6px solid var(--red); margin-bottom: 1.25rem; }
+    .total-label { font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: #a3a3a3; margin: 0; }
+    .total-amount { font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 700; color: #ffffff; line-height: 1; letter-spacing: -0.02em; display: block; margin: 0.5rem 0 0 0; }
+    .total-summary { margin: 1.75rem 0 0 0; padding: 1.5rem 0 0 0; border-top: 1px solid #262626; font-size: 0.875rem; color: #a3a3a3; list-style: none; }
+    .total-summary li { display: flex; justify-content: space-between; padding: 0.25rem 0; }
+    .total-summary .summary-group-title { color: #ffffff; font-weight: 700; margin-top: 0.75rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.12em; }
+    .total-summary .summary-group-title:first-child { margin-top: 0; }
+
+    /* PRIVACY */
+    .privacy-label { display: flex; align-items: flex-start; gap: 0.875rem; cursor: pointer; font-size: 0.9375rem; color: var(--ink-2); line-height: 1.5; }
+    .privacy-label input { margin-top: 0.125rem; flex-shrink: 0; }
+    .privacy-label a { color: var(--red); text-decoration: underline; font-weight: 500; }
+    .privacy-note { margin-top: 1rem; font-size: 0.8125rem; color: var(--ink-3); padding-left: 1.875rem; line-height: 1.5; }
+
+    /* PAYMENT TOGGLE */
+    .payment-toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.75rem; }
+    .payment-option { padding: 1.125rem 1rem; border: 1px solid var(--line); background: #ffffff; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 1rem; color: var(--ink-2); transition: all 0.15s; cursor: pointer; }
+    .payment-option:hover { border-color: var(--ink-3); background: #fafafa; }
+    .payment-option.is-active { background: var(--red); border-color: var(--red); color: #ffffff; }
+
+    /* BUTTONS */
+    .btn-primary { width: 100%; background: var(--red); color: #ffffff; font-family: 'Barlow Condensed', sans-serif; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 1.125rem 2rem; border: none; cursor: pointer; transition: background 0.15s; display: block; }
+    .btn-primary:hover { background: #a50d26; }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-paypal { width: 100%; background: #ffc439; color: #003087; font-family: 'Barlow Condensed', sans-serif; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 1.125rem 2rem; border: none; cursor: pointer; transition: background 0.15s; display: block; }
+    .btn-paypal:hover { background: #f0b429; }
+    .btn-paypal:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-secondary { background: transparent; color: var(--ink); font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.875rem 1.75rem; border: 1px solid var(--ink); cursor: pointer; transition: all 0.15s; }
+    .btn-secondary:hover { background: var(--ink); color: #ffffff; }
+
+    /* BANK INFO */
+    .bank-info { background: #faf9f7; border-left: 4px solid var(--red); padding: 1.5rem; }
+    .bank-info-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.03em; }
+    .bank-info-row { font-size: 0.875rem; padding: 0.25rem 0; color: var(--ink-2); }
+    .bank-info-row strong { color: var(--ink); font-weight: 600; }
+    .bank-info-iban { background: #ffffff; border: 1px solid var(--line); padding: 1rem; margin: 1rem 0; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .bank-info-iban-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+    .bank-info-iban-code { font-family: 'Courier New', monospace; color: var(--red); font-weight: 700; letter-spacing: 0.05em; font-size: 1rem; }
+    .btn-copy { background: transparent; border: 1px solid var(--line); padding: 0.5rem 0.875rem; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; }
+    .btn-copy:hover { background: var(--ink); color: #ffffff; border-color: var(--ink); }
+
+    /* MODALS */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.75); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-content { background: #ffffff; max-width: 42rem; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+    .modal-header { background: var(--ink); color: #ffffff; padding: 1.75rem 2rem; border-bottom: 4px solid var(--red); }
+    .modal-title { font-size: 1.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin: 0; line-height: 1; }
+    .modal-subtitle { font-size: 0.875rem; color: #a3a3a3; margin: 0.375rem 0 0 0; }
+    .modal-body { padding: 2rem; }
+    .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--line); background: #faf9f7; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* SUCCESS */
+    .success-card { background: #ffffff; border: 1px solid var(--line); border-top: 6px solid #16a34a; padding: 3rem 2rem; text-align: center; }
+    .success-icon { display: inline-flex; align-items: center; justify-content: center; width: 5rem; height: 5rem; background: #16a34a; color: #ffffff; border-radius: 50%; margin-bottom: 1.5rem; }
+    .success-title { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; color: var(--ink); letter-spacing: 0.03em; line-height: 1; margin: 0 0 1rem 0; }
+
+    /* ERROR MODAL */
+    .error-header { background: var(--red); color: #ffffff; padding: 1.75rem 2rem; text-align: center; }
+
+    /* LOADING OVERLAY */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.85); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .loading-content { text-align: center; color: #ffffff; max-width: 24rem; }
+    .spinner { width: 64px; height: 64px; border: 4px solid rgba(255, 255, 255, 0.15); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: #ffffff; }
+    .loading-subtext { font-size: 0.875rem; color: #a3a3a3; margin: 0.5rem 0 0; line-height: 1.5; }
+
+    /* FOOTER */
+    .page-footer { text-align: center; padding: 3rem 1.5rem 2rem; color: var(--ink-3); font-size: 0.8125rem; border-top: 1px solid var(--line); background: #ffffff; }
+    .page-footer strong { color: var(--ink); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem; display: block; margin-bottom: 0.5rem; }
+
+    #successDetails { text-align: left; }
+    #successDetails > div { padding: 0.25rem 0; color: var(--ink-2); font-size: 0.9375rem; }
+    #successDetails > div.font-bold { color: var(--ink); font-weight: 600; }
+    #reviewContent .bg-gray-50 { background: #faf9f7; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <header class="app-header">
-    <h1>Check-in Raduno</h1>
-    <p>Aquile Alfee 2027</p>
-  </header>
-
-  <main class="app-container">
-    
-    <div id="scannerBox" class="scanner-box">
-      <div id="reader"></div>
-    </div>
-
-    <div id="resultBox" class="result-box hidden"></div>
-
-    <div id="manualBox" class="manual-box">
-      <label class="manual-label">Problemi con il QR? Cerca manualmente:</label>
-      <div class="manual-input-group">
-        <input type="text" id="manualCode" placeholder="MGC2027-XXXXXX o Cognome" class="manual-input">
-        <button onclick="manualCheckIn()" class="btn-search">Cerca</button>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-logos">
+        <img src="logo.jpg" alt="Moto Guzzi Club Pisa" class="hero-logo">
+      </div>
+      <div class="hero-text">
+        <span class="hero-eyebrow">2-4 Aprile 2027</span>
+        <h1 class="hero-title">Moto Guzzi<br>Club Pisa</h1>
+        <p class="hero-sub">2° Raduno "Aquile Alfee"</p>
+        <p class="hero-meta">Modulo Ufficiale Iscrizione &amp; Ristorazione</p>
       </div>
     </div>
+  </header>
 
-  </main>
+  <main class="page-container">
+    <form id="rallyForm" novalidate onsubmit="event.preventDefault();">
 
-  <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwrx5s88EV-zuq1FpCWCaqGiUVoRFioebcNEqM6oSLtCuqNoY6Sv_iEBsxhWhcJZJ4B/exec';
-
-    const qr = new Html5Qrcode('reader');
-    let lastScanned = '';
-    let lastScanTime = 0;
-    let currentCode = '';
-    let busy = false;
-
-    qr.start(
-      { facingMode: 'environment' },
-      { fps: 10, qrbox: { width: 250, height: 250 } },
-      onScanSuccess
-    ).catch(err => {
-      document.getElementById('scannerBox').innerHTML = 
-        '<div style="color:var(--error); font-size:0.875rem; padding:1rem; text-align:center;">Impossibile accedere alla fotocamera.<br>Usa il campo manuale qui sotto.<br><br><em style="color:var(--ink-3); font-size:0.75rem;">' + err + '</em></div>';
-    });
-
-    async function onScanSuccess(decodedText) {
-      if (busy) return;
-      const now = Date.now();
-      if (decodedText === lastScanned && now - lastScanTime < 3000) return;
-      lastScanned = decodedText;
-      lastScanTime = now;
-      currentCode = decodedText;
-      
-      beep();
-      
-      try {
-        busy = true;
-        const response = await fetch(WEB_APP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'verify', code: decodedText })
-        });
-        const result = await response.json();
-        showResult(result);
-      } catch (err) {
-        showError('Errore di connessione. Riprova.');
-      } finally {
-        busy = false;
-      }
-    }
-
-    async function manualCheckIn() {
-      const query = document.getElementById('manualCode').value.trim();
-      if (!query || busy) return;
-      beep();
-      try {
-        busy = true;
-        if (query.toUpperCase().startsWith('MGC2027-')) {
-          currentCode = query.toUpperCase();
-          const response = await fetch(WEB_APP_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'verify', code: query.toUpperCase() })
-          });
-          const result = await response.json();
-          showResult(result);
-        } else {
-          const response = await fetch(WEB_APP_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action: 'search', query: query })
-          });
-          const result = await response.json();
-          showSearchResults(result);
-        }
-      } catch (err) {
-        showError('Errore: ' + err.message);
-      } finally {
-        busy = false;
-      }
-    }
-
-    async function verificaDaLista(code) {
-      currentCode = code;
-      try {
-        busy = true;
-        const response = await fetch(WEB_APP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'verify', code: code })
-        });
-        const result = await response.json();
-        showResult(result);
-      } catch (err) {
-        showError('Errore: ' + err.message);
-      } finally {
-        busy = false;
-      }
-    }
-
-    async function confermaIngresso() {
-      if (!currentCode || busy) return;
-      busy = true;
-      
-      const btn = document.getElementById('confirmBtn');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Registrazione in corso...';
-        btn.style.opacity = '0.7';
-      }
-      
-      try {
-        const response = await fetch(WEB_APP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'confirm', code: currentCode })
-        });
-        const result = await response.json();
-        showResult(result);
-      } catch (err) {
-        showError('Errore: ' + err.message);
-      } finally {
-        busy = false;
-      }
-    }
-
-    function getIcon(type) {
-      const stroke = 'currentColor';
-      if (type === 'ok') return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-      if (type === 'clock') return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
-      if (type === 'warning') return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`;
-      if (type === 'error') return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
-    }
-
-    function renderOrderInfo(result) {
-      if (!result.dataIscrizione && !result.modalitaPagamento && !result.dataPagamento) return '';
-      let html = '<div class="order-info-block">';
-      html += '<p class="order-info-title">Dati iscrizione</p>';
-      if (result.dataIscrizione) {
-        html += `<div class="detail-row"><span class="detail-label">Iscritto il</span><span class="detail-value">${result.dataIscrizione}</span></div>`;
-      }
-      if (result.dataPagamento) {
-        html += `<div class="detail-row"><span class="detail-label">Pagamento registrato il</span><span class="detail-value">${result.dataPagamento}</span></div>`;
-      }
-      if (result.modalitaPagamento) {
-        html += `<div class="detail-row"><span class="detail-label">Metodo pagamento</span><span class="detail-value">${result.modalitaPagamento}</span></div>`;
-      }
-      html += '</div>';
-      return html;
-    }
-
-    function showResult(result) {
-      const box = document.getElementById('resultBox');
-      const scannerBox = document.getElementById('scannerBox');
-      const manualBox = document.getElementById('manualBox');
-      
-      scannerBox.classList.add('hidden');
-      manualBox.classList.add('hidden');
-      box.classList.remove('hidden');
-      
-      let statusClass, iconType, title;
-      
-      if (result.status === 'ready') {
-        statusClass = 'status-ok';
-        iconType = 'ok';
-        title = 'QUOTA VERSATA';
-      } else if (result.status === 'ok') {
-        statusClass = 'status-ok';
-        iconType = 'ok';
-        title = 'INGRESSO REGISTRATO';
-      } else if (result.status === 'not_paid') {
-        statusClass = 'status-error';
-        iconType = 'error';
-        title = 'NON PAGATO';
-      } else if (result.status === 'already_in') {
-        statusClass = 'status-info';
-        iconType = 'clock';
-        title = 'INGRESSO REGISTRATO';
-      } else {
-        statusClass = 'status-neutral';
-        iconType = 'error';
-        title = 'NON TROVATO';
-      }
-      
-      let html = `<div class="${statusClass}">`;
-      
-      html += `<div class="result-header">
-        <div class="result-icon">${getIcon(iconType)}</div>
-        <h2 class="result-title">${title}</h2>`;
-      if (result.name) {
-        html += `<p class="result-name">${result.name}</p>`;
-      }
-      if (result.status === 'already_in' && result.timestamp) {
-        html += `<div class="info-timestamp">Ingresso del ${result.timestamp}</div>`;
-      }
-      if (result.status === 'ok' && result.timestamp) {
-        html += `<div class="info-timestamp success">Ingresso del ${result.timestamp}</div>`;
-      }
-      if (result.total) {
-        html += `<p class="result-total">Totale: <strong>${Number(result.total).toFixed(2).replace('.', ',')} €</strong></p>`;
-      }
-      html += `</div>`;
-      
-      if (result.status === 'ready' || result.status === 'ok' || result.status === 'already_in' || result.status === 'not_paid') {
-        html += `<div class="result-details">`;
-        
-        html += renderOrderInfo(result);
-        
-        if (result.pilotDetails) {
-          html += `<div class="person-block">`;
-          html += `<div class="person-title">Pilota</div>`;
-          
-          if (result.pilotDetails.moto) {
-            html += `<div class="detail-row"><span class="detail-label">Moto</span><span class="detail-value">${result.pilotDetails.moto}</span></div>`;
-          }
-          if (result.pilotDetails.citta) {
-            html += `<div class="detail-row"><span class="detail-label">Città</span><span class="detail-value">${result.pilotDetails.citta}</span></div>`;
-          }
-          if (result.pilotDetails.club) {
-            html += `<div class="detail-row"><span class="detail-label">Club</span><span class="detail-value">${result.pilotDetails.club}</span></div>`;
-          }
-          
-          html += `<div style="height:0.5rem;"></div>`;
-          
-          if (result.pilotDetails.hasMeals) {
-            html += `<ul class="meal-list">`;
-            result.pilotDetails.meals.forEach(m => { html += `<li>${m.label}</li>`; });
-            html += `</ul>`;
-          } else {
-            html += `<p style="font-size:0.875rem; color:var(--ink-3); font-style:italic; margin:0;">Nessun pasto prenotato</p>`;
-          }
-          if (result.pilotDetails.shirt) {
-            html += `<div class="detail-row" style="margin-top:0.5rem;"><span class="detail-label">Taglia Maglietta</span><span class="detail-value">${result.pilotDetails.shirt}</span></div>`;
-          }
-          if (result.pilotDetails.intolleranze) {
-            html += `<div class="dietary-box"><strong>Intolleranze / Esigenze</strong>${result.pilotDetails.intolleranze}</div>`;
-          }
-          html += `</div>`;
-        }
-        
-        if (result.passengerDetails && result.passengerName) {
-          html += `<div class="person-block">`;
-          html += `<div class="person-title">Passeggero</div>`;
-          html += `<p style="font-size:1.125rem; font-weight:700; color:var(--ink); margin:0 0 0.75rem 0;">${result.passengerName}</p>`;
-          if (result.passengerDetails.hasMeals) {
-            html += `<ul class="meal-list">`;
-            result.passengerDetails.meals.forEach(m => { html += `<li>${m.label}</li>`; });
-            html += `</ul>`;
-          } else {
-            html += `<p style="font-size:0.875rem; color:var(--ink-3); font-style:italic; margin:0;">Nessun pasto prenotato</p>`;
-          }
-          if (result.passengerDetails.shirt) {
-            html += `<div class="detail-row" style="margin-top:0.5rem;"><span class="detail-label">Taglia Maglietta</span><span class="detail-value">${result.passengerDetails.shirt}</span></div>`;
-          }
-          if (result.passengerDetails.intolleranze) {
-            html += `<div class="dietary-box"><strong>Intolleranze / Esigenze</strong>${result.passengerDetails.intolleranze}</div>`;
-          }
-          html += `</div>`;
-        }
-        
-        html += `</div>`;
-      }
-      
-      html += `<div class="result-actions">`;
-      
-      if (result.status === 'ready') {
-        html += `<button id="confirmBtn" onclick="confermaIngresso()" class="btn-action btn-confirm">Conferma Ingresso</button>`;
-        html += `<button onclick="resetScanner()" class="btn-action btn-cancel">Annulla</button>`;
-      } else {
-        html += `<button onclick="resetScanner()" class="btn-action btn-next">Scansiona Prossimo</button>`;
-      }
-      
-      html += `</div>`;
-      html += `</div>`;
-      
-      box.innerHTML = html;
-      
-      if (navigator.vibrate) {
-        if (result.status === 'ok') navigator.vibrate([100, 50, 100]);
-        else if (result.status === 'ready') navigator.vibrate([50]);
-        else navigator.vibrate([300]);
-      }
-      
-      if (result.status === 'ok') {
-        setTimeout(() => {
-          if (!document.getElementById('resultBox').classList.contains('hidden')) {
-            resetScanner();
-          }
-        }, 3000);
-      }
-    }
-
-    function showSearchResults(result) {
-      const box = document.getElementById('resultBox');
-      const scannerBox = document.getElementById('scannerBox');
-      const manualBox = document.getElementById('manualBox');
-      
-      scannerBox.classList.add('hidden');
-      manualBox.classList.add('hidden');
-      box.classList.remove('hidden');
-      
-      if (result.status === 'not_found') {
-        box.innerHTML = `
-          <div class="status-neutral">
-            <div class="result-header">
-              ${getIcon('error')}
-              <h2 class="result-title">NON TROVATO</h2>
-            </div>
-            <div class="result-details" style="text-align:center;">
-              <p style="color:var(--ink-2);">${result.message}</p>
-            </div>
-            <div class="result-actions">
-              <button onclick="resetScanner()" class="btn-action btn-next">Riprova</button>
-            </div>
-          </div>
-        `;
-        return;
-      }
-      
-      if (result.status === 'list') {
-        let html = `<div style="padding: 1.5rem;">`;
-        html += `<h2 class="search-results-title">Trovati ${result.results.length} iscritti</h2>`;
-        
-        result.results.forEach(r => {
-          const statoClass = r.paid ? 'paid' : 'not-paid';
-          const statoText = r.paid ? (r.alreadyIn ? 'Presente' : 'Pagato') : 'Non pagato';
-          
-          html += `
-            <button onclick="verificaDaLista('${r.code}')" class="search-item">
-              <div>
-                <p class="search-item-name">${r.name}</p>
-                <p class="search-item-status ${statoClass}">${statoText}</p>
-              </div>
-              <div style="text-align:right;">
-                <p style="font-size:0.65rem; text-transform:uppercase; color:var(--ink-3); margin:0;">Totale</p>
-                <p class="search-item-price">${Number(r.total).toFixed(2).replace('.', ',')} €</p>
-              </div>
-            </button>
-          `;
-        });
-        
-        html += `<button onclick="resetScanner()" class="btn-action btn-cancel" style="margin-top:1rem;">Annulla</button>`;
-        html += `</div>`;
-        box.innerHTML = html;
-      }
-    }
-
-    function showError(msg) {
-      const box = document.getElementById('resultBox');
-      const scannerBox = document.getElementById('scannerBox');
-      const manualBox = document.getElementById('manualBox');
-      
-      scannerBox.classList.add('hidden');
-      manualBox.classList.add('hidden');
-      box.classList.remove('hidden');
-      
-      box.innerHTML = `
-        <div class="status-error">
-          <div class="result-header">
-            ${getIcon('error')}
-            <h2 class="result-title">ERRORE</h2>
-          </div>
-          <div class="result-details" style="text-align:center;">
-            <p style="color:var(--ink-2);">${msg}</p>
-          </div>
-          <div class="result-actions">
-            <button onclick="resetScanner()" class="btn-action btn-next">Riprova</button>
+      <!-- 01 DATI PILOTA -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <div>
+            <p class="section-label">Pilota</p>
+            <h2 class="section-title">Dati Anagrafici</h2>
           </div>
         </div>
-      `;
-    }
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotSurname" class="field-label">Cognome <span class="req">*</span></label>
+              <input type="text" id="pilotSurname" required autocomplete="family-name" class="input" placeholder="Rossi">
+            </div>
+            <div class="field">
+              <label for="pilotFirstName" class="field-label">Nome <span class="req">*</span></label>
+              <input type="text" id="pilotFirstName" required autocomplete="given-name" class="input" placeholder="Mario">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotEmail" class="field-label">Email <span class="req">*</span></label>
+              <input type="email" id="pilotEmail" required autocomplete="email" class="input" placeholder="mario.rossi@email.com">
+            </div>
+            <div class="field">
+              <label for="pilotPhone" class="field-label">Telefono <span class="req">*</span></label>
+              <input type="tel" id="pilotPhone" required autocomplete="tel" pattern="[0-9\s\+\-]{9,15}" class="input" placeholder="333 1234567">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotCity" class="field-label">Città <span class="req">*</span></label>
+              <input type="text" id="pilotCity" required class="input" placeholder="Pisa">
+            </div>
+            <div class="field">
+              <label for="pilotClub" class="field-label">Club di Appartenenza <span class="req">*</span></label>
+              <select id="pilotClub" required class="select">
+                <option value="">Seleziona il tuo club...</option>
+              </select>
+              <input type="text" id="pilotClubAltro" class="hidden mt-2 input" placeholder="Scrivi il nome del club">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotMoto" class="field-label">Modello Moto Guzzi <span class="req">*</span></label>
+              <select id="pilotMoto" required class="select">
+                <option value="">Seleziona il tuo modello...</option>
+              </select>
+              <input type="text" id="pilotMotoAltro" class="hidden mt-2 input" placeholder="Scrivi il modello della tua moto">
+            </div>
+          </div>
+          <div class="pt-2 border-t border-neutral-200 mt-2" style="padding-top: 1.25rem;">
+            <label class="inline-flex items-center cursor-pointer gap-2">
+              <input type="checkbox" id="hasPassenger" onchange="onPassengerToggle()">
+              <span class="text-sm font-medium">Partecipa anche un Passeggero</span>
+            </label>
+          </div>
+        </div>
+      </div>
 
-    function resetScanner() {
-      document.getElementById('resultBox').classList.add('hidden');
-      document.getElementById('scannerBox').classList.remove('hidden');
-      document.getElementById('manualBox').classList.remove('hidden');
-      document.getElementById('manualCode').value = '';
-      lastScanned = '';
-      lastScanTime = 0;
-      currentCode = '';
-      busy = false;
-    }
+      <!-- 02 DATI PASSEGGERO -->
+      <div id="passengerContainer" class="hidden section">
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <div>
+            <p class="section-label">Passeggero</p>
+            <h2 class="section-title">Dati Anagrafici</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="passSurname" class="field-label">Cognome <span class="req">*</span></label>
+              <input type="text" id="passSurname" class="input" placeholder="Bianchi">
+            </div>
+            <div class="field">
+              <label for="passFirstName" class="field-label">Nome <span class="req">*</span></label>
+              <input type="text" id="passFirstName" class="input" placeholder="Laura">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="passEmail" class="field-label">Email</label>
+              <input type="email" id="passEmail" class="input" placeholder="laura.bianchi@email.com">
+            </div>
+            <div class="field">
+              <label for="passPhone" class="field-label">Telefono</label>
+              <input type="tel" id="passPhone" pattern="[0-9\s\+\-]{9,15}" class="input" placeholder="333 9876543">
+            </div>
+          </div>
+        </div>
+      </div>
 
-    function beep() {
+      <!-- 03 QUOTA PILOTA -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <div>
+            <p class="section-label">Pilota</p>
+            <h2 class="section-title">Quota &amp; Gadget</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label class="field-label">Tipo di Iscrizione</label>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="regType" value="25" checked onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Base — Senza maglietta</span>
+                  <span class="radio-card-price">25,00 €</span>
+                </span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="regType" value="35" onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Con maglietta</span>
+                  <span class="radio-card-price">35,00 €</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div id="shirtSizeContainer" class="hidden field mt-4">
+            <label for="shirtSize" class="field-label">Taglia Maglietta</label>
+            <select id="shirtSize" class="select">
+              <option value="S">S</option>
+              <option value="M" selected>M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+          <div class="mt-4 pt-4 border-t border-neutral-200">
+            <label class="option-row option-highlight">
+              <span class="option-row-left">
+                <input type="checkbox" id="mgwcMember" onchange="updateTotal()">
+                Socio MGWC in regola — sconto 5€
+              </span>
+              <span class="option-row-price">-5,00 €</span>
+            </label>
+            <div id="mgwcCardContainer" class="hidden mt-3">
+              <label class="field-label">Numero Tessera MGWC <span class="req">*</span></label>
+              <div class="flex" style="max-width: 260px;">
+                <span class="inline-flex items-center px-3 bg-neutral-100 border border-neutral-300 border-r-0 font-mono text-sm text-neutral-600">2027</span>
+                <input type="text" id="mgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="input" placeholder="0000" style="border-left: 0;">
+              </div>
+              <p class="text-xs text-neutral-500 mt-1.5">Inserisci le 4 cifre finali della tessera.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 QUOTA PASSEGGERO -->
+      <div id="passengerRegContainer" class="hidden section">
+        <div class="section-head">
+          <span class="section-num">04</span>
+          <div>
+            <p class="section-label">Passeggero</p>
+            <h2 class="section-title">Quota &amp; Gadget</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label class="field-label">Tipo di Iscrizione</label>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="passRegType" value="25" checked onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Base — Senza maglietta</span>
+                  <span class="radio-card-price">25,00 €</span>
+                </span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="passRegType" value="35" onchange="updateTotal()">
+                <span class="radio-card-inner">
+                  <span>Con maglietta</span>
+                  <span class="radio-card-price">35,00 €</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div id="passShirtSizeContainer" class="hidden field mt-4">
+            <label for="passShirtSize" class="field-label">Taglia Maglietta</label>
+            <select id="passShirtSize" class="select">
+              <option value="S">S</option>
+              <option value="M" selected>M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+          <div class="mt-4 pt-4 border-t border-neutral-200">
+            <label class="option-row option-highlight">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMgwcMember" onchange="updateTotal()">
+                Socio MGWC in regola — sconto 5€
+              </span>
+              <span class="option-row-price">-5,00 €</span>
+            </label>
+            <div id="passMgwcCardContainer" class="hidden mt-3">
+              <label class="field-label">Numero Tessera MGWC <span class="req">*</span></label>
+              <div class="flex" style="max-width: 260px;">
+                <span class="inline-flex items-center px-3 bg-neutral-100 border border-neutral-300 border-r-0 font-mono text-sm text-neutral-600">2027</span>
+                <input type="text" id="passMgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="input" placeholder="0000" style="border-left: 0;">
+              </div>
+              <p class="text-xs text-neutral-500 mt-1.5">Inserisci le 4 cifre finali della tessera.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 PASTI PILOTA -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">05</span>
+          <div>
+            <p class="section-label">Pilota</p>
+            <h2 class="section-title">Pasti &amp; Ristorazione</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="option-list">
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealFri" onchange="updateTotal()">
+                Buffet Venerdì
+              </span>
+              <span class="option-row-price">20,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealSatPack" onchange="updateTotal()">
+                Pranzo al sacco Sabato
+              </span>
+              <span class="option-row-price">15,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealSatGala" onchange="updateTotal()">
+                Cena di Gala Sabato
+              </span>
+              <span class="option-row-price">40,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="mealSun" onchange="updateTotal()">
+                Pranzo Domenica
+              </span>
+              <span class="option-row-price">22,00 €</span>
+            </label>
+          </div>
+          <div class="field mt-5">
+            <label for="pilotDietary" class="field-label">Intolleranze / Esigenze Alimentari</label>
+            <input type="text" id="pilotDietary" class="input" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 PASTI PASSEGGERO -->
+      <div id="passengerMealsContainer" class="hidden section">
+        <div class="section-head">
+          <span class="section-num">06</span>
+          <div>
+            <p class="section-label">Passeggero</p>
+            <h2 class="section-title">Pasti &amp; Ristorazione</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="option-list">
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealFri" onchange="updateTotal()">
+                Buffet Venerdì
+              </span>
+              <span class="option-row-price">20,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealSatPack" onchange="updateTotal()">
+                Pranzo al sacco Sabato
+              </span>
+              <span class="option-row-price">15,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealSatGala" onchange="updateTotal()">
+                Cena di Gala Sabato
+              </span>
+              <span class="option-row-price">40,00 €</span>
+            </label>
+            <label class="option-row">
+              <span class="option-row-left">
+                <input type="checkbox" id="passMealSun" onchange="updateTotal()">
+                Pranzo Domenica
+              </span>
+              <span class="option-row-price">22,00 €</span>
+            </label>
+          </div>
+          <div class="field mt-5">
+            <label for="passDietary" class="field-label">Intolleranze / Esigenze Alimentari</label>
+            <input type="text" id="passDietary" class="input" placeholder="Es. Vegetariano, Celiachia, Allergia a...">
+          </div>
+        </div>
+      </div>
+
+      <!-- TOTALE -->
+      <div class="total-card">
+        <p class="total-label">Riepilogo finale</p>
+        <span id="totalDisplay" class="total-amount">25,00 €</span>
+        <ul id="summaryList" class="total-summary"></ul>
+      </div>
+
+      <!-- 07 PRIVACY -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">07</span>
+          <div>
+            <p class="section-label">Documenti</p>
+            <h2 class="section-title">Privacy &amp; Consenso</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <label class="privacy-label">
+            <input type="checkbox" id="privacyConsent" required>
+            <span>
+              Acconsento al trattamento dei dati personali forniti (anche del passeggero, se presente) ai soli fini dell'organizzazione del raduno, ai sensi del Reg. UE 2016/679 (GDPR). <span class="text-red-600">*</span>
+              <a href="#" target="_blank">Leggi l'informativa completa</a>
+            </span>
+          </label>
+          <p class="privacy-note">
+            Dopo l'invio riceverai un'email con il riepilogo e le istruzioni per completare il pagamento. La tua iscrizione sarà confermata non appena il pagamento sarà registrato. Se non la ricevi, controlla anche la cartella spam.
+          </p>
+        </div>
+      </div>
+
+      <!-- 08 PAGAMENTO -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-num">08</span>
+          <div>
+            <p class="section-label">Ultimo Step</p>
+            <h2 class="section-title">Metodo di Pagamento</h2>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="payment-toggle-group">
+            <button type="button" id="btnPaypal" onclick="setPaymentMethod('paypal')" class="payment-option is-active">PayPal</button>
+            <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="payment-option">Bonifico Bancario</button>
+          </div>
+
+          <div id="paypalContainer">
+            <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="btn-paypal">Rivedi e Invia — PayPal</button>
+            <p id="paypalError" class="hidden text-sm text-red-600 text-center mt-3"></p>
+          </div>
+
+          <div id="bankContainer" class="hidden">
+            <div class="bank-info">
+              <p class="bank-info-title">Coordinate Bancarie</p>
+              <p class="bank-info-row"><strong>Intestatario:</strong> <span id="bankHolder"></span></p>
+              <p class="bank-info-row"><strong>Banca:</strong> <span id="bankName"></span></p>
+              <div class="bank-info-iban">
+                <div>
+                  <span class="bank-info-iban-label">IBAN</span>
+                  <span id="ibanValue" class="bank-info-iban-code"></span>
+                </div>
+                <button type="button" onclick="copyIban()" class="btn-copy">
+                  <span id="copyBtnText">Copia IBAN</span>
+                </button>
+              </div>
+              <p class="bank-info-row"><strong>Causale:</strong> <span id="causaleValue" style="color: var(--red); font-weight: 700;"></span></p>
+            </div>
+            <button type="button" id="bankSubmitBtn" onclick="openReviewModal()" class="btn-primary mt-5" style="margin-top: 1.5rem;">Rivedi e Invia — Bonifico</button>
+            <p id="bankError" class="hidden text-sm text-red-600 text-center mt-3"></p>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- SUCCESSO -->
+    <div id="successBox" class="hidden">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2 class="success-title">Iscrizione Inviata</h2>
+        <p class="text-neutral-600 mb-6" style="font-size: 1rem;">Grazie per esserti iscritto al 2° Raduno "Aquile Alfee" del Moto Guzzi Club Pisa.</p>
+        <div class="bg-amber-50 border-l-4 border-amber-400 p-5 mb-6 text-left">
+          <p class="text-sm text-amber-900" style="line-height: 1.6; margin: 0;">La tua iscrizione è ora in attesa di conferma del pagamento. Non appena l'organizzazione avrà verificato il pagamento, riceverai una seconda email di conferma definitiva.</p>
+        </div>
+        <p id="successNote" class="hidden text-sm text-red-600 mb-4"></p>
+        <div id="successDetails" class="bg-neutral-50 p-6 text-left text-sm border border-neutral-200 mb-6"></div>
+        <button type="button" onclick="window.print()" class="btn-secondary" style="width: 100%;">Stampa / salva riepilogo</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODALE RIEPILOGO -->
+  <div id="reviewModal" class="hidden modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Rivedi e Conferma</h2>
+        <p class="modal-subtitle">Controlla i dati prima di inviare</p>
+      </div>
+      <div id="reviewContent" class="modal-body space-y-4"></div>
+      <div class="modal-footer">
+        <div class="bg-amber-50 border border-amber-300 p-3 text-xs text-amber-800 text-center">
+          <strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 justify-end">
+          <button type="button" onclick="closeReviewModal()" class="btn-secondary w-full sm:w-auto">Modifica</button>
+          <button type="button" onclick="proceedWithPayment()" class="btn-primary w-full sm:w-auto">Invia Definitivamente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE ERRORE -->
+  <div id="errorModal" class="hidden modal-overlay">
+    <div class="modal-content" style="max-width: 28rem;">
+      <div class="error-header">
+        <div style="margin-bottom: 0.75rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </div>
+        <h2 class="modal-title" id="errorModalTitle" style="color: #fff;">Errore</h2>
+      </div>
+      <div class="modal-body" style="padding: 1.75rem;">
+        <p class="text-neutral-800 text-sm" id="errorModalMessage" style="line-height: 1.6;"></p>
+        <div class="bg-neutral-50 border border-neutral-200 p-4 mt-4 text-sm space-y-1.5">
+          <p class="font-semibold text-neutral-800" style="margin: 0 0 0.5rem 0;">Se pensi sia un errore, contatta l'organizzazione:</p>
+          <p style="margin: 0;"><a href="mailto:motoguzziclubpisa@gmail.com" style="color: var(--red); text-decoration: underline;">motoguzziclubpisa@gmail.com</a></p>
+          <p style="margin: 0;"><a href="tel:+393297259560" style="color: var(--red); text-decoration: underline;">329 725 9560</a></p>
+        </div>
+      </div>
+      <div style="padding: 1rem 1.75rem; border-top: 1px solid var(--line); background: #faf9f7; text-align: right;">
+        <button type="button" onclick="closeErrorModal()" class="btn-secondary">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loadingOverlay" class="hidden loading-overlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p class="loading-text">Invio iscrizione in corso...</p>
+      <p class="loading-subtext">Attendi qualche secondo, non chiudere la pagina.</p>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <strong>Moto Guzzi Club Pisa — Aquile Alfee</strong>
+    <p style="margin: 0.5rem 0;">motoguzziclubpisa@gmail.com · 329 725 9560</p>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">2° Raduno Aquile Alfee · 2-4 Aprile 2027</p>
+  </footer>
+
+  <script>
+    const CONFIG = {
+      PAYPAL_ME_HANDLE: 'motoguzziclubpisa',
+      EVENT_YEAR: 2027,
+      BANK_HOLDER: 'Moto Guzzi Club Pisa Aquile Alfee',
+      BANK_NAME: 'UniCredit',
+      IBAN: 'IT61 U020 0871 1320 0010 7354 780',
+      SUBMIT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbxuRFVEwSoR0wTWX0DTWAXGfa7WR2MPkrxyD05zzSqwT6LodJ6T5BH-MZwaQKVeUQ1q/exec',
+      ORGANIZER_EMAIL: ''
+    };
+
+    let CLUBS = [];
+
+    async function loadClubs() {
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        osc.connect(ctx.destination);
-        osc.frequency.value = 1200;
-        osc.start();
-        setTimeout(() => osc.stop(), 100);
-      } catch (e) {}
+        const res = await fetch('clubs.txt?v=' + Date.now(), { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+        CLUBS = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      } catch (e) {
+        console.error('clubs.txt non caricato:', e);
+        CLUBS = [];
+      }
     }
+
+    const MOTOMODELS = {
+      "Storiche (1921-1960)": [
+        "Normale 500", "Sport (13/14/15)", "GT (Norge, 16, 17)", "GTS", "Alce 500", "Airone 250", 
+        "Motoleggera 65 (Guzzino)", "Superalce 500", "Astore 500", "Falcone 500", 
+        "Galletto (160/175/192)", "Cardellino 73", "Zigolo (98/110)", "Lodola 175", 
+        "Stornello 125", "Dingo (49/50)", "Trotter"
+      ],
+      "Anni '60 e '70 (1960-1979)": [
+        "V7 700", "V7 Special 750", "V7 750 Sport", "850 GT", "850 California", 
+        "Nuovo Falcone 500", "2C 4T", "254", "250 TS", "350 GTS", "400 GTS", 
+        "V850 Le Mans", "1000 SP", "V50 (1977)", "V35 (1977)", 
+        "V1000 Idroconvert", "V1000 G5"
+      ],
+      "Anni '80 e '90 (1980-1999)": [
+        "V50 Monza", "Le Mans III", "California II", "V65", "V35 Custom", 
+        "850 T5", "V65 Lario", "Le Mans 1000", "Custom 125", "California III", 
+        "1000 GT", "Nevada 350", "Targa 750", "Daytona 1000 IE", "Quota 1000", 
+        "Strada 1000", "1100 Sport", "V10 Centauro", "Quota 1100 ES", 
+        "V11 / V11 Sport / V11 Le Mans"
+      ],
+      "Moderne (2000 - oggi)": [
+        "Breva 750", "Breva 850", "Breva 1100", "Breva 1200", 
+        "Griso 850", "Griso 1100", "Griso 1200 8V", 
+        "Norge 850", "Norge 1200", "1200 Sport", 
+        "Stelvio 1200", "Stelvio 1200 NTX", "Bellagio 940", 
+        "California 1400 Custom", "California 1400 Touring", 
+        "Audace", "Eldorado 1400", "MGX-21 Flying Fortress", 
+        "V7 (Classic/Stone/Special/Racer)", "V9 Roamer", "V9 Bobber", 
+        "V85 TT", "V100 Mandello", "V100 Stelvio", "MGS-01 Corsa"
+      ]
+    };
+
+    const PRICES = { base: 25, withShirt: 35, mgwcDiscount: 5, meals: { fri: 20, satPack: 15, satGala: 40, sun: 22 } };
+    const MEAL_LABELS = { fri: 'Buffet Venerdì', satPack: 'Pranzo al sacco Sabato', satGala: 'Cena di Gala Sabato', sun: 'Pranzo Domenica' };
+    let currentTotal = 25, submitting = false, paymentMethod = 'paypal';
+    let reviewOrder = null;
+    const $ = (id) => document.getElementById(id);
+    const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
+    const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
+
+    function showLoading() {
+      $('loadingOverlay').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoading() {
+      $('loadingOverlay').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function populateClubSelect() {
+      const selectClub = $('pilotClub');
+      while (selectClub.options.length > 1) {
+        selectClub.remove(1);
+      }
+
+      if (CLUBS.length === 0) {
+        const optErr = document.createElement('option');
+        optErr.value = '';
+        optErr.textContent = 'Lista club non disponibile - usa ALTRO per scrivere il nome';
+        optErr.disabled = true;
+        selectClub.appendChild(optErr);
+      } else {
+        CLUBS.forEach(club => {
+          const opt = document.createElement('option');
+          opt.value = club;
+          opt.textContent = club;
+          selectClub.appendChild(opt);
+        });
+      }
+
+      const optNone = document.createElement('option');
+      optNone.value = 'NESSUN CLUB';
+      optNone.textContent = 'NESSUN CLUB';
+      selectClub.appendChild(optNone);
+
+      const optAltro = document.createElement('option');
+      optAltro.value = 'ALTRO';
+      optAltro.textContent = 'ALTRO (specifica)';
+      selectClub.appendChild(optAltro);
+    }
+
+    function initMotoModels() {
+      const selectMoto = $('pilotMoto');
+      for (const [groupName, models] of Object.entries(MOTOMODELS)) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = groupName;
+        models.forEach(model => {
+          const opt = document.createElement('option');
+          opt.value = model;
+          opt.textContent = model;
+          optgroup.appendChild(opt);
+        });
+        selectMoto.appendChild(optgroup);
+      }
+      const optMotoAltro = document.createElement('option');
+      optMotoAltro.value = 'ALTRO';
+      optMotoAltro.textContent = 'ALTRO (specifica)';
+      selectMoto.appendChild(optMotoAltro);
+    }
+
+    $('pilotClub').addEventListener('change', function() {
+      const altroInput = $('pilotClubAltro');
+      if (this.value === 'ALTRO') {
+        altroInput.classList.remove('hidden');
+        altroInput.required = true;
+        altroInput.focus();
+      } else {
+        altroInput.classList.add('hidden');
+        altroInput.required = false;
+        altroInput.value = '';
+      }
+    });
+
+    $('pilotMoto').addEventListener('change', function() {
+      const altroInput = $('pilotMotoAltro');
+      if (this.value === 'ALTRO') {
+        altroInput.classList.remove('hidden');
+        altroInput.required = true;
+        altroInput.focus();
+      } else {
+        altroInput.classList.add('hidden');
+        altroInput.required = false;
+        altroInput.value = '';
+      }
+    });
+
+    function buildPerson(prefix, p) {
+      const regValue = parseInt(document.querySelector('input[name="' + p.regName + '"]:checked').value, 10);
+      const withShirt = regValue === PRICES.withShirt;
+      const isMember = $(p.member).checked;
+      const meals = {};
+      let total = withShirt ? PRICES.withShirt : PRICES.base;
+      const lines = [{ label: withShirt ? 'Iscrizione con maglietta' : 'Iscrizione base', amount: total }];
+      
+      let cardValue = null;
+      if (isMember) {
+        const suffix = $(p.card).value.trim();
+        cardValue = '2027' + suffix;
+        lines.push({ label: 'Sconto socio MGWC (tessera ' + (cardValue || '—') + ')', amount: -PRICES.mgwcDiscount });
+        total -= PRICES.mgwcDiscount;
+      }
+      if (withShirt) lines[0].label += ' (taglia ' + $(p.shirt).value + ')';
+      Object.keys(PRICES.meals).forEach((k) => {
+        const on = $(p.meals[k]).checked; meals[k] = on;
+        if (on) { total += PRICES.meals[k]; lines.push({ label: MEAL_LABELS[k], amount: PRICES.meals[k] }); }
+      });
+      const surname = titleCase($(p.surname).value);
+      const firstName = titleCase($(p.first).value);
+      return {
+        surname: surname, firstName: firstName, name: (firstName + ' ' + surname).trim(),
+        email: $(p.email).value.trim(), phone: $(p.phone).value.trim(),
+        shirtSize: withShirt ? $(p.shirt).value : null,
+        mgwcMember: isMember, mgwcCard: cardValue,
+        meals: meals, lines: lines, subtotal: total,
+        dietary: $(p.dietary).value.trim()
+      };
+    }
+
+    const PILOT_IDS = { regName: 'regType', shirt: 'shirtSize', member: 'mgwcMember', card: 'mgwcCardNumber', surname: 'pilotSurname', first: 'pilotFirstName', email: 'pilotEmail', phone: 'pilotPhone', dietary: 'pilotDietary', meals: { fri: 'mealFri', satPack: 'mealSatPack', satGala: 'mealSatGala', sun: 'mealSun' } };
+    const PASS_IDS = { regName: 'passRegType', shirt: 'passShirtSize', member: 'passMgwcMember', card: 'passMgwcCardNumber', surname: 'passSurname', first: 'passFirstName', email: 'passEmail', phone: 'passPhone', dietary: 'passDietary', meals: { fri: 'passMealFri', satPack: 'passMealSatPack', satGala: 'passMealSatGala', sun: 'passMealSun' } };
+
+    function getOrder() {
+      const pilot = buildPerson('', PILOT_IDS);
+      pilot.city = $('pilotCity').value.trim();
+      let clubValue = $('pilotClub').value;
+      if (clubValue === 'ALTRO') clubValue = $('pilotClubAltro').value.trim();
+      pilot.club = clubValue;
+      
+      let motoValue = $('pilotMoto').value;
+      if (motoValue === 'ALTRO') motoValue = $('pilotMotoAltro').value.trim();
+      pilot.moto = motoValue;
+
+      const hasPassenger = $('hasPassenger').checked;
+      const passenger = hasPassenger ? buildPerson('pass', PASS_IDS) : null;
+      const total = Math.max(pilot.subtotal + (passenger ? passenger.subtotal : 0), 0);
+      return { pilot: pilot, passenger: passenger, total: total, currency: 'EUR', year: CONFIG.EVENT_YEAR };
+    }
+
+    function setRequired(id, on) { const el = $(id); if (on) el.setAttribute('required', 'true'); else el.removeAttribute('required'); }
+    function toggle(id, show) { $(id).classList.toggle('hidden', !show); }
+
+    function renumberSections() {
+      var sections = document.querySelectorAll('.section');
+      var n = 0;
+      sections.forEach(function (section) {
+        if (section.classList.contains('hidden')) return;
+        n++;
+        var numEl = section.querySelector('.section-num');
+        if (numEl) numEl.textContent = (n < 10 ? '0' : '') + n;
+      });
+    }
+
+    function resetPassengerFields() {
+      ['passSurname','passFirstName','passEmail','passPhone','passMgwcCardNumber','passDietary'].forEach((id) => { $(id).value = ''; });
+      ['passMgwcMember','passMealFri','passMealSatPack','passMealSatGala','passMealSun'].forEach((id) => { $(id).checked = false; });
+      document.querySelector('input[name="passRegType"][value="25"]').checked = true;
+      $('passShirtSize').value = 'M';
+    }
+    function onPassengerToggle() { if (!$('hasPassenger').checked) resetPassengerFields(); updateTotal(); }
+
+    function updateTotal() {
+      const pilotShirt = document.querySelector('input[name="regType"]:checked').value === String(PRICES.withShirt);
+      toggle('shirtSizeContainer', pilotShirt);
+      const pilotMember = $('mgwcMember').checked;
+      toggle('mgwcCardContainer', pilotMember);
+      setRequired('mgwcCardNumber', pilotMember);
+      if (!pilotMember) $('mgwcCardNumber').value = '';
+
+      const hasPassenger = $('hasPassenger').checked;
+      toggle('passengerContainer', hasPassenger);
+      toggle('passengerRegContainer', hasPassenger);
+      toggle('passengerMealsContainer', hasPassenger);
+      setRequired('passSurname', hasPassenger);
+      setRequired('passFirstName', hasPassenger);
+
+      const passShirt = hasPassenger && document.querySelector('input[name="passRegType"]:checked').value === String(PRICES.withShirt);
+      toggle('passShirtSizeContainer', passShirt);
+
+      const passMember = hasPassenger && $('passMgwcMember').checked;
+      toggle('passMgwcCardContainer', passMember);
+      setRequired('passMgwcCardNumber', passMember);
+      if (!passMember) $('passMgwcCardNumber').value = '';
+
+      const order = getOrder();
+      currentTotal = order.total;
+      $('totalDisplay').innerText = eur(order.total);
+
+      const list = $('summaryList');
+      list.innerHTML = '';
+      const addGroup = (title, person) => {
+        const head = document.createElement('li');
+        head.className = 'summary-group-title';
+        head.textContent = title;
+        list.appendChild(head);
+        person.lines.forEach((l) => {
+          const li = document.createElement('li');
+          const a = document.createElement('span'); a.textContent = l.label;
+          const b = document.createElement('span'); b.textContent = (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount));
+          li.appendChild(a); li.appendChild(b);
+          list.appendChild(li);
+        });
+      };
+      addGroup('Pilota', order.pilot);
+      if (order.passenger) addGroup('Passeggero', order.passenger);
+      updateCausale();
+      renumberSections();
+    }
+
+    function causaleText() { return 'Raduno Pisa ' + CONFIG.EVENT_YEAR; }
+    function updateCausale() { $('causaleValue').textContent = causaleText(); }
+
+    function setPaymentMethod(method) {
+      paymentMethod = method;
+      $('btnPaypal').classList.toggle('is-active', method === 'paypal');
+      $('btnBank').classList.toggle('is-active', method === 'bank');
+      toggle('paypalContainer', method === 'paypal');
+      toggle('bankContainer', method === 'bank');
+    }
+
+    function copyIban() {
+      const text = $('ibanValue').innerText;
+      const done = () => { $('copyBtnText').innerText = 'Copiato'; setTimeout(() => { $('copyBtnText').innerText = 'Copia IBAN'; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fallbackCopy);
+      } else { fallbackCopy(); }
+      function fallbackCopy() {
+        const ta = document.createElement('textarea'); ta.value = text;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); done();
+      }
+    }
+
+    function validateForm() {
+      const form = $('rallyForm');
+      if (!form.reportValidity()) return false;
+      const clubSelect = $('pilotClub');
+      if (!clubSelect.value) { alert('Seleziona il tuo Club di Appartenenza.'); clubSelect.focus(); return false; }
+      if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) { alert('Inserisci il nome del tuo club.'); $('pilotClubAltro').focus(); return false; }
+      
+      const motoSelect = $('pilotMoto');
+      if (!motoSelect.value) { alert('Seleziona il tuo modello di Moto Guzzi.'); motoSelect.focus(); return false; }
+      if (motoSelect.value === 'ALTRO' && !$('pilotMotoAltro').value.trim()) { alert('Inserisci il modello della tua moto.'); $('pilotMotoAltro').focus(); return false; }
+
+      if ($('mgwcMember').checked) {
+        const cardNum = $('mgwcCardNumber').value.trim();
+        if (cardNum.length !== 4 || isNaN(cardNum)) { alert('Inserisci le 4 cifre finali della tessera MGWC.'); $('mgwcCardNumber').focus(); return false; }
+      }
+      if ($('hasPassenger').checked) {
+        if ($('passMgwcMember').checked) {
+          const passCardNum = $('passMgwcCardNumber').value.trim();
+          if (passCardNum.length !== 4 || isNaN(passCardNum)) { alert('Inserisci le 4 cifre finali della tessera MGWC del passeggero.'); $('passMgwcCardNumber').focus(); return false; }
+        }
+        const missing = !$('passSurname').value.trim() ? 'passSurname' : (!$('passFirstName').value.trim() ? 'passFirstName' : null);
+        if (missing) { $(missing).focus(); return false; }
+      }
+      if (!$('pilotSurname').value.trim()) { $('pilotSurname').focus(); return false; }
+      if (!$('pilotFirstName').value.trim()) { $('pilotFirstName').focus(); return false; }
+      return true;
+    }
+
+    async function sendRegistration(order, payment) {
+      const payload = { submittedAt: new Date().toISOString(), event: 'Raduno Aquile Alfee ' + CONFIG.EVENT_YEAR, order: order, payment: payment };
+      if (CONFIG.SUBMIT_ENDPOINT) {
+        try {
+          const res = await fetch(CONFIG.SUBMIT_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          let responseData = {};
+          try { responseData = await res.json(); } catch (e) { responseData = { ok: true }; }
+          if (responseData.ok === false) {
+            return { ok: false, mode: 'endpoint', error: responseData.error || 'UNKNOWN', message: responseData.message || 'Errore sconosciuto. Contatta l\'organizzazione.' };
+          }
+          return { ok: true, mode: 'endpoint' };
+        } catch (e) {
+          return { ok: false, mode: 'endpoint', error: 'NETWORK', message: 'Errore di connessione. Controlla la rete e riprova.' };
+        }
+      }
+      return { ok: true, mode: 'none' };
+    }
+
+    function showSuccess(order, payment, sendResult) {
+      $('rallyForm').classList.add('hidden');
+      $('successBox').classList.remove('hidden');
+      const box = $('successDetails'); box.innerHTML = '';
+      const add = (text, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = text; box.appendChild(d); };
+      const addPerson = (title, p) => {
+        add(title + ': ' + p.name, 'font-bold pt-2');
+        if (p.email) add('Email: ' + p.email);
+        if (p.phone) add('Telefono: ' + p.phone);
+        if (title === 'Pilota' && p.moto) add('Moto: ' + p.moto);
+        p.lines.forEach((l) => add('• ' + l.label + ': ' + (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))));
+      };
+      addPerson('Pilota', order.pilot);
+      if (order.passenger) addPerson('Passeggero', order.passenger);
+      add('Totale: ' + eur(order.total), 'font-bold text-lg pt-3');
+      add('Metodo scelto: ' + payment.method, 'pt-1');
+      if (payment.method === 'Bonifico bancario') {
+        add('IBAN: ' + CONFIG.IBAN, 'mt-2');
+        add('Causale: ' + causaleText());
+      } else if (payment.method === 'PayPal') {
+        const a = document.createElement('a');
+        a.href = payment.url; a.target = '_blank'; a.rel = 'noopener';
+        a.className = 'inline-block mt-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded';
+        a.textContent = 'Apri PayPal e completa il pagamento';
+        box.appendChild(a);
+      }
+      const note = $('successNote');
+      if (!sendResult.ok) {
+        note.textContent = 'Attenzione: non siamo riusciti a trasmettere i dati. Salva questo riepilogo e contattaci.';
+        note.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openReviewModal() {
+      $('bankError').classList.add('hidden');
+      $('paypalError').classList.add('hidden');
+      if (!validateForm()) return;
+      const order = getOrder();
+      reviewOrder = order;
+      const box = $('reviewContent');
+      box.innerHTML = '';
+
+      const renderPerson = (title, p, extraFields) => {
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 p-4 border border-neutral-200';
+        let html = `<h3 class="text-lg font-bold mb-3 border-b border-neutral-300 pb-2" style="color: var(--red); text-transform: uppercase; letter-spacing: 0.03em; font-family: 'Barlow Condensed', sans-serif;">${title}</h3>`;
+        html += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">`;
+        html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">Nome</span><p class="font-semibold mt-0.5">${p.name}</p></div>`;
+        html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">Email</span><p class="font-semibold mt-0.5 break-all">${p.email || '-'}</p></div>`;
+        html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">Telefono</span><p class="font-semibold mt-0.5">${p.phone || '-'}</p></div>`;
+        if (extraFields) extraFields.forEach(f => {
+          html += `<div><span class="text-xs uppercase tracking-wide text-neutral-500 font-semibold">${f.label}</span><p class="font-semibold mt-0.5">${f.value || '-'}</p></div>`;
+        });
+        html += `</div>`;
+        html += `<div class="mt-4 pt-3 border-t border-neutral-300">`;
+        html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mb-2">Dettaglio Iscrizione</p>`;
+        p.lines.forEach(l => {
+          html += `<div class="flex justify-between text-sm py-1"><span>${l.label}</span><span class="font-semibold">${(l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))}</span></div>`;
+        });
+        const mealsOn = Object.keys(p.meals).filter(k => p.meals[k]);
+        if (mealsOn.length > 0) {
+          html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mt-3 mb-1">Pasti Prenotati</p>`;
+          html += `<p class="text-sm">${mealsOn.map(k => MEAL_LABELS[k]).join(', ')}</p>`;
+        }
+        if (p.dietary) {
+          html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mt-3 mb-1">Intolleranze / Esigenze</p>`;
+          html += `<p class="text-sm bg-amber-50 border border-amber-200 p-2">${p.dietary}</p>`;
+        }
+        html += `<div class="flex justify-between text-base font-bold mt-3 pt-3 border-t border-neutral-300" style="color: var(--red);"><span>Subtotale</span><span>${eur(p.subtotal)}</span></div>`;
+        html += `</div>`;
+        div.innerHTML = html;
+        box.appendChild(div);
+      };
+
+      renderPerson('Pilota', order.pilot, [
+        { label: 'Città', value: order.pilot.city },
+        { label: 'Club', value: order.pilot.club },
+        { label: 'Moto', value: order.pilot.moto }
+      ]);
+      if (order.passenger) renderPerson('Passeggero', order.passenger, null);
+
+      const totalDiv = document.createElement('div');
+      totalDiv.style.background = '#0a0a0a';
+      totalDiv.style.borderLeft = '4px solid var(--red)';
+      totalDiv.style.padding = '1.5rem';
+      totalDiv.style.textAlign = 'center';
+      const methodLabel = paymentMethod === 'paypal' ? 'PayPal' : 'Bonifico Bancario';
+      totalDiv.innerHTML = `
+        <p style="color: #a3a3a3; font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; margin: 0;">Totale da pagare</p>
+        <p style="color: #ffffff; font-family: 'Barlow Condensed', sans-serif; font-size: 2.75rem; font-weight: 700; line-height: 1; margin: 0.5rem 0; letter-spacing: -0.02em;">${eur(order.total)}</p>
+        <p style="color: #a3a3a3; font-size: 0.875rem; margin: 0;">Metodo: <strong style="color: #fff;">${methodLabel}</strong></p>
+      `;
+      box.appendChild(totalDiv);
+
+      if (paymentMethod === 'bank') {
+        const ibanDiv = document.createElement('div');
+        ibanDiv.className = 'bg-blue-50 border border-blue-200 p-4 text-sm';
+        ibanDiv.innerHTML = `
+          <p class="font-bold text-blue-900 mb-2" style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;">Coordinate Bancarie</p>
+          <p class="text-blue-900"><strong>Intestatario:</strong> ${CONFIG.BANK_HOLDER}</p>
+          <p class="text-blue-900"><strong>IBAN:</strong> <span class="font-mono">${CONFIG.IBAN}</span></p>
+          <p class="text-blue-900"><strong>Causale:</strong> Raduno Pisa ${CONFIG.EVENT_YEAR}</p>
+        `;
+        box.appendChild(ibanDiv);
+      }
+
+      if (!$('privacyConsent').checked) {
+        const warn = document.createElement('div');
+        warn.className = 'bg-amber-50 border border-amber-300 p-3 text-sm text-amber-800';
+        warn.innerHTML = 'Devi accettare l\'informativa privacy prima di inviare.';
+        box.appendChild(warn);
+      }
+
+      $('reviewModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReviewModal() {
+      $('reviewModal').classList.add('hidden');
+      document.body.style.overflow = '';
+      reviewOrder = null;
+    }
+
+    async function proceedWithPayment() {
+      if (!$('privacyConsent').checked) { alert('Devi accettare l\'informativa privacy per procedere.'); return; }
+      if (!reviewOrder) return;
+      $('reviewModal').classList.add('hidden');
+      document.body.style.overflow = '';
+      showLoading();
+      if (paymentMethod === 'paypal') await submitPaypalFlow();
+      else await submitBankFlow();
+    }
+
+    function showErrorModal(message) {
+      var title = 'Errore';
+      var msg = message || 'Non è stato possibile completare l\'iscrizione.';
+      
+      if (msg.indexOf('già iscritto') !== -1 || msg.indexOf('DUPLICATE') !== -1) {
+        title = 'Iscrizione Già Registrata';
+      } else if (msg.indexOf('connessione') !== -1 || msg.indexOf('rete') !== -1) {
+        title = 'Errore di Connessione';
+      } else if (msg.indexOf('server') !== -1) {
+        title = 'Errore del Server';
+      }
+      
+      var titleEl = document.getElementById('errorModalTitle');
+      if (titleEl) titleEl.textContent = title;
+      
+      $('errorModalMessage').textContent = msg;
+      $('errorModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeErrorModal() {
+      $('errorModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function paypalUrl(total) { return 'https://www.paypal.me/' + encodeURIComponent(CONFIG.PAYPAL_ME_HANDLE) + '/' + total.toFixed(2) + 'EUR'; }
+
+    async function submitPaypalFlow() {
+      if (submitting) return;
+      submitting = true;
+      $('paypalError').classList.add('hidden');
+      const order = reviewOrder;
+      const url = paypalUrl(order.total);
+      const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
+      const result = await sendRegistration(order, payment);
+      hideLoading();
+      if (!result.ok) { submitting = false; reviewOrder = null; showErrorModal(result.message); return; }
+      window.open(url, '_blank', 'noopener');
+      reviewOrder = null;
+      showSuccess(order, payment, result);
+      submitting = false;
+    }
+
+    async function submitBankFlow() {
+      if (submitting || !reviewOrder) return;
+      submitting = true;
+      $('bankError').classList.add('hidden');
+      const order = reviewOrder;
+      const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa di pagamento' };
+      const result = await sendRegistration(order, payment);
+      hideLoading();
+      if (!result.ok) { submitting = false; reviewOrder = null; showErrorModal(result.message); return; }
+      reviewOrder = null;
+      showSuccess(order, payment, result);
+      submitting = false;
+    }
+
+    (async function init() {
+      $('bankHolder').textContent = CONFIG.BANK_HOLDER;
+      $('bankName').textContent = CONFIG.BANK_NAME;
+      $('ibanValue').textContent = CONFIG.IBAN;
+
+      await loadClubs();
+      populateClubSelect();
+      initMotoModels();
+
+      updateTotal();
+    })();
   </script>
 </body>
 </html>
