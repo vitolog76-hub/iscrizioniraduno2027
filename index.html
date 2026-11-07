@@ -804,6 +804,18 @@
 
     function setRequired(id, on) { const el = $(id); if (on) el.setAttribute('required', 'true'); else el.removeAttribute('required'); }
     function toggle(id, show) { $(id).classList.toggle('hidden', !show); }
+
+    function renumberSections() {
+      var sections = document.querySelectorAll('.section');
+      var n = 0;
+      sections.forEach(function (section) {
+        if (section.classList.contains('hidden')) return;
+        n++;
+        var numEl = section.querySelector('.section-num');
+        if (numEl) numEl.textContent = (n < 10 ? '0' : '') + n;
+      });
+    }
+
     function resetPassengerFields() {
       ['passSurname','passFirstName','passEmail','passPhone','passMgwcCardNumber','passDietary'].forEach((id) => { $(id).value = ''; });
       ['passMgwcMember','passMealFri','passMealSatPack','passMealSatGala','passMealSun'].forEach((id) => { $(id).checked = false; });
@@ -857,6 +869,7 @@
       addGroup('Pilota', order.pilot);
       if (order.passenger) addGroup('Passeggero', order.passenger);
       updateCausale();
+      renumberSections();
     }
 
     function causaleText() { return 'Raduno Pisa ' + CONFIG.EVENT_YEAR; }
