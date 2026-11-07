@@ -645,12 +645,19 @@
       ORGANIZER_EMAIL: ''
     };
 
-    const CLUBS = [
-      "MOTO GUZZI CLUB PISA - AQUILE ALFEE", "GUZZI CLUB BENEVENTO", "MOTO GUZZI CLUB ROMA", "SGENERAZIONE GUZZISTA",
-      "MOTO GUZZI CLUB GENOVA", "AMICI MOTO GUZZI LECCE", "GUZZI CLUB CAPO DI LEUCA", "GUZZISTI DEL GARGANO",
-      "GUZZISTI DI TARANTO", "1° MOTO GUZZI CLUB BARI", "AQUILE ARETUSEE SIRACUSA", "AQUILE DELLE CINQUE TORRI TRAPANI",
-      "MOTOCLUB LE AQUILE PALERMO", "GUZZI CLUB FIORENZA", "QUELLI CHE..GUZZI ROMA"
-    ];
+    let CLUBS = [];
+
+    async function loadClubs() {
+      try {
+        const res = await fetch('clubs.txt?v=' + Date.now(), { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+        CLUBS = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      } catch (e) {
+        console.error('clubs.txt non caricato:', e);
+        CLUBS = [];
+      }
+    }
 
     const MOTOMODELS = {
       "Storiche (1921-1960)": [
@@ -692,20 +699,39 @@
     const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
     const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
 
-    (function initDropdowns() {
+    function populateClubSelect() {
       const selectClub = $('pilotClub');
-      CLUBS.forEach(club => {
-        const opt = document.createElement('option');
-        opt.value = club; opt.textContent = club;
-        selectClub.appendChild(opt);
-      });
-      const optNone = document.createElement('option');
-      optNone.value = 'NESSUN CLUB'; optNone.textContent = 'NESSUN CLUB';
-      selectClub.appendChild(optNone);
-      const optAltro = document.createElement('option');
-      optAltro.value = 'ALTRO'; optAltro.textContent = 'ALTRO (specifica)';
-      selectClub.appendChild(optAltro);
+      while (selectClub.options.length > 1) {
+        selectClub.remove(1);
+      }
 
+      if (CLUBS.length === 0) {
+        const optErr = document.createElement('option');
+        optErr.value = '';
+        optErr.textContent = 'Lista club non disponibile - usa ALTRO per scrivere il nome';
+        optErr.disabled = true;
+        selectClub.appendChild(optErr);
+      } else {
+        CLUBS.forEach(club => {
+          const opt = document.createElement('option');
+          opt.value = club;
+          opt.textContent = club;
+          selectClub.appendChild(opt);
+        });
+      }
+
+      const optNone = document.createElement('option');
+      optNone.value = 'NESSUN CLUB';
+      optNone.textContent = 'NESSUN CLUB';
+      selectClub.appendChild(optNone);
+
+      const optAltro = document.createElement('option');
+      optAltro.value = 'ALTRO';
+      optAltro.textContent = 'ALTRO (specifica)';
+      selectClub.appendChild(optAltro);
+    }
+
+    function initMotoModels() {
       const selectMoto = $('pilotMoto');
       for (const [groupName, models] of Object.entries(MOTOMODELS)) {
         const optgroup = document.createElement('optgroup');
@@ -722,7 +748,7 @@
       optMotoAltro.value = 'ALTRO';
       optMotoAltro.textContent = 'ALTRO (specifica)';
       selectMoto.appendChild(optMotoAltro);
-    })();
+    }
 
     $('pilotClub').addEventListener('change', function() {
       const altroInput = $('pilotClubAltro');
@@ -1134,10 +1160,15 @@
       submitting = false;
     }
 
-    (function init() {
+    (async function init() {
       $('bankHolder').textContent = CONFIG.BANK_HOLDER;
       $('bankName').textContent = CONFIG.BANK_NAME;
       $('ibanValue').textContent = CONFIG.IBAN;
+
+      await loadClubs();
+      populateClubSelect();
+      initMotoModels();
+
       updateTotal();
     })();
   </script>
