@@ -157,6 +157,14 @@
     /* ERROR MODAL */
     .error-header { background: var(--red); color: #ffffff; padding: 1.75rem 2rem; text-align: center; }
 
+    /* LOADING OVERLAY */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.85); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .loading-content { text-align: center; color: #ffffff; max-width: 24rem; }
+    .spinner { width: 64px; height: 64px; border: 4px solid rgba(255, 255, 255, 0.15); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: #ffffff; }
+    .loading-subtext { font-size: 0.875rem; color: #a3a3a3; margin: 0.5rem 0 0; line-height: 1.5; }
+
     /* FOOTER */
     .page-footer { text-align: center; padding: 3rem 1.5rem 2rem; color: var(--ink-3); font-size: 0.8125rem; border-top: 1px solid var(--line); background: #ffffff; }
     .page-footer strong { color: var(--ink); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem; display: block; margin-bottom: 0.5rem; }
@@ -628,6 +636,15 @@
     </div>
   </div>
 
+  <!-- LOADING OVERLAY -->
+  <div id="loadingOverlay" class="hidden loading-overlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p class="loading-text">Invio iscrizione in corso...</p>
+      <p class="loading-subtext">Attendi qualche secondo, non chiudere la pagina.</p>
+    </div>
+  </div>
+
   <footer class="page-footer">
     <strong>Moto Guzzi Club Pisa — Aquile Alfee</strong>
     <p style="margin: 0.5rem 0;">motoguzziclubpisa@gmail.com · 329 725 9560</p>
@@ -698,6 +715,16 @@
     const $ = (id) => document.getElementById(id);
     const titleCase = (t) => t.trim().toLowerCase().replace(/(^|[\s'\-])([a-zà-ÿ])/g, (m, sep, ch) => sep + ch.toUpperCase());
     const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
+
+    function showLoading() {
+      $('loadingOverlay').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoading() {
+      $('loadingOverlay').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
 
     function populateClubSelect() {
       const selectClub = $('pilotClub');
@@ -1102,6 +1129,7 @@
       if (!reviewOrder) return;
       $('reviewModal').classList.add('hidden');
       document.body.style.overflow = '';
+      showLoading();
       if (paymentMethod === 'paypal') await submitPaypalFlow();
       else await submitBankFlow();
     }
@@ -1140,6 +1168,7 @@
       const url = paypalUrl(order.total);
       const payment = { method: 'PayPal', transactionId: null, status: 'in attesa di pagamento', url: url };
       const result = await sendRegistration(order, payment);
+      hideLoading();
       if (!result.ok) { submitting = false; reviewOrder = null; showErrorModal(result.message); return; }
       window.open(url, '_blank', 'noopener');
       reviewOrder = null;
@@ -1154,6 +1183,7 @@
       const order = reviewOrder;
       const payment = { method: 'Bonifico bancario', transactionId: null, status: 'in attesa di pagamento' };
       const result = await sendRegistration(order, payment);
+      hideLoading();
       if (!result.ok) { submitting = false; reviewOrder = null; showErrorModal(result.message); return; }
       reviewOrder = null;
       showSuccess(order, payment, result);
