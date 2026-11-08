@@ -232,6 +232,7 @@
             </div>
             <div class="field">
               <label for="pilotClub" class="field-label">Club di Appartenenza <span class="req">*</span></label>
+              <input type="text" id="pilotClubSearch" class="input" placeholder="Cerca club (es. Pisa, Milano…)" autocomplete="off" style="margin-bottom: 0.5rem;">
               <select id="pilotClub" required class="select">
                 <option value="">Seleziona il tuo club...</option>
               </select>
@@ -726,11 +727,20 @@
       document.body.style.overflow = '';
     }
 
-    function populateClubSelect() {
+    // === PATCH 2: populateClubSelect accetta filtro e preserva la selezione corrente ===
+    function populateClubSelect(filter = '') {
       const selectClub = $('pilotClub');
+      const currentValue = selectClub.value;
+
+      // Svuota tutte le option tranne la prima ("Seleziona il tuo club...")
       while (selectClub.options.length > 1) {
         selectClub.remove(1);
       }
+
+      const f = (filter || '').toString().toLowerCase().trim();
+      const filtered = f
+        ? CLUBS.filter(function (c) { return c.toLowerCase().indexOf(f) !== -1; })
+        : CLUBS;
 
       if (CLUBS.length === 0) {
         const optErr = document.createElement('option');
@@ -738,8 +748,14 @@
         optErr.textContent = 'Lista club non disponibile - usa ALTRO per scrivere il nome';
         optErr.disabled = true;
         selectClub.appendChild(optErr);
+      } else if (filtered.length === 0) {
+        const optEmpty = document.createElement('option');
+        optEmpty.value = '';
+        optEmpty.textContent = 'Nessun club trovato per "' + filter + '"';
+        optEmpty.disabled = true;
+        selectClub.appendChild(optEmpty);
       } else {
-        CLUBS.forEach(club => {
+        filtered.forEach(function (club) {
           const opt = document.createElement('option');
           opt.value = club;
           opt.textContent = club;
@@ -747,6 +763,7 @@
         });
       }
 
+      // NESSUN CLUB e ALTRO sempre in fondo, indipendentemente dal filtro
       const optNone = document.createElement('option');
       optNone.value = 'NESSUN CLUB';
       optNone.textContent = 'NESSUN CLUB';
@@ -756,6 +773,14 @@
       optAltro.value = 'ALTRO';
       optAltro.textContent = 'ALTRO (specifica)';
       selectClub.appendChild(optAltro);
+
+      // Ripristina la selezione precedente, se ancora presente nella lista filtrata
+      if (currentValue) {
+        const stillThere = Array.prototype.some.call(selectClub.options, function (o) {
+          return o.value === currentValue;
+        });
+        if (stillThere) selectClub.value = currentValue;
+      }
     }
 
     function initMotoModels() {
@@ -777,7 +802,13 @@
       selectMoto.appendChild(optMotoAltro);
     }
 
-    $('pilotClub').addEventListener('change', function() {
+    // === PATCH 3: listener input sulla barra di ricerca club ===
+    $('pilotClubSearch').addEventListener('input', function () {
+      populateClubSelect(this.value);
+    });
+
+    // === PATCH 4: reset della ricerca quando si seleziona un club ===
+    $('pilotClub').addEventListener('change', function () {
       const altroInput = $('pilotClubAltro');
       if (this.value === 'ALTRO') {
         altroInput.classList.remove('hidden');
@@ -787,6 +818,12 @@
         altroInput.classList.add('hidden');
         altroInput.required = false;
         altroInput.value = '';
+      }
+
+      const searchInput = $('pilotClubSearch');
+      if (searchInput && searchInput.value) {
+        searchInput.value = '';
+        populateClubSelect('');
       }
     });
 
