@@ -19,7 +19,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5rem;
+  gap: 4rem;
 }
 
 .hero-logos {
@@ -27,7 +27,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 }
 
 .hero-logo {
-  height: 10rem;
+  height: 18rem; /* LOGO INGRANDITO */
   width: auto;
   object-fit: contain;
 }
@@ -84,7 +84,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 @media (max-width: 768px) {
   .hero { padding: 3rem 1.5rem; }
   .hero-inner { flex-direction: column; gap: 2.5rem; text-align: center; }
-  .hero-logo { height: 7rem; }
+  .hero-logo { height: 14rem; } /* LOGO GRANDE ANCHE SU MOBILE */
   .hero-line { margin: 0 auto 1.5rem auto; }
   .hero-title { font-size: 2.5rem; }
   .hero-sub { font-size: 1.25rem; }
