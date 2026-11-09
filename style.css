@@ -65,7 +65,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 }
 
 .hero-title .hero-title-pisa {
-  color: var(--red);
+  color: var(--ink-3);
   font-weight: 700;
 }
 
