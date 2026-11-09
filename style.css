@@ -15,38 +15,47 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 .hero-date { font-size: 0.875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 0 0 0.75rem 0; }
 .hero-line { width: 100%; height: 2px; background: var(--line); margin-bottom: 1.5rem; }
 
-/* BANNER BICOLORE */
+/* BANNER BICOLORE (Grigio) */
 .hero-banner {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  margin: 0 0 1rem 0;
-  border: 6px solid var(--ink); /* Bordo esterno più spesso */
+  margin: 0 0 1.5rem 0;
+  /* Nessun bordo spesso */
 }
 
 .hero-title {
-  background: var(--ink);
-  color: #ffffff;
-  font-size: clamp(2rem, 4vw, 3rem);
+  background: #404040; /* Grigio scuro */
+  color: #ffffff; /* Testo bianco */
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  line-height: 1;
+  line-height: 1.1;
   margin: 0;
-  padding: 1rem 1.5rem;
-  text-align: center; /* Testo centrato */
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  flex: 1; /* Forza la stessa altezza */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-sub {
-  background: var(--red);
-  color: #ffffff;
-  font-size: 1.375rem;
+  background: #e5e5e5; /* Grigio chiaro */
+  color: #0a0a0a; /* Testo scuro */
+  font-size: 1.25rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  line-height: 1;
+  letter-spacing: 0.15em;
+  line-height: 1.1;
   margin: 0;
-  padding: 0.875rem 1.5rem;
-  text-align: center; /* Testo centrato */
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  flex: 1; /* Forza la stessa altezza */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-meta { color: var(--ink-3); font-size: 0.875rem; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 1rem; font-weight: 500; }
