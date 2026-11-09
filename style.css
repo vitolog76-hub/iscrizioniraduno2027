@@ -6,10 +6,10 @@
 body { background: var(--paper); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; margin: 0; }
 h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.01em; }
 
-/* HERO - Stile Moto Guzzi minimal (bianco e nero) */
+/* HERO - Stile Moto Guzzi (bianco, nero, accenti rossi) */
 .hero {
   background: #ffffff;
-  border-bottom: 1px solid #000000;
+  border-bottom: 4px solid var(--red);
   padding: 5rem 2rem;
 }
 
@@ -27,7 +27,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 }
 
 .hero-logo {
-  height: 18rem; /* LOGO INGRANDITO */
+  height: 18rem;
   width: auto;
   object-fit: contain;
 }
@@ -42,7 +42,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #737373;
+  color: var(--ink-3);
   font-weight: 500;
   margin: 0 0 1rem 0;
 }
@@ -50,14 +50,14 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 .hero-line {
   width: 60px;
   height: 3px;
-  background: #000000;
+  background: var(--red);
   margin-bottom: 1.5rem;
 }
 
 .hero-title {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
-  color: #000000;
+  color: var(--ink);
   line-height: 0.95;
   text-transform: uppercase;
   margin: 0;
@@ -65,15 +65,15 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 }
 
 .hero-sub {
-  color: #000000;
+  color: var(--red);
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 600;
   margin: 0.75rem 0 0 0;
   letter-spacing: 0.05em;
 }
 
 .hero-meta {
-  color: #737373;
+  color: var(--ink-3);
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -84,7 +84,7 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
 @media (max-width: 768px) {
   .hero { padding: 3rem 1.5rem; }
   .hero-inner { flex-direction: column; gap: 2.5rem; text-align: center; }
-  .hero-logo { height: 14rem; } /* LOGO GRANDE ANCHE SU MOBILE */
+  .hero-logo { height: 14rem; }
   .hero-line { margin: 0 auto 1.5rem auto; }
   .hero-title { font-size: 2.5rem; }
   .hero-sub { font-size: 1.25rem; }
