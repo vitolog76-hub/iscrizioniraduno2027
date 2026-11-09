@@ -12,7 +12,6 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
   border-bottom: 4px solid var(--red);
   padding: 5rem 2rem;
 }
-
 .hero-inner {
   max-width: 72rem;
   margin: 0 auto;
@@ -21,65 +20,15 @@ h1, h2, h3, .condensed { font-family: 'Helvetica Neue', Helvetica, Arial, sans-s
   justify-content: center;
   gap: 4rem;
 }
-
-.hero-logos {
-  flex-shrink: 0;
-}
-
-.hero-logo {
-  height: 18rem;
-  width: auto;
-  object-fit: contain;
-}
-
-.hero-text {
-  flex: 1;
-  max-width: 42rem;
-  text-align: left;
-}
-
-.hero-date {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  font-weight: 500;
-  margin: 0 0 1rem 0;
-}
-
-.hero-line {
-  width: 60px;
-  height: 3px;
-  background: var(--red);
-  margin-bottom: 1.5rem;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 0.95;
-  text-transform: uppercase;
-  margin: 0;
-  letter-spacing: 0.02em;
-}
-
-.hero-sub {
-  color: var(--red);
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0.75rem 0 0 0;
-  letter-spacing: 0.05em;
-}
-
-.hero-meta {
-  color: var(--ink-3);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-top: 1.5rem;
-  font-weight: 400;
-}
+.hero-logos { flex-shrink: 0; }
+.hero-logo { height: 18rem; width: auto; object-fit: contain; }
+.hero-text { flex: 1; max-width: 42rem; text-align: left; }
+.hero-date { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; margin: 0 0 1rem 0; }
+.hero-line { width: 60px; height: 3px; background: var(--red); margin-bottom: 1.5rem; }
+.hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; color: var(--ink); line-height: 0.95; text-transform: uppercase; margin: 0; letter-spacing: 0.02em; }
+.hero-title .hero-title-pisa { color: var(--red); font-weight: 700; }
+.hero-sub { color: var(--red); font-size: 1.5rem; font-weight: 600; margin: 0.75rem 0 0 0; letter-spacing: 0.05em; }
+.hero-meta { color: var(--ink-3); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 1.5rem; font-weight: 400; }
 
 @media (max-width: 768px) {
   .hero { padding: 3rem 1.5rem; }
