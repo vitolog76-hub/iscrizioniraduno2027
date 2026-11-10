@@ -183,21 +183,21 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     align-items: center;
     overflow: hidden !important; 
     position: relative;
-    background-color: #0a0a0a !important; /* Sfondo scuro se l'immagine non copre tutto */
+    background-color: var(--paper) !important; /* Sfondo crema invece di nero */
   }
   
-  /* FIX: Aggiunto no-repeat per fermare il mosaico */
   .hero::before {
     background-image: url('hero-bg-mobile.png') !important; 
-    background-size: 100% auto !important; 
+    background-size: cover !important; /* Copre tutti i 320px senza lasciare buchi */
     background-position: center top !important; 
-    background-repeat: no-repeat !important; /* <--- QUESTA E' LA MAGIA */
+    background-repeat: no-repeat !important; 
     transform: none !important;
     position: absolute;
     inset: 0;
     z-index: 0;
   }
 
+  /* Sfumatura scura a sinistra per il testo, sfumatura crema in basso */
   .hero::after {
     background: 
       linear-gradient(to top, var(--paper) 0%, transparent 15%), 
