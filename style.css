@@ -178,79 +178,65 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
    ========================================= */
 
 @media (max-width: 640px) {
-  /* 1. ALTEZZA CONTENUTA: definisce quanto tagliare sopra e sotto */
   .hero { 
-    padding: 1rem; 
-    height: 420px; /* Altezza fissa: se vedi troppo asfalto, abbassa a 400px; se taglia i monumenti, alza a 450px */
+    padding: 0 !important; /* Togliamo padding per evitare che si allunghi */
+    height: 380px !important; /* Altezza fissa: taglia tutto ciò che è più alto di 380px */
+    min-height: 380px !important;
+    max-height: 380px !important;
     display: flex;
     align-items: center;
-    min-height: auto;
+    overflow: hidden !important; /* OBBLIGA a tagliare fuori i bordi */
+    position: relative;
   }
   
-  /* 2. TAGLIO SOLO SOPRA E SOTTO (Nessuno zoom) */
   .hero::before {
-    background-image: url('hero-bg-mobile.jpg'); 
-    background-size: 100% auto; /* Larghezza al 100%, l'altezza si adatta e viene tagliata dal contenitore */
-    background-position: center 35%; /* Sposta leggermente il mirino in alto per togliere l'asfalto in basso */
-    transform: none; 
+    background-image: url('hero-bg-mobile.jpg') !important; 
+    background-size: 100% auto !important; /* Larghezza al 100% */
+    background-position: center 20% !important; /* Sposta il mirino in alto per togliere l'asfalto */
+    transform: none !important;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
   }
 
-  /* 3. Sfumatura per la leggibilità del testo (scura a sinistra) */
   .hero::after {
     background: 
       linear-gradient(to top, var(--paper) 0%, transparent 10%), 
-      linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+      linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%) !important;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
   }
 
-  /* 4. Layout affiancato (Logo a sinistra, Testo a destra) */
   .hero-inner { 
-    flex-direction: row; 
-    justify-content: flex-start; 
-    text-align: left; 
-    gap: 1rem; 
-    align-items: center;
-    width: 100%;
+    flex-direction: row !important; 
+    justify-content: flex-start !important; 
+    text-align: left !important; 
+    gap: 1rem !important; 
+    align-items: center !important;
+    width: 100% !important;
+    padding: 1rem !important;
+    z-index: 2;
+    position: relative;
   }
   
-  .hero-logo-img { 
-    height: 4.5rem; 
-  }
+  .hero-logo-img { height: 4rem !important; }
+  .hero-text { text-align: left !important; padding-left: 0 !important; flex: 1 !important; }
   
-  .hero-text { 
-    text-align: left; 
-    padding-left: 0;
-    flex: 1;
-  }
-  
-  .hero-title { 
-    font-size: 1.5rem; 
-    line-height: 0.9;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9); 
-  }
-  
-  .hero-title .hero-title-pisa { 
-    font-size: 1.1em; 
-  }
+  .hero-title { font-size: 1.4rem !important; line-height: 0.9 !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-title .hero-title-pisa { font-size: 1.1em !important; }
+  .hero-sub { font-size: 0.8rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-meta { font-size: 0.65rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-tagline { font-size: 0.5rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
 
-  .hero-sub { 
-    font-size: 0.9rem; 
-    margin-top: 0.25rem;
-    letter-spacing: 0.02em;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9); 
-  }
-  
-  .hero-meta { 
-    font-size: 0.7rem; 
-    margin-top: 0.25rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9); 
-  }
-  
-  .hero-tagline {
-    font-size: 0.55rem;
-    letter-spacing: 0.05em;
-    margin-top: 0.25rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9); 
-  }
+  .progress-container { padding: 0.75rem 1rem; }
+  .progress-label { display: none; }
+  .progress-line { top: 1.25rem; width: 80%; left: 60%; }
+  .section-head { padding: 1.25rem; gap: 1rem; }
+  .section-num-wrapper { margin-left: -1.25rem; font-size: 2rem; }
+  .section-title { font-size: 1.5rem; }
+  .section-body { padding: 1.5rem; }
+}
 
   .section-head { padding: 1.25rem; gap: 1rem; }
   .section-num-wrapper { margin-left: -1.25rem; font-size: 2rem; }
