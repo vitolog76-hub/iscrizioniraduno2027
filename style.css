@@ -25,7 +25,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   background-image: url('hero-bg.jpg');
   background-size: cover;
   background-position: center;
-  transform: scaleX(-1); /* SPECCHIA L'IMMAGINE */
+  
   z-index: 0;
 }
 
