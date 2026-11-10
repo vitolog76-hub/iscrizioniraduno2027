@@ -48,7 +48,19 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   margin: 0 auto;
   display: flex; 
   align-items: center; 
-  justify-content: flex-start; /* Testo a sinistra */
+  justify-content: flex-start;
+  gap: 2rem; /* Spazio tra logo e testo */
+}
+
+.hero-logo-container {
+  flex-shrink: 0;
+}
+
+.hero-logo-img {
+  height: 11rem; /* Dimensione del logo */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6)); /* Ombra per staccarlo dallo sfondo */
 }
 
 .hero-text { 
@@ -158,7 +170,13 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 .section-body { padding: 2.5rem; }
 @media (max-width: 640px) {
   .hero { padding: 3rem 1rem 4rem 1rem; }
-  .hero-inner { justify-content: center; text-align: center; }
+    .hero-inner { 
+    flex-direction: column; /* Su mobile mette il logo sopra il testo */
+    justify-content: center; 
+    text-align: center; 
+    gap: 1rem; 
+  }
+  .hero-logo-img { height: 9rem; } /* Logo leggermente più piccolo su telefono */
   .hero-text { text-align: center; }
   .section-head { padding: 1.25rem; gap: 1rem; }
   .section-num-wrapper { margin-left: -1.25rem; font-size: 2rem; }
