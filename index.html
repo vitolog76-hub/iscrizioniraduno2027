@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=698">
+  <link rel="stylesheet" href="style.css?v=798">
 </head>
 <body>
 
@@ -322,7 +322,7 @@
 
   <script src="app.js"></script>
   <!-- Script per illuminare la barra in base allo scroll -->
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
       const sections = [
         { id: 'section-1', index: 0 },
@@ -334,7 +334,7 @@
 
       window.addEventListener('scroll', function() {
         let currentIndex = 0;
-        const scrollPos = window.scrollY + 150; // Offset per la barra sticky
+        const scrollPos = window.scrollY + 200; // Offset per la barra sticky
 
         sections.forEach(sec => {
           const el = document.getElementById(sec.id);
@@ -349,7 +349,7 @@
         }
 
         steps.forEach((step, idx) => {
-          if (idx <= currentIndex) {
+          if (idx === currentIndex) {
             step.classList.add('active');
           } else {
             step.classList.remove('active');
