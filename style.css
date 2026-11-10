@@ -226,6 +226,10 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     font-size: 1rem; 
     margin-top: 0.5rem;
   }
+    .hero-tagline {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
 
   .section-head { padding: 1.25rem; gap: 1rem; }
   .section-num-wrapper { margin-left: -1.25rem; font-size: 2rem; }
