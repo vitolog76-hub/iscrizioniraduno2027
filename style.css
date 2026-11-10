@@ -176,20 +176,20 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 @media (max-width: 640px) {
   .hero { 
     padding: 0 !important; 
-    height: 320px !important; 
-    min-height: 320px !important;
-    max-height: 320px !important;
+    height: auto !important; /* L'altezza si calcola da sola */
+    min-height: auto !important;
+    aspect-ratio: 1200 / 800; /* <--- FORZA LE PROPORZIONI DELL'IMMAGINE */
     display: flex;
     align-items: center;
     overflow: hidden !important; 
     position: relative;
-    background-color: var(--paper) !important; /* Sfondo crema invece di nero */
+    background-color: var(--paper) !important; 
   }
   
   .hero::before {
     background-image: url('hero-bg-mobile.png') !important; 
-    background-size: cover !important; /* Copre tutti i 320px senza lasciare buchi */
-    background-position: center top !important; 
+    background-size: 100% 100% !important; /* Riempie esattamente il contenitore senza tagliare nulla */
+    background-position: center center !important; 
     background-repeat: no-repeat !important; 
     transform: none !important;
     position: absolute;
@@ -211,7 +211,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     flex-direction: row !important; 
     justify-content: flex-start !important; 
     text-align: left !important; 
-    gap: 1rem !important; 
+    gap: 0.75rem !important; 
     align-items: center !important;
     width: 100% !important;
     padding: 1rem !important;
@@ -219,14 +219,15 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     position: relative;
   }
   
-  .hero-logo-img { height: 4.5rem !important; }
+  .hero-logo-img { height: 3.5rem !important; /* Leggermente più piccolo per stare nell'altezza ridotta */
+  }
   .hero-text { text-align: left !important; padding-left: 0 !important; flex: 1 !important; }
   
-  .hero-title { font-size: 1.4rem !important; line-height: 0.9 !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-title { font-size: 1.2rem !important; line-height: 0.9 !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
   .hero-title .hero-title-pisa { font-size: 1.1em !important; }
-  .hero-sub { font-size: 0.8rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
-  .hero-meta { font-size: 0.65rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
-  .hero-tagline { font-size: 0.5rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-sub { font-size: 0.75rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-meta { font-size: 0.6rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-tagline { font-size: 0.45rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
 
   .progress-container { padding: 0.75rem 1rem; }
   .progress-label { display: none; }
