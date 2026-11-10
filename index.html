@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscrizione Raduno - Moto Guzzi Club Pisa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=400">
+</head>
+<body>
+
+  <!-- HERO CON SFONDO FOTOGRAFICO (SPECCHIATO) E CURVA -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="hero-title">Moto Guzzi Club <span class="hero-title-pisa">Pisa</span></h1>
+        <p class="hero-sub">2° Raduno "Aquile Alfee"</p>
+        <p class="hero-meta">Pisa 2, 3, 4 Aprile 2027 | Peccioli</p>
+      </div>
+    </div>
+    
+    <!-- ONDA DI SEPARAZIONE -->
+    <div class="wave-separator">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.11,130.83,116.16,192.59,102.35,236.44,92.3,278.83,75.6,321.39,56.44Z" class="shape-fill-red"></path>
+          <path d="M321.39,76.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,51,906.67,92,985.66,112.83c70.05,18.48,146.53,26.09,214.34,3V120H0V115.8C59.71,138.11,130.83,136.16,192.59,122.35,236.44,112.3,278.83,95.6,321.39,76.44Z" class="shape-fill-yellow" transform="translate(0, -5)"></path>
+      </svg>
+    </div>
+  </header>
+
+  <!-- PROGRESS BAR (Sticky) -->
+  <div class="progress-container" id="progressBar">
+    <div class="progress-step active" data-target="section-1">
+      <div class="progress-line"></div>
+      <div class="progress-circle">01</div>
+      <div class="progress-label">Dati Anagrafici</div>
+    </div>
+    <div class="progress-step" data-target="section-3">
+      <div class="progress-line"></div>
+      <div class="progress-circle">02</div>
+      <div class="progress-label">Partecipazione</div>
+    </div>
+    <div class="progress-step" data-target="section-5">
+      <div class="progress-line"></div>
+      <div class="progress-circle">03</div>
+      <div class="progress-label">Ristorazione</div>
+    </div>
+    <div class="progress-step" data-target="section-7">
+      <div class="progress-circle">04</div>
+      <div class="progress-label">Riepilogo</div>
+    </div>
+  </div>
+
+  <main class="page-container">
+    <form id="rallyForm" novalidate onsubmit="event.preventDefault();">
+
+      <div class="section" id="section-1">
+        <div class="section-head">
+          <div class="section-num-wrapper">01</div>
+          <h2 class="section-title">Dati Anagrafici</h2>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field"><label for="pilotSurname" class="field-label">Cognome <span class="req">*</span></label><input type="text" id="pilotSurname" required autocomplete="family-name" class="input" placeholder="Rossi"></div>
+            <div class="field"><label for="pilotFirstName" class="field-label">Nome <span class="req">*</span></label><input type="text" id="pilotFirstName" required autocomplete="given-name" class="input" placeholder="Mario"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="pilotEmail" class="field-label">Email <span class="req">*</span></label><input type="email" id="pilotEmail" required autocomplete="email" class="input" placeholder="mario.rossi@email.com"></div>
+            <div class="field"><label for="pilotPhone" class="field-label">Telefono <span class="req">*</span></label><input type="tel" id="pilotPhone" required autocomplete="tel" pattern="[0-9\s\+\-]{9,15}" class="input" placeholder="333 1234567"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="pilotCity" class="field-label">Città <span class="req">*</span></label><input type="text" id="pilotCity" required class="input" placeholder="Pisa"></div>
+            <div class="field">
+              <label for="pilotClub" class="field-label">Club di Appartenenza <span class="req">*</span></label>
+              <input type="text" id="pilotClubSearch" class="input" placeholder="Cerca club (es. Pisa, Milano…)" autocomplete="off" style="margin-bottom: 0.5rem;">
+              <select id="pilotClub" required class="select"><option value="">Seleziona il tuo club...</option></select>
+              <input type="text" id="pilotClubAltro" class="hidden mt-2 input" placeholder="Scrivi il nome del club">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pilotMoto" class="field-label">Modello Moto Guzzi <span class="req">*</span></label>
+              <select id="pilotMoto" required class="select"><option value="">Seleziona il tuo modello...</option></select>
+              <input type="text" id="pilotMotoAltro" class="hidden mt-2 input" placeholder="Scrivi il modello della tua moto">
+            </div>
+          </div>
+          <div class="pt-4 border-t border-neutral-200 mt-4" style="padding-top: 1.5rem;">
+            <label class="inline-flex items-center cursor-pointer gap-3">
+              <input type="checkbox" id="hasPassenger" onchange="onPassengerToggle()" style="width: 1.5rem; height: 1.5rem;">
+              <span class="text-base font-bold text-gray-800">Partecipa anche un Passeggero</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div id="passengerContainer" class="hidden section">
+        <div class="section-head">
+          <div class="section-num-wrapper">02</div>
+          <h2 class="section-title">Dati Passeggero</h2>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field"><label for="passSurname" class="field-label">Cognome <span class="req">*</span></label><input type="text" id="passSurname" class="input" placeholder="Bianchi"></div>
+            <div class="field"><label for="passFirstName" class="field-label">Nome <span class="req">*</span></label><input type="text" id="passFirstName" class="input" placeholder="Laura"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="passEmail" class="field-label">Email</label><input type="email" id="passEmail" class="input" placeholder="laura.bianchi@email.com"></div>
+            <div class="field"><label for="passPhone" class="field-label">Telefono</label><input type="tel" id="passPhone" pattern="[0-9\s\+\-]{9,15}" class="input" placeholder="333 9876543"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-3">
+        <div class="section-head">
+          <div class="section-num-wrapper">03</div>
+          <h2 class="section-title">Quota Pilota</h2>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label class="field-label">Tipo di Iscrizione</label>
+            <div class="radio-group">
+              <label class="radio-card"><input type="radio" name="regType" value="25" checked onchange="updateTotal()"><span class="radio-card-inner"><span>Base — Senza maglietta</span><span class="radio-card-price">25,00 €</span></span></label>
+              <label class="radio-card"><input type="radio" name="regType" value="35" onchange="updateTotal()"><span class="radio-card-inner"><span>Con maglietta</span><span class="radio-card-price">35,00 €</span></span></label>
+            </div>
+          </div>
+          <div id="shirtSizeContainer" class="hidden field mt-4">
+            <label for="shirtSize" class="field-label">Taglia Maglietta</label>
+            <select id="shirtSize" class="select"><option value="S">S</option><option value="M" selected>M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option></select>
+          </div>
+          <div class="mt-4 pt-4 border-t border-neutral-200">
+            <label class="option-row option-highlight"><span class="option-row-left"><input type="checkbox" id="mgwcMember" onchange="updateTotal()">Socio MGWC in regola — sconto 5€</span><span class="option-row-price">-5,00 €</span></label>
+            <div id="mgwcCardContainer" class="hidden mt-3">
+              <label class="field-label">Numero Tessera MGWC <span class="req">*</span></label>
+              <div class="flex" style="max-width: 260px;">
+                <span class="inline-flex items-center px-3 bg-gray-100 border border-gray-300 border-r-0 font-mono text-sm text-gray-600 rounded-l-md">2027</span>
+                <input type="text" id="mgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="input" placeholder="0000" style="border-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+              </div>
+              <p class="text-sm text-gray-500 mt-2">Inserisci le 4 cifre finali della tessera.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="passengerRegContainer" class="hidden section">
+        <div class="section-head">
+          <div class="section-num-wrapper">04</div>
+          <h2 class="section-title">Quota Passeggero</h2>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label class="field-label">Tipo di Iscrizione</label>
+            <div class="radio-group">
+              <label class="radio-card"><input type="radio" name="passRegType" value="25" checked onchange="updateTotal()"><span class="radio-card-inner"><span>Base — Senza maglietta</span><span class="radio-card-price">25,00 €</span></span></label>
+              <label class="radio-card"><input type="radio" name="passRegType" value="35" onchange="updateTotal()"><span class="radio-card-inner"><span>Con maglietta</span><span class="radio-card-price">35,00 €</span></span></label>
+            </div>
+          </div>
+          <div id="passShirtSizeContainer" class="hidden field mt-4">
+            <label for="passShirtSize" class="field-label">Taglia Maglietta</label>
+            <select id="passShirtSize" class="select"><option value="S">S</option><option value="M" selected>M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option></select>
+          </div>
+          <div class="mt-4 pt-4 border-t border-neutral-200">
+            <label class="option-row option-highlight"><span class="option-row-left"><input type="checkbox" id="passMgwcMember" onchange="updateTotal()">Socio MGWC in regola — sconto 5€</span><span class="option-row-price">-5,00 €</span></label>
+            <div id="passMgwcCardContainer" class="hidden mt-3">
+              <label class="field-label">Numero Tessera MGWC <span class="req">*</span></label>
+              <div class="flex" style="max-width: 260px;">
+                <span class="inline-flex items-center px-3 bg-gray-100 border border-gray-300 border-r-0 font-mono text-sm text-gray-600 rounded-l-md">2027</span>
+                <input type="text" id="passMgwcCardNumber" maxlength="4" pattern="[0-9]{4}" class="input" placeholder="0000" style="border-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+              </div>
+              <p class="text-sm text-gray-500 mt-2">Inserisci le 4 cifre finali della tessera.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-5">
+        <div class="section-head">
+          <div class="section-num-wrapper">05</div>
+          <h2 class="section-title">Pasti Pilota</h2>
+        </div>
+        <div class="section-body">
+          <div class="option-list">
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="mealFri" onchange="updateTotal()">Buffet Venerdì</span><span class="option-row-price">20,00 €</span></label>
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="mealSatPack" onchange="updateTotal()">Pranzo al sacco Sabato</span><span class="option-row-price">15,00 €</span></label>
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="mealSatGala" onchange="updateTotal()">Cena di Gala Sabato</span><span class="option-row-price">40,00 €</span></label>
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="mealSun" onchange="updateTotal()">Pranzo Domenica</span><span class="option-row-price">22,00 €</span></label>
+          </div>
+          <div id="pilotSatPackDetails" class="hidden mt-4" style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 2px solid #e5e7eb;">
+            <p class="text-base font-bold mb-3" style="margin: 0 0 1rem 0; color: var(--ink);">Scegli panino e bibita (frutta e dolce inclusi)</p>
+            <div class="field-row" style="margin-bottom: 0;">
+              <div class="field" style="margin-bottom: 0;">
+                <label for="pilotPanino" class="field-label">Panino <span class="req">*</span></label>
+                <select id="pilotPanino" class="select"><option value="">Seleziona il panino...</option></select>
+              </div>
+              <div class="field" style="margin-bottom: 0;">
+                <label for="pilotBibita" class="field-label">Bibita <span class="req">*</span></label>
+                <select id="pilotBibita" class="select"><option value="">Seleziona la bibita...</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="field mt-5"><label for="pilotDietary" class="field-label">Intolleranze / Esigenze Alimentari</label><input type="text" id="pilotDietary" class="input" placeholder="Es. Vegetariano, Celiachia, Allergia a..."></div>
+        </div>
+      </div>
+
+      <div id="passengerMealsContainer" class="hidden section">
+        <div class="section-head">
+          <div class="section-num-wrapper">06</div>
+          <h2 class="section-title">Pasti Passeggero</h2>
+        </div>
+        <div class="section-body">
+          <div class="option-list">
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="passMealFri" onchange="updateTotal()">Buffet Venerdì</span><span class="option-row-price">20,00 €</span></label>
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="passMealSatPack" onchange="updateTotal()">Pranzo al sacco Sabato</span><span class="option-row-price">15,00 €</span></label>
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="passMealSatGala" onchange="updateTotal()">Cena di Gala Sabato</span><span class="option-row-price">40,00 €</span></label>
+            <label class="option-row"><span class="option-row-left"><input type="checkbox" id="passMealSun" onchange="updateTotal()">Pranzo Domenica</span><span class="option-row-price">22,00 €</span></label>
+          </div>
+          <div id="passSatPackDetails" class="hidden mt-4" style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 2px solid #e5e7eb;">
+            <p class="text-base font-bold mb-3" style="margin: 0 0 1rem 0; color: var(--ink);">Scegli panino e bibita del passeggero (frutta e dolce inclusi)</p>
+            <div class="field-row" style="margin-bottom: 0;">
+              <div class="field" style="margin-bottom: 0;">
+                <label for="passPanino" class="field-label">Panino <span class="req">*</span></label>
+                <select id="passPanino" class="select"><option value="">Seleziona il panino...</option></select>
+              </div>
+              <div class="field" style="margin-bottom: 0;">
+                <label for="passBibita" class="field-label">Bibita <span class="req">*</span></label>
+                <select id="passBibita" class="select"><option value="">Seleziona la bibita...</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="field mt-5"><label for="passDietary" class="field-label">Intolleranze / Esigenze Alimentari</label><input type="text" id="passDietary" class="input" placeholder="Es. Vegetariano, Celiachia, Allergia a..."></div>
+        </div>
+      </div>
+
+      <div class="total-card">
+        <p class="total-label">Riepilogo finale</p>
+        <span id="totalDisplay" class="total-amount">25,00 €</span>
+        <ul id="summaryList" class="total-summary"></ul>
+      </div>
+
+      <div class="section" id="section-7">
+        <div class="section-head">
+          <div class="section-num-wrapper">07</div>
+          <h2 class="section-title">Privacy & Consenso</h2>
+        </div>
+        <div class="section-body">
+          <label class="privacy-label">
+            <input type="checkbox" id="privacyConsent" required>
+            <span>Acconsento al trattamento dei dati personali forniti (anche del passeggero, se presente) ai soli fini dell'organizzazione del raduno, ai sensi del Reg. UE 2016/679 (GDPR). <span style="color: var(--red);">*</span><br><a href="#" target="_blank">Leggi l'informativa completa</a></span>
+          </label>
+          <p class="privacy-note">Dopo l'invio riceverai un'email con il riepilogo e le istruzioni per completare il pagamento. La tua iscrizione sarà confermata non appena il pagamento sarà registrato.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="section-num-wrapper">08</div>
+          <h2 class="section-title">Metodo di Pagamento</h2>
+        </div>
+        <div class="section-body">
+          <div class="payment-toggle-group">
+            <button type="button" id="btnPaypal" onclick="setPaymentMethod('paypal')" class="payment-option is-active">PayPal</button>
+            <button type="button" id="btnBank" onclick="setPaymentMethod('bank')" class="payment-option">Bonifico Bancario</button>
+          </div>
+          <div id="paypalContainer">
+            <button type="button" id="paypalPayBtn" onclick="openReviewModal()" class="btn-paypal">Rivedi e Invia — PayPal</button>
+            <p id="paypalError" class="hidden text-sm text-red-600 text-center mt-3"></p>
+          </div>
+          <div id="bankContainer" class="hidden">
+            <div class="bank-info">
+              <p class="bank-info-title">Coordinate Bancarie</p>
+              <p class="bank-info-row"><strong>Intestatario:</strong> <span id="bankHolder"></span></p>
+              <p class="bank-info-row"><strong>Banca:</strong> <span id="bankName"></span></p>
+              <div class="bank-info-iban"><div><span class="bank-info-iban-label">IBAN</span><span id="ibanValue" class="bank-info-iban-code"></span></div><button type="button" onclick="copyIban()" class="btn-copy"><span id="copyBtnText">Copia IBAN</span></button></div>
+              <p class="bank-info-row"><strong>Causale:</strong> <span id="causaleValue" style="color: var(--red); font-weight: 700;"></span></p>
+            </div>
+            <button type="button" id="bankSubmitBtn" onclick="openReviewModal()" class="btn-primary mt-5" style="margin-top: 2rem;">Rivedi e Invia — Bonifico</button>
+            <p id="bankError" class="hidden text-sm text-red-600 text-center mt-3"></p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div id="successBox" class="hidden">
+      <div class="success-card">
+        <div class="success-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <h2 class="success-title">Iscrizione Inviata</h2>
+        <p class="text-gray-600 mb-6" style="font-size: 1.125rem;">Grazie per esserti iscritto al 2° Raduno "Aquile Alfee" del Moto Guzzi Club Pisa.</p>
+        <div class="bg-amber-50 border-l-4 border-amber-400 p-6 mb-6 text-left" style="border-radius: 8px;">
+          <p class="text-base text-amber-900" style="line-height: 1.6; margin: 0;">La tua iscrizione è ora in attesa di conferma del pagamento. Non appena l'organizzazione avrà verificato il pagamento, riceverai una seconda email di conferma definitiva.</p>
+        </div>
+        <p id="successNote" class="hidden text-sm text-red-600 mb-4"></p>
+        <div id="successDetails" class="bg-gray-50 p-6 text-left text-base border border-gray-200 mb-6 rounded-lg"></div>
+        <button type="button" onclick="window.print()" class="btn-secondary" style="width: 100%;">Stampa / salva riepilogo</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODALI E OVERLAY -->
+  <div id="reviewModal" class="hidden modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header"><h2 class="modal-title">Rivedi e Conferma</h2><p class="modal-subtitle">Controlla i dati prima di inviare</p></div>
+      <div id="reviewContent" class="modal-body space-y-4"></div>
+      <div class="modal-footer">
+        <div class="bg-amber-50 border border-amber-300 p-4 text-sm text-amber-800 text-center" style="border-radius: 8px;"><strong>Attenzione:</strong> cliccando "Invia Iscrizione Definitivamente" l'iscrizione sarà registrata nel nostro sistema (in attesa di pagamento).</div>
+        <div class="flex flex-col sm:flex-row gap-3 justify-end"><button type="button" onclick="closeReviewModal()" class="btn-secondary w-full sm:w-auto">Modifica</button><button type="button" onclick="proceedWithPayment()" class="btn-primary w-full sm:w-auto">Invia Definitivamente</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="errorModal" class="hidden modal-overlay">
+    <div class="modal-content" style="max-width: 28rem;">
+      <div class="error-header"><div style="margin-bottom: 1rem;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div><h2 class="modal-title" id="errorModalTitle" style="color: #fff;">Errore</h2></div>
+      <div class="modal-body" style="padding: 2rem;">
+        <p class="text-gray-800 text-base" id="errorModalMessage" style="line-height: 1.6;"></p>
+        <div class="bg-gray-50 border border-gray-200 p-5 mt-5 text-sm space-y-2" style="border-radius: 8px;"><p class="font-bold text-gray-800" style="margin: 0 0 0.5rem 0;">Se pensi sia un errore, contatta l'organizzazione:</p><p style="margin: 0;"><a href="mailto:motoguzziclubpisa@gmail.com" style="color: var(--red); text-decoration: underline; font-weight: 600;">motoguzziclubpisa@gmail.com</a></p><p style="margin: 0;"><a href="tel:+393297259560" style="color: var(--red); text-decoration: underline; font-weight: 600;">329 725 9560</a></p></div>
+      </div>
+      <div style="padding: 1.5rem 2rem; border-top: 1px solid #e5e5e5; background: #fafafa; text-align: right; border-radius: 0 0 16px 16px;"><button type="button" onclick="closeErrorModal()" class="btn-secondary">Chiudi</button></div>
+    </div>
+  </div>
+
+  <div id="loadingOverlay" class="hidden loading-overlay">
+    <div class="loading-content"><div class="spinner"></div><p class="loading-text">Invio iscrizione in corso...</p><p class="loading-subtext">Attendi qualche secondo, non chiudere la pagina.</p></div>
+  </div>
+
+  <footer class="page-footer">
+    <strong>Moto Guzzi Club Pisa — Aquile Alfee</strong>
+    <p style="margin: 0.5rem 0;">motoguzziclubpisa@gmail.com · 329 725 9560</p>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase;">2° Raduno Aquile Alfee · 2-4 Aprile 2027</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <!-- Script per illuminare la barra in base allo scroll -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = [
+        { id: 'section-1', index: 0 },
+        { id: 'section-3', index: 1 },
+        { id: 'section-5', index: 2 },
+        { id: 'section-7', index: 3 }
+      ];
+      const steps = document.querySelectorAll('.progress-step');
+
+      window.addEventListener('scroll', function() {
+        let currentIndex = 0;
+        const scrollPos = window.scrollY + 150; // Offset per la barra sticky
+
+        sections.forEach(sec => {
+          const el = document.getElementById(sec.id);
+          if (el && scrollPos >= el.offsetTop) {
+            currentIndex = sec.index;
+          }
+        });
+
+        // Se siamo in fondo alla pagina, illumina l'ultimo step
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+          currentIndex = 3;
+        }
+
+        steps.forEach((step, idx) => {
+          if (idx <= currentIndex) {
+            step.classList.add('active');
+          } else {
+            step.classList.remove('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
