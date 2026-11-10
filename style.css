@@ -57,7 +57,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 }
 
 .hero-logo-img {
-  height: 7rem; 
+  height: 15rem; 
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8)); 
