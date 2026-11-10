@@ -12,8 +12,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
    ========================================= */
 .hero {
   position: relative;
-  background-color: #121212; /* Base scura */
-  /* Texture a righe diagonali + Bagliore rosso a sinistra + Bagliore giallo a destra */
+  background-color: #121212;
   background-image: 
     radial-gradient(circle at 15% 50%, rgba(200, 16, 46, 0.4) 0%, transparent 60%),
     radial-gradient(circle at 85% 50%, rgba(255, 196, 57, 0.08) 0%, transparent 50%),
@@ -23,12 +22,13 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   border-bottom: 6px solid var(--red);
 }
 
+/* FIX: Larghezza 60rem (come il modulo) e centrato */
 .hero-inner {
-  max-width: 72rem; 
+  max-width: 60rem; 
   margin: 0 auto;
   display: flex; 
   align-items: center; 
-  justify-content: flex-start;
+  justify-content: center; /* Centra il blocco logo+testo */
   gap: 3rem; 
 }
 
@@ -36,7 +36,6 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   height: 15rem; 
   width: auto;
   object-fit: contain;
-  /* Ombra nera + Alone rosso luminoso per far staccare il logo */
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)) drop-shadow(0 0 30px rgba(200, 16, 46, 0.6)); 
 }
 
@@ -81,10 +80,11 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   margin-top: 0.5rem; 
 }
 
+/* FIX: Tagline in grigio chiaro per essere visibile su sfondo scuro */
 .hero-tagline {
-  color: var(--red); 
+  color: #d1d5db; /* Grigio chiarissimo */
   font-size: 0.875rem; 
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.2em; 
   margin-top: 1rem;
@@ -96,7 +96,6 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 @media (max-width: 640px) {
   .hero { 
     padding: 3rem 1rem; 
-    /* Il bagliore rosso si sposta in alto a sinistra su mobile */
     background-image: 
       radial-gradient(circle at 20% 30%, rgba(200, 16, 46, 0.5) 0%, transparent 60%),
       repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 2px, transparent 2px, transparent 10px);
@@ -108,6 +107,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     text-align: left; 
     gap: 1.25rem; 
     align-items: center;
+    width: 100%;
   }
   
   .hero-logo-img { 
