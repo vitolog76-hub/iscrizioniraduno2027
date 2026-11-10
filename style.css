@@ -7,7 +7,9 @@
 body { background: var(--paper); font-family: 'Barlow', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
 h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.01em; }
 
-/* HERO CON SFONDO E SFUMATURA */
+/* =========================================
+   HERO CON SFONDO, SPECCHIO E SFUMATURA
+   ========================================= */
 .hero {
   position: relative;
   background-color: #2c3e50; 
@@ -16,7 +18,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   overflow: hidden;
 }
 
-/* Sfondo (specchiato) */
+/* Sfondo (specchiato per avere Pisa a destra) */
 .hero::before {
   content: '';
   position: absolute;
@@ -24,11 +26,11 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   background-image: url('hero-bg.jpg');
   background-size: cover;
   background-position: center;
-  transform: scaleX(-1); /* SPECCHIA L'IMMAGINE (se non la vuoi, cancella questa riga) */
+  transform: scaleX(-1); 
   z-index: 0;
 }
 
-/* Overlay scuro + Sfumatura in basso */
+/* Overlay scuro + Sfumatura in basso (Desktop) */
 .hero::after {
   content: '';
   position: absolute;
@@ -55,10 +57,10 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 }
 
 .hero-logo-img {
-  height: 14rem; /* LOGO RIDOTTO (era 11rem) */
+  height: 7rem; 
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6)); 
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8)); 
 }
 
 .hero-text { 
@@ -103,7 +105,9 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   text-shadow: 0 2px 6px rgba(0,0,0,0.6); 
 }
 
-/* PROGRESS BAR STICKY */
+/* =========================================
+   PROGRESS BAR STICKY
+   ========================================= */
 .progress-container { 
   position: sticky; 
   top: 0; 
@@ -130,7 +134,9 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 .progress-line { position: absolute; top: 1.25rem; left: 50%; width: 100%; height: 2px; background: #e5e5e5; z-index: 1; }
 .progress-step:last-child .progress-line { display: none; }
 
-/* LAYOUT E CARD */
+/* =========================================
+   LAYOUT E CARD
+   ========================================= */
 .page-container { max-width: 60rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
 .section { 
   background: #ffffff; 
@@ -156,19 +162,62 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 }
 .section-title { font-size: 2rem; font-weight: 700; color: var(--ink); text-transform: capitalize; line-height: 1; margin: 0; }
 .section-label { display: none; }
-
 .section-body { padding: 2.5rem; }
 
+/* =========================================
+   OTTIMIZZAZIONE MOBILE
+   ========================================= */
 @media (max-width: 640px) {
-  .hero { padding: 3rem 1rem 4rem 1rem; }
+  .hero { 
+    padding: 3rem 1rem 4rem 1rem; 
+    min-height: 550px; /* Dà respiro verticale */
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Sfondo: gli diciamo di focalizzarsi sulla Torre di Pisa a destra */
+  .hero::before {
+    background-position: 65% center; 
+  }
+
+  /* Sfumatura verticale per far leggere il testo al centro */
+  .hero::after {
+    background: 
+      linear-gradient(to top, var(--paper) 0%, transparent 15%), 
+      linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+  }
+
   .hero-inner { 
     flex-direction: column; 
     justify-content: center; 
     text-align: center; 
-    gap: 1rem; 
+    gap: 1.5rem; 
   }
-  .hero-logo-img { height: 7rem; } /* LOGO RIDOTTO SU MOBILE (era 9rem) */
-  .hero-text { text-align: center; }
+  
+  .hero-logo-img { 
+    height: 7rem; 
+  }
+  
+  .hero-text { 
+    text-align: center; 
+    padding-left: 0;
+  }
+  
+  .hero-title { 
+    font-size: 2.5rem; 
+    line-height: 0.9;
+  }
+  
+  .hero-sub { 
+    font-size: 1.25rem; 
+    margin-top: 0.5rem;
+  }
+  
+  .hero-meta { 
+    font-size: 1rem; 
+    margin-top: 0.5rem;
+  }
+
   .section-head { padding: 1.25rem; gap: 1rem; }
   .section-num-wrapper { margin-left: -1.25rem; font-size: 2rem; }
   .section-title { font-size: 1.5rem; }
@@ -178,7 +227,9 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   .progress-line { top: 1.25rem; width: 80%; left: 60%; }
 }
 
-/* CAMPI INPUT */
+/* =========================================
+   CAMPI INPUT
+   ========================================= */
 .field { margin-bottom: 1.5rem; }
 .field:last-child { margin-bottom: 0; }
 .field-label { display: block; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
@@ -221,7 +272,9 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1
 .option-highlight .option-row-left { color: #166534; }
 .option-highlight .option-row-price { color: #15803d; }
 
-/* TOTALE E PAGAMENTO */
+/* =========================================
+   TOTALE, PRIVACY E PAGAMENTO
+   ========================================= */
 .total-card { background: var(--ink); color: #ffffff; padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
 .total-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--red); }
 .total-label { font-size: 0.8125rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; color: #a3a3a3; margin: 0; }
@@ -241,7 +294,9 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1
 .payment-option:hover { border-color: #d1d5db; background: #fff; }
 .payment-option.is-active { background: var(--red); border-color: var(--red); color: #ffffff; }
 
-/* PULSANTI */
+/* =========================================
+   PULSANTI
+   ========================================= */
 .btn-primary { width: 100%; background: var(--red); color: #ffffff; font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 1.25rem 2rem; border: none; cursor: pointer; transition: background 0.15s; display: block; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(200, 16, 46, 0.2); }
 .btn-primary:hover { background: var(--red-dark); }
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -251,6 +306,9 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1
 .btn-secondary { background: transparent; color: var(--ink); font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.875rem 1.75rem; border: 2px solid var(--ink); border-radius: 8px; cursor: pointer; transition: all 0.15s; }
 .btn-secondary:hover { background: var(--ink); color: #ffffff; }
 
+/* =========================================
+   COORDINATE BANCARIE
+   ========================================= */
 .bank-info { background: #f9fafb; border: 2px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; }
 .bank-info-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.03em; }
 .bank-info-row { font-size: 0.9375rem; padding: 0.25rem 0; color: var(--ink-2); }
@@ -261,7 +319,9 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--red); width: 1
 .btn-copy { background: #fff; border: 2px solid #d1d5db; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; }
 .btn-copy:hover { background: var(--ink); color: #ffffff; border-color: var(--ink); }
 
-/* MODALI E OVERLAY */
+/* =========================================
+   MODALI E OVERLAY
+   ========================================= */
 .modal-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(4px); z-index: 50; display: flex; align-items: center; justify-content: center; padding: 1rem; }
 .modal-content { background: #ffffff; border-radius: 16px; max-width: 42rem; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
 .modal-header { background: var(--ink); color: #ffffff; padding: 2rem; border-bottom: 4px solid var(--red); border-radius: 16px 16px 0 0; }
