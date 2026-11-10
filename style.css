@@ -18,7 +18,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   overflow: hidden;
 }
 
-/* Sfondo Desktop (specchiato) */
+/* Sfondo Desktop (specchiato e sfocato) */
 .hero::before {
   content: '';
   position: absolute;
@@ -26,7 +26,8 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   background-image: url('hero-bg.jpg');
   background-size: cover;
   background-position: center;
-  transform: scaleX(-1); 
+  transform: scaleX(-1) scale(1.05); /* scale(1.05) evita i bordi trasparenti causati dal blur */
+  filter: blur(4px); /* EFFETTO SFOCATURA */
   z-index: 0;
 }
 
@@ -171,14 +172,14 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 .section-body { padding: 2.5rem; }
 
 /* =========================================
-   OTTIMIZZAZIONE MOBILE (FIX DEFINITIVO)
+   OTTIMIZZAZIONE MOBILE
    ========================================= */
 @media (max-width: 640px) {
   .hero { 
     padding: 0 !important; 
-    height: auto !important; /* L'altezza si calcola da sola */
+    height: auto !important; 
     min-height: auto !important;
-    aspect-ratio: 1200 / 800; /* <--- FORZA LE PROPORZIONI DELL'IMMAGINE */
+    aspect-ratio: 1200 / 800; 
     display: flex;
     align-items: center;
     overflow: hidden !important; 
@@ -186,22 +187,23 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     background-color: var(--paper) !important; 
   }
   
+  /* Sfondo Mobile (sfocato) */
   .hero::before {
     background-image: url('hero-bg-mobile.png') !important; 
-    background-size: 100% 100% !important; /* Riempie esattamente il contenitore senza tagliare nulla */
+    background-size: 100% 100% !important; 
     background-position: center center !important; 
     background-repeat: no-repeat !important; 
-    transform: none !important;
+    transform: scale(1.05) !important; /* Evita i bordi trasparenti del blur */
+    filter: blur(3px) !important; /* EFFETTO SFOCATURA MOBILE (leggermente più leggero) */
     position: absolute;
     inset: 0;
     z-index: 0;
   }
 
-  /* Sfumatura scura a sinistra per il testo, sfumatura crema in basso */
-   .hero::after {
+  .hero::after {
     background: 
       linear-gradient(to top, var(--paper) 0%, transparent 15%), 
-      linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%) !important;
+      linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%) !important;
     position: absolute;
     inset: 0;
     z-index: 1;
@@ -214,20 +216,19 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     gap: 0.75rem !important; 
     align-items: center !important;
     width: 100% !important;
-    padding: 1rem !important;
+    padding: 0.5rem 1rem !important; 
     z-index: 2;
     position: relative;
   }
   
-  .hero-logo-img { height: 7rem !important; /* Leggermente più piccolo per stare nell'altezza ridotta */
-  }
+  .hero-logo-img { height: 6rem !important; }
   .hero-text { text-align: left !important; padding-left: 0 !important; flex: 1 !important; }
   
-  .hero-title { font-size: 1.2rem !important; line-height: 0.9 !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-title { font-size: 1.3rem !important; line-height: 0.9 !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
   .hero-title .hero-title-pisa { font-size: 1.1em !important; }
-  .hero-sub { font-size: 0.75rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
-  .hero-meta { font-size: 0.6rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
-  .hero-tagline { font-size: 0.45rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-sub { font-size: 0.8rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-meta { font-size: 0.65rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
+  .hero-tagline { font-size: 0.5rem !important; margin-top: 0.25rem !important; text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; }
 
   .progress-container { padding: 0.75rem 1rem; }
   .progress-label { display: none; }
