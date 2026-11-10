@@ -104,6 +104,15 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
   margin-top: 0.5rem; 
   text-shadow: 0 2px 6px rgba(0,0,0,0.6); 
 }
+.hero-tagline {
+  color: rgba(255, 255, 255, 0.75); /* Bianco leggermente trasparente */
+  font-size: 0.875rem; /* Più piccolo della data */
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em; /* Molto distanziato, elegante */
+  margin-top: 0.75rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
 
 /* =========================================
    PROGRESS BAR STICKY
