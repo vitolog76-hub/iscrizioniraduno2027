@@ -219,7 +219,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     position: relative;
   }
   
-  .hero-logo-img { height: 3.5rem !important; /* Leggermente più piccolo per stare nell'altezza ridotta */
+  .hero-logo-img { height: 7rem !important; /* Leggermente più piccolo per stare nell'altezza ridotta */
   }
   .hero-text { text-align: left !important; padding-left: 0 !important; flex: 1 !important; }
   
