@@ -55,7 +55,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 }
 
 .hero-logo-img {
-  height: 7rem; /* LOGO RIDOTTO (era 11rem) */
+  height: 11rem; /* LOGO RIDOTTO (era 11rem) */
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6)); 
@@ -167,7 +167,7 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     text-align: center; 
     gap: 1rem; 
   }
-  .hero-logo-img { height: 5rem; } /* LOGO RIDOTTO SU MOBILE (era 9rem) */
+  .hero-logo-img { height: 7rem; } /* LOGO RIDOTTO SU MOBILE (era 9rem) */
   .hero-text { text-align: center; }
   .section-head { padding: 1.25rem; gap: 1rem; }
   .section-num-wrapper { margin-left: -1.25rem; font-size: 2rem; }
