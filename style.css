@@ -176,28 +176,28 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
 @media (max-width: 640px) {
   .hero { 
     padding: 0 !important; 
-    height: 320px !important; /* Altezza compatta per tagliare cielo e asfalto */
+    height: 320px !important; 
     min-height: 320px !important;
     max-height: 320px !important;
     display: flex;
     align-items: center;
     overflow: hidden !important; 
     position: relative;
-    background-color: var(--ink) !important; 
+    background-color: #0a0a0a !important; /* Sfondo scuro se l'immagine non copre tutto */
   }
   
-  /* Usa l'immagine PNG verticale */
+  /* FIX: Aggiunto no-repeat per fermare il mosaico */
   .hero::before {
     background-image: url('hero-bg-mobile.png') !important; 
-    background-size: 100% auto !important; /* Mostra tutta la larghezza senza tagliare i lati */
+    background-size: 100% auto !important; 
     background-position: center top !important; 
+    background-repeat: no-repeat !important; /* <--- QUESTA E' LA MAGIA */
     transform: none !important;
     position: absolute;
     inset: 0;
     z-index: 0;
   }
 
-  /* Sfumatura scura a sinistra per far leggere il testo, sfumatura crema in basso */
   .hero::after {
     background: 
       linear-gradient(to top, var(--paper) 0%, transparent 15%), 
@@ -207,7 +207,6 @@ h1, h2, h3, .condensed { font-family: 'Barlow Condensed', sans-serif; letter-spa
     z-index: 1;
   }
 
-  /* Layout: Logo a sinistra, Testo a destra */
   .hero-inner { 
     flex-direction: row !important; 
     justify-content: flex-start !important; 
