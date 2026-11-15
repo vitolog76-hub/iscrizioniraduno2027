@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=798">
+  <link rel="stylesheet" href="style.css?v=799">
 </head>
 <body>
 
@@ -178,15 +178,15 @@
             <label class="option-row"><span class="option-row-left"><input type="checkbox" id="mealSun" onchange="updateTotal()">Pranzo Domenica</span><span class="option-row-price">22,00 €</span></label>
           </div>
           <div id="pilotSatPackDetails" class="hidden mt-4" style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 2px solid #e5e7eb;">
-            <p class="text-base font-bold mb-3" style="margin: 0 0 1rem 0; color: var(--ink);">Scegli panino e bibita (frutta e dolce inclusi)</p>
+            <p class="text-base font-bold mb-3" style="margin: 0 0 1rem 0; color: var(--ink);">Scegli il panino (acqua, frutta e dolce inclusi)</p>
             <div class="field-row" style="margin-bottom: 0;">
               <div class="field" style="margin-bottom: 0;">
                 <label for="pilotPanino" class="field-label">Panino <span class="req">*</span></label>
                 <select id="pilotPanino" class="select"><option value="">Seleziona il panino...</option></select>
               </div>
               <div class="field" style="margin-bottom: 0;">
-                <label for="pilotBibita" class="field-label">Bibita <span class="req">*</span></label>
-                <select id="pilotBibita" class="select"><option value="">Seleziona la bibita...</option></select>
+                <label class="field-label">Bibita</label>
+                <input type="text" class="input" value="Acqua 50cl (inclusa)" readonly style="background:#e5e7eb; cursor:not-allowed; color:#6b7280;">
               </div>
             </div>
           </div>
@@ -207,15 +207,15 @@
             <label class="option-row"><span class="option-row-left"><input type="checkbox" id="passMealSun" onchange="updateTotal()">Pranzo Domenica</span><span class="option-row-price">22,00 €</span></label>
           </div>
           <div id="passSatPackDetails" class="hidden mt-4" style="background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 2px solid #e5e7eb;">
-            <p class="text-base font-bold mb-3" style="margin: 0 0 1rem 0; color: var(--ink);">Scegli panino e bibita del passeggero (frutta e dolce inclusi)</p>
+            <p class="text-base font-bold mb-3" style="margin: 0 0 1rem 0; color: var(--ink);">Scegli il panino del passeggero (acqua, frutta e dolce inclusi)</p>
             <div class="field-row" style="margin-bottom: 0;">
               <div class="field" style="margin-bottom: 0;">
                 <label for="passPanino" class="field-label">Panino <span class="req">*</span></label>
                 <select id="passPanino" class="select"><option value="">Seleziona il panino...</option></select>
               </div>
               <div class="field" style="margin-bottom: 0;">
-                <label for="passBibita" class="field-label">Bibita <span class="req">*</span></label>
-                <select id="passBibita" class="select"><option value="">Seleziona la bibita...</option></select>
+                <label class="field-label">Bibita</label>
+                <input type="text" class="input" value="Acqua 50cl (inclusa)" readonly style="background:#e5e7eb; cursor:not-allowed; color:#6b7280;">
               </div>
             </div>
           </div>
