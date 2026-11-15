@@ -10,7 +10,6 @@ const CONFIG = {
 
 let CLUBS = [];
 let PANINI = [];
-let BIBITE = [];
 
 async function loadClubs() {
   try {
@@ -33,18 +32,6 @@ async function loadPanini() {
   } catch (e) {
     console.error('panini.txt non caricato:', e);
     PANINI = [];
-  }
-}
-
-async function loadBibite() {
-  try {
-    const res = await fetch('bibite.txt?v=' + Date.now(), { cache: 'no-cache' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    BIBITE = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-  } catch (e) {
-    console.error('bibite.txt non caricato:', e);
-    BIBITE = [];
   }
 }
 
@@ -212,7 +199,7 @@ function buildPerson(prefix, p) {
 
   const satPackOn = $(p.meals.satPack).checked;
   const panino = satPackOn ? $(p.panino).value : '';
-  const bibita = satPackOn ? $(p.bibita).value : '';
+  const bibita = satPackOn ? 'ACQUA 50CL' : '';
 
   Object.keys(PRICES.meals).forEach((k) => {
     const on = $(p.meals[k]).checked; meals[k] = on;
@@ -234,8 +221,8 @@ function buildPerson(prefix, p) {
   };
 }
 
-const PILOT_IDS = { regName: 'regType', shirt: 'shirtSize', member: 'mgwcMember', card: 'mgwcCardNumber', surname: 'pilotSurname', first: 'pilotFirstName', email: 'pilotEmail', phone: 'pilotPhone', dietary: 'pilotDietary', panino: 'pilotPanino', bibita: 'pilotBibita', meals: { fri: 'mealFri', satPack: 'mealSatPack', satGala: 'mealSatGala', sun: 'mealSun' } };
-const PASS_IDS = { regName: 'passRegType', shirt: 'passShirtSize', member: 'passMgwcMember', card: 'passMgwcCardNumber', surname: 'passSurname', first: 'passFirstName', email: 'passEmail', phone: 'passPhone', dietary: 'passDietary', panino: 'passPanino', bibita: 'passBibita', meals: { fri: 'passMealFri', satPack: 'passMealSatPack', satGala: 'passMealSatGala', sun: 'passMealSun' } };
+const PILOT_IDS = { regName: 'regType', shirt: 'shirtSize', member: 'mgwcMember', card: 'mgwcCardNumber', surname: 'pilotSurname', first: 'pilotFirstName', email: 'pilotEmail', phone: 'pilotPhone', dietary: 'pilotDietary', panino: 'pilotPanino', meals: { fri: 'mealFri', satPack: 'mealSatPack', satGala: 'mealSatGala', sun: 'mealSun' } };
+const PASS_IDS = { regName: 'passRegType', shirt: 'passShirtSize', member: 'passMgwcMember', card: 'passMgwcCardNumber', surname: 'passSurname', first: 'passFirstName', email: 'passEmail', phone: 'passPhone', dietary: 'passDietary', panino: 'passPanino', meals: { fri: 'passMealFri', satPack: 'passMealSatPack', satGala: 'passMealSatGala', sun: 'passMealSun' } };
 
 function getOrder() {
   const pilot = buildPerson('', PILOT_IDS);
@@ -268,7 +255,7 @@ function renumberSections() {
 }
 
 function resetPassengerFields() {
-  ['passSurname','passFirstName','passEmail','passPhone','passMgwcCardNumber','passDietary','passPanino','passBibita'].forEach((id) => { $(id).value = ''; });
+  ['passSurname','passFirstName','passEmail','passPhone','passMgwcCardNumber','passDietary','passPanino'].forEach((id) => { $(id).value = ''; });
   ['passMgwcMember','passMealFri','passMealSatPack','passMealSatGala','passMealSun'].forEach((id) => { $(id).checked = false; });
   document.querySelector('input[name="passRegType"][value="25"]').checked = true;
   $('passShirtSize').value = 'M';
@@ -286,8 +273,7 @@ function updateTotal() {
   const pilotSatPack = $('mealSatPack').checked;
   toggle('pilotSatPackDetails', pilotSatPack);
   setRequired('pilotPanino', pilotSatPack);
-  setRequired('pilotBibita', pilotSatPack);
-  if (!pilotSatPack) { $('pilotPanino').value = ''; $('pilotBibita').value = ''; }
+  if (!pilotSatPack) { $('pilotPanino').value = ''; }
 
   const hasPassenger = $('hasPassenger').checked;
   toggle('passengerContainer', hasPassenger);
@@ -307,8 +293,7 @@ function updateTotal() {
   const passSatPack = hasPassenger && $('passMealSatPack').checked;
   toggle('passSatPackDetails', passSatPack);
   setRequired('passPanino', passSatPack);
-  setRequired('passBibita', passSatPack);
-  if (!passSatPack) { $('passPanino').value = ''; $('passBibita').value = ''; }
+  if (!passSatPack) { $('passPanino').value = ''; }
 
   const order = getOrder();
   currentTotal = order.total;
@@ -421,7 +406,7 @@ function showSuccess(order, payment, sendResult) {
     if (p.phone) add('Telefono: ' + p.phone);
     if (title === 'Pilota' && p.moto) add('Moto: ' + p.moto);
     p.lines.forEach((l) => add('• ' + l.label + ': ' + (l.amount < 0 ? '-' : '') + eur(Math.abs(l.amount))));
-    if (p.panino) add('• Pranzo al sacco: ' + p.panino + ' + ' + p.bibita + ' + Frutta e Dolce');
+    if (p.panino) add('• Pranzo al sacco: ' + p.panino + ' + Acqua 50cl + Frutta e Dolce');
   };
   addPerson('Pilota', order.pilot);
   if (order.passenger) addPerson('Passeggero', order.passenger);
@@ -476,11 +461,11 @@ function openReviewModal() {
       html += `<p class="text-xs uppercase tracking-wide text-neutral-500 font-semibold mt-3 mb-1">Pasti Prenotati</p>`;
       html += `<p class="text-sm">${mealsOn.map(k => MEAL_LABELS[k]).join(', ')}</p>`;
     }
-    if (p.panino || p.bibita) {
+    if (p.panino) {
       html += `<div class="mt-3 p-3 text-sm" style="background: #fef3c7; border: 1px solid #fcd34d;">`;
       html += `<p class="font-semibold" style="margin: 0 0 0.25rem 0;">Pranzo al sacco Sabato</p>`;
       html += `<p style="margin: 0;">Panino: <strong>${p.panino || '-'}</strong></p>`;
-      html += `<p style="margin: 0;">Bibita: <strong>${p.bibita || '-'}</strong></p>`;
+      html += `<p style="margin: 0;">Bibita: <strong>Acqua 50cl</strong></p>`;
       html += `<p style="margin: 0;">Frutta e Dolce: <strong>inclusi</strong></p>`;
       html += `</div>`;
     }
@@ -607,13 +592,11 @@ async function submitBankFlow() {
   $('bankName').textContent = CONFIG.BANK_NAME;
   $('ibanValue').textContent = CONFIG.IBAN;
 
-  await Promise.all([loadClubs(), loadPanini(), loadBibite()]);
+  await Promise.all([loadClubs(), loadPanini()]);
   populateClubSelect();
   initMotoModels();
   populateListSelect('pilotPanino', PANINI);
-  populateListSelect('pilotBibita', BIBITE);
   populateListSelect('passPanino', PANINI);
-  populateListSelect('passBibita', BIBITE);
 
   updateTotal();
 })();
