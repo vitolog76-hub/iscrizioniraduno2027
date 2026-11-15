@@ -53,10 +53,10 @@ const MOTOMODELS = {
     "Normale 500", "Sport (13/14/15)", "GT (Norge, 16, 17)", "GTS", "Alce 500", "Airone 250", 
     "Motoleggera 65 (Guzzino)", "Superalce 500", "Astore 500", "Falcone 500", 
     "Galletto (160/175/192)", "Cardellino 73", "Zigolo (98/110)", "Lodola 175", 
-    "Stornello 125", "Dingo (49/50)", "Trotter"
+    "Stornello 125"
   ],
   "Anni '60 e '70 (1960-1979)": [
-    "V7 700", "V7 Special 750", "V7 750 Sport", "850 GT", "850 California", 
+    "V7 700", "V7 Special 750", "V7 750 Sport", "850 GT", "850 California", "T3 850",  
     "Nuovo Falcone 500", "2C 4T", "254", "250 TS", "350 GTS", "400 GTS", 
     "V850 Le Mans", "1000 SP", "V50 (1977)", "V35 (1977)", 
     "V1000 Idroconvert", "V1000 G5"
@@ -70,7 +70,7 @@ const MOTOMODELS = {
   ],
   "Moderne (2000 - oggi)": [
     "Breva 750", "Breva 850", "Breva 1100", "Breva 1200", 
-    "Griso 850", "Griso 1100", "Griso 1200 8V", 
+    "Griso 850", "Griso 1100", "Griso 1200 8V", "California 1100 EV",
     "Norge 850", "Norge 1200", "1200 Sport", 
     "Stelvio 1200", "Stelvio 1200 NTX", "Bellagio 940", 
     "California 1400 Custom", "California 1400 Touring", 
