@@ -6,31 +6,87 @@ const CONFIG = {
   IBAN: 'IT61 U020 0871 1320 0010 7354 780',
   SUBMIT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbxuRFVEwSoR0wTWX0DTWAXGfa7WR2MPkrxyD05zzSqwT6LodJ6T5BH-MZwaQKVeUQ1q/exec',
   ORGANIZER_EMAIL: '',
-  // Data limite magliette: 4 Marzo 2027, 23:59:59 (mese 2 = Marzo)
-  SHIRT_DEADLINE: new Date(2027, 2, 4, 23, 59, 59)
+  DEADLINE_FILE: 'deadline.txt'
 };
+
+// Data di fallback: usata SOLO se deadline.txt non è raggiungibile.
+// Deve essere la stessa del file. Formato: mese 0-based (2 = Marzo).
+let SHIRT_DEADLINE = new Date(2027, 2, 4, 23, 59, 59);
 
 let CLUBS = [];
 let PANINI = [];
 
 function isShirtOrderAllowed() {
-  return new Date() <= CONFIG.SHIRT_DEADLINE;
+  return new Date() <= SHIRT_DEADLINE;
+}
+
+function formatDeadlineDate(date) {
+  var mesi = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  return date.getDate() + ' ' + mesi[date.getMonth()] + ' ' + date.getFullYear();
+}
+
+async function loadShirtDeadline() {
+  try {
+    var res = await fetch(CONFIG.DEADLINE_FILE + '?v=' + Date.now(), { cache: 'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var text = await res.text();
+    var lines = text.split(/\r?\n/);
+    var dataStr = null;
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i].trim();
+      if (!l) continue;
+      if (l.charAt(0) === '#') continue;
+      dataStr = l;
+      break;
+    }
+    if (!dataStr) throw new Error('Nessuna data nel file');
+    var parts = dataStr.split('-');
+    if (parts.length !== 3) throw new Error('Formato non valido (atteso AAAA-MM-GG)');
+    var anno = parseInt(parts[0], 10);
+    var mese = parseInt(parts[1], 10) - 1;
+    var giorno = parseInt(parts[2], 10);
+    if (isNaN(anno) || isNaN(mese) || isNaN(giorno)) throw new Error('Data non valida');
+    SHIRT_DEADLINE = new Date(anno, mese, giorno, 23, 59, 59);
+    console.log('Data limite magliette caricata da deadline.txt:', formatDeadlineDate(SHIRT_DEADLINE));
+  } catch (e) {
+    console.warn('deadline.txt non caricato, uso data di fallback (' + formatDeadlineDate(SHIRT_DEADLINE) + '):', e);
+  }
+}
+
+function populateShirtDeadlineText() {
+  var text = formatDeadlineDate(SHIRT_DEADLINE);
+  var ids = ['shirtDeadlineTextPilot','shirtDeadlineTextPass','shirtDeadlineTextPilotScaduto','shirtDeadlineTextPassScaduto'];
+  ids.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
 }
 
 function applyShirtDeadline() {
-  if (isShirtOrderAllowed()) return;
+  var infoPilot = document.getElementById('pilotShirtDeadlineInfo');
+  var infoPass = document.getElementById('passShirtDeadlineInfo');
   var pilotOpt = document.getElementById('pilotShirtOption');
   var passOpt = document.getElementById('passShirtOption');
   var pilotNotice = document.getElementById('shirtDeadlineNoticePilot');
   var passNotice = document.getElementById('shirtDeadlineNoticePass');
-  if (pilotOpt) pilotOpt.classList.add('hidden');
-  if (passOpt) passOpt.classList.add('hidden');
-  if (pilotNotice) pilotNotice.classList.remove('hidden');
-  if (passNotice) passNotice.classList.remove('hidden');
-  var pilotBase = document.querySelector('input[name="regType"][value="25"]');
-  var passBase = document.querySelector('input[name="passRegType"][value="25"]');
-  if (pilotBase) pilotBase.checked = true;
-  if (passBase) passBase.checked = true;
+
+  if (isShirtOrderAllowed()) {
+    if (infoPilot) infoPilot.classList.remove('hidden');
+    if (infoPass) infoPass.classList.remove('hidden');
+    if (pilotNotice) pilotNotice.classList.add('hidden');
+    if (passNotice) passNotice.classList.add('hidden');
+  } else {
+    if (infoPilot) infoPilot.classList.add('hidden');
+    if (infoPass) infoPass.classList.add('hidden');
+    if (pilotOpt) pilotOpt.classList.add('hidden');
+    if (passOpt) passOpt.classList.add('hidden');
+    if (pilotNotice) pilotNotice.classList.remove('hidden');
+    if (passNotice) passNotice.classList.remove('hidden');
+    var pilotBase = document.querySelector('input[name="regType"][value="25"]');
+    var passBase = document.querySelector('input[name="passRegType"][value="25"]');
+    if (pilotBase) pilotBase.checked = true;
+    if (passBase) passBase.checked = true;
+  }
 }
 
 async function loadClubs() {
@@ -370,13 +426,12 @@ function validateForm() {
   const form = $('rallyForm');
   if (!form.reportValidity()) return false;
 
-  // Controllo data limite magliette
   if (!isShirtOrderAllowed()) {
     const pilotRadio = document.querySelector('input[name="regType"]:checked');
     const passRadio = document.querySelector('input[name="passRegType"]:checked');
     if ((pilotRadio && pilotRadio.value === String(PRICES.withShirt)) ||
         ($('hasPassenger').checked && passRadio && passRadio.value === String(PRICES.withShirt))) {
-      alert('Il termine per ordinare la maglietta (4 Marzo 2027) è scaduto. Seleziona "Base — Senza maglietta".');
+      alert('Il termine per ordinare la maglietta (' + formatDeadlineDate(SHIRT_DEADLINE) + ') è scaduto. Seleziona "Base — Senza maglietta".');
       return false;
     }
   }
@@ -627,12 +682,13 @@ async function submitBankFlow() {
   $('bankName').textContent = CONFIG.BANK_NAME;
   $('ibanValue').textContent = CONFIG.IBAN;
 
-  await Promise.all([loadClubs(), loadPanini()]);
+  await Promise.all([loadClubs(), loadPanini(), loadShirtDeadline()]);
   populateClubSelect();
   initMotoModels();
   populateListSelect('pilotPanino', PANINI);
   populateListSelect('passPanino', PANINI);
 
+  populateShirtDeadlineText();
   applyShirtDeadline();
 
   updateTotal();
