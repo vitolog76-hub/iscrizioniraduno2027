@@ -5,11 +5,33 @@ const CONFIG = {
   BANK_NAME: 'UniCredit',
   IBAN: 'IT61 U020 0871 1320 0010 7354 780',
   SUBMIT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbxuRFVEwSoR0wTWX0DTWAXGfa7WR2MPkrxyD05zzSqwT6LodJ6T5BH-MZwaQKVeUQ1q/exec',
-  ORGANIZER_EMAIL: ''
+  ORGANIZER_EMAIL: '',
+  // Data limite magliette: 4 Marzo 2027, 23:59:59 (mese 2 = Marzo)
+  SHIRT_DEADLINE: new Date(2027, 2, 4, 23, 59, 59)
 };
 
 let CLUBS = [];
 let PANINI = [];
+
+function isShirtOrderAllowed() {
+  return new Date() <= CONFIG.SHIRT_DEADLINE;
+}
+
+function applyShirtDeadline() {
+  if (isShirtOrderAllowed()) return;
+  var pilotOpt = document.getElementById('pilotShirtOption');
+  var passOpt = document.getElementById('passShirtOption');
+  var pilotNotice = document.getElementById('shirtDeadlineNoticePilot');
+  var passNotice = document.getElementById('shirtDeadlineNoticePass');
+  if (pilotOpt) pilotOpt.classList.add('hidden');
+  if (passOpt) passOpt.classList.add('hidden');
+  if (pilotNotice) pilotNotice.classList.remove('hidden');
+  if (passNotice) passNotice.classList.remove('hidden');
+  var pilotBase = document.querySelector('input[name="regType"][value="25"]');
+  var passBase = document.querySelector('input[name="passRegType"][value="25"]');
+  if (pilotBase) pilotBase.checked = true;
+  if (passBase) passBase.checked = true;
+}
 
 async function loadClubs() {
   try {
@@ -347,6 +369,18 @@ function copyIban() {
 function validateForm() {
   const form = $('rallyForm');
   if (!form.reportValidity()) return false;
+
+  // Controllo data limite magliette
+  if (!isShirtOrderAllowed()) {
+    const pilotRadio = document.querySelector('input[name="regType"]:checked');
+    const passRadio = document.querySelector('input[name="passRegType"]:checked');
+    if ((pilotRadio && pilotRadio.value === String(PRICES.withShirt)) ||
+        ($('hasPassenger').checked && passRadio && passRadio.value === String(PRICES.withShirt))) {
+      alert('Il termine per ordinare la maglietta (4 Marzo 2027) è scaduto. Seleziona "Base — Senza maglietta".');
+      return false;
+    }
+  }
+
   const clubSelect = $('pilotClub');
   if (!clubSelect.value) { alert('Seleziona il tuo Club di Appartenenza.'); clubSelect.focus(); return false; }
   if (clubSelect.value === 'ALTRO' && !$('pilotClubAltro').value.trim()) { alert('Inserisci il nome del tuo club.'); $('pilotClubAltro').focus(); return false; }
@@ -542,6 +576,7 @@ function showErrorModal(message) {
   var title = 'Errore';
   var msg = message || 'Non è stato possibile completare l\'iscrizione.';
   if (msg.indexOf('già iscritto') !== -1 || msg.indexOf('DUPLICATE') !== -1) { title = 'Iscrizione Già Registrata'; }
+  else if (msg.indexOf('termine') !== -1 || msg.indexOf('SHIRT_DEADLINE') !== -1) { title = 'Termine Scaduto'; }
   else if (msg.indexOf('connessione') !== -1 || msg.indexOf('rete') !== -1) { title = 'Errore di Connessione'; }
   else if (msg.indexOf('server') !== -1) { title = 'Errore del Server'; }
   var titleEl = document.getElementById('errorModalTitle');
@@ -597,6 +632,8 @@ async function submitBankFlow() {
   initMotoModels();
   populateListSelect('pilotPanino', PANINI);
   populateListSelect('passPanino', PANINI);
+
+  applyShirtDeadline();
 
   updateTotal();
 })();
