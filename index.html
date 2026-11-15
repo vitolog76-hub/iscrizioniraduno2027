@@ -12,23 +12,20 @@
 </head>
 <body>
 
-  <!-- HERO CON SFONDO FOTOGRAFICO (SPECCHIATO) E CURVA -->
-    <header class="hero">
+  <header class="hero">
     <div class="hero-inner">
       <div class="hero-logo-container">
         <img src="logo.png" alt="Aquile Alfee" class="hero-logo-img">
       </div>
-            <div class="hero-text">
+      <div class="hero-text">
         <h1 class="hero-title">Moto Guzzi Club <span class="hero-title-pisa">Pisa</span></h1>
         <p class="hero-sub">2° Raduno "Aquile Alfee"</p>
         <p class="hero-meta">Pisa 2, 3, 4 Aprile 2027 | Peccioli</p>
         <p class="hero-tagline">Modulo Ufficiale Iscrizione &amp; Ristorazione</p>
       </div>
-    
-   
+    </div>
   </header>
 
-    <!-- PROGRESS BAR (Sticky) -->
   <div class="progress-container" id="progressBar">
     <div class="progress-step active" data-target="section-1">
       <div class="progress-badge"><span class="num">01</span> DATI</div>
@@ -113,7 +110,10 @@
             <label class="field-label">Tipo di Iscrizione</label>
             <div class="radio-group">
               <label class="radio-card"><input type="radio" name="regType" value="25" checked onchange="updateTotal()"><span class="radio-card-inner"><span>Base — Senza maglietta</span><span class="radio-card-price">25,00 €</span></span></label>
-              <label class="radio-card"><input type="radio" name="regType" value="35" onchange="updateTotal()"><span class="radio-card-inner"><span>Con maglietta</span><span class="radio-card-price">35,00 €</span></span></label>
+              <label class="radio-card" id="pilotShirtOption"><input type="radio" name="regType" value="35" onchange="updateTotal()"><span class="radio-card-inner"><span>Con maglietta</span><span class="radio-card-price">35,00 €</span></span></label>
+            </div>
+            <div id="shirtDeadlineNoticePilot" class="hidden" style="background:#fef3c7;border:1px solid #fcd34d;padding:1rem;border-radius:8px;margin-top:0.75rem;">
+              <p style="margin:0;font-size:0.95rem;color:#92400e;"><strong>Termine per ordinare la maglietta scaduto</strong> (4 Marzo 2027). Puoi iscriverti con la quota Base da 25,00 €.</p>
             </div>
           </div>
           <div id="shirtSizeContainer" class="hidden field mt-4">
@@ -144,7 +144,10 @@
             <label class="field-label">Tipo di Iscrizione</label>
             <div class="radio-group">
               <label class="radio-card"><input type="radio" name="passRegType" value="25" checked onchange="updateTotal()"><span class="radio-card-inner"><span>Base — Senza maglietta</span><span class="radio-card-price">25,00 €</span></span></label>
-              <label class="radio-card"><input type="radio" name="passRegType" value="35" onchange="updateTotal()"><span class="radio-card-inner"><span>Con maglietta</span><span class="radio-card-price">35,00 €</span></span></label>
+              <label class="radio-card" id="passShirtOption"><input type="radio" name="passRegType" value="35" onchange="updateTotal()"><span class="radio-card-inner"><span>Con maglietta</span><span class="radio-card-price">35,00 €</span></span></label>
+            </div>
+            <div id="shirtDeadlineNoticePass" class="hidden" style="background:#fef3c7;border:1px solid #fcd34d;padding:1rem;border-radius:8px;margin-top:0.75rem;">
+              <p style="margin:0;font-size:0.95rem;color:#92400e;"><strong>Termine per ordinare la maglietta scaduto</strong> (4 Marzo 2027). Puoi iscrivere il passeggero con la quota Base da 25,00 €.</p>
             </div>
           </div>
           <div id="passShirtSizeContainer" class="hidden field mt-4">
@@ -287,7 +290,6 @@
     </div>
   </main>
 
-  <!-- MODALI E OVERLAY -->
   <div id="reviewModal" class="hidden modal-overlay">
     <div class="modal-content">
       <div class="modal-header"><h2 class="modal-title">Rivedi e Conferma</h2><p class="modal-subtitle">Controlla i dati prima di inviare</p></div>
@@ -321,8 +323,7 @@
   </footer>
 
   <script src="app.js"></script>
-  <!-- Script per illuminare la barra in base allo scroll -->
-    <script>
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
       const sections = [
         { id: 'section-1', index: 0 },
@@ -334,7 +335,7 @@
 
       window.addEventListener('scroll', function() {
         let currentIndex = 0;
-        const scrollPos = window.scrollY + 200; // Offset per la barra sticky
+        const scrollPos = window.scrollY + 200;
 
         sections.forEach(sec => {
           const el = document.getElementById(sec.id);
@@ -343,7 +344,6 @@
           }
         });
 
-        // Se siamo in fondo alla pagina, illumina l'ultimo step
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
           currentIndex = 3;
         }
